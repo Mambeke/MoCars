@@ -124,6 +124,72 @@ export const vehicles = [
       'Vehicle information shown here is limited to the details supplied with the MoCars reference catalogue. Contact MoCars to confirm the full specification, availability and location.',
     features: [],
   },
+  {
+    id: 'mercedes-benz-gle-450d-4matic',
+    reference: 'MOC-GLE-005',
+    make: 'Mercedes-Benz',
+    model: 'GLE 450d 4MATIC',
+    title: 'Mercedes-Benz GLE 450d 4MATIC',
+    year: null,
+    condition: 'New',
+    price: null,
+    mileage: null,
+    engine: null,
+    engineCapacity: null,
+    fuel: null,
+    transmission: null,
+    drivetrain: null,
+    bodyType: 'SUV',
+    exteriorColor: 'Burgundy',
+    interiorColor: 'Black',
+    seatingCapacity: null,
+    location: null,
+    availability: 'Enquire to confirm',
+    dateAdded: '2026-11-04',
+    featured: false,
+    images: [
+      '/images/mercedes-gle-front.webp',
+      '/images/mercedes-gle-rear.webp',
+      '/images/mercedes-gle-interior.webp',
+      '/images/mercedes-gle-rear-cabin.webp',
+    ],
+    description:
+      'A new Mercedes-Benz GLE 450d 4MATIC listing supplied with exterior and cabin photographs. Contact MoCars to confirm the model year, price, mileage, full specification, availability and location.',
+    features: [],
+  },
+  {
+    id: 'toyota-land-cruiser-zx-v8',
+    reference: 'MOC-LCZX-006',
+    make: 'Toyota',
+    model: 'Land Cruiser ZX V8',
+    title: 'Toyota Land Cruiser ZX V8',
+    year: null,
+    condition: 'New',
+    price: null,
+    mileage: null,
+    engine: null,
+    engineCapacity: null,
+    fuel: null,
+    transmission: null,
+    drivetrain: null,
+    bodyType: 'SUV',
+    exteriorColor: 'Black',
+    interiorColor: 'Black',
+    seatingCapacity: null,
+    location: null,
+    availability: 'Enquire to confirm',
+    dateAdded: '2026-11-04',
+    featured: false,
+    images: [
+      '/images/land-cruiser-zx-front.webp',
+      '/images/land-cruiser-zx-rear.webp',
+      '/images/land-cruiser-zx-cockpit.webp',
+      '/images/land-cruiser-zx-rear-cabin.webp',
+    ],
+    description:
+      'A new Toyota Land Cruiser ZX V8 listing supplied with exterior and cabin photographs. Contact MoCars to confirm the model year, price, mileage, full specification, availability and location.',
+    features: [],
+  },
 ];
 
 export const parts = [
@@ -230,13 +296,15 @@ export const partCategories = [
 ];
 
 export const formatPrice = (value) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  })
-    .format(value)
-    .replace('$', 'US$');
+  Number.isFinite(value)
+    ? new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    })
+      .format(value)
+      .replace('$', 'US$')
+    : 'Price on request';
 
 export const formatMileage = (value) =>
   Number.isFinite(value) ? `${value.toLocaleString('en-US')} km` : 'Mileage on request';

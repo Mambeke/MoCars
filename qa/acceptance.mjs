@@ -51,7 +51,7 @@ try {
   'Homepage places the cars-and-parts message above the hero statement');
   const featuredDesktop = await page.locator('.vehicle-featured-grid .vehicle-card').evaluateAll((cards) => cards.map((card) => Math.round(card.getBoundingClientRect().top)));
   const featuredFollowsHero = await page.evaluate(() => document.querySelector('.facts-strip-wrap')?.nextElementSibling?.classList.contains('featured-vehicles-section'));
-  assert(featuredFollowsHero && featuredDesktop.length > 1 && new Set(featuredDesktop).size === 1,
+  assert(featuredFollowsHero && featuredDesktop.length === 4 && new Set(featuredDesktop).size === 1,
     'Featured vehicles appear directly below the hero in one row');
   const featuredParts = await page.evaluate(() => {
     const section = document.querySelector('.featured-parts-section');
@@ -101,6 +101,36 @@ try {
   await page.locator('h1').filter({ hasText: 'Mazda CX-5' }).waitFor();
   assert((await page.locator('h1').first().innerText()).includes('Mazda CX-5'), 'Journey 2: new vehicle detail opens');
   assert((await page.getByRole('link', { name: 'Enquire on WhatsApp' }).getAttribute('href')).includes('MOC-CX5-004'), 'Journey 2: contact action includes listing reference');
+
+  await page.goto(`${baseURL}/new-cars`, { waitUntil: 'networkidle' });
+  await page.getByLabel('Make').selectOption('Mercedes-Benz');
+  const mercedesCard = page.locator('.vehicle-card');
+  assert((await mercedesCard.count()) === 1
+    && (await mercedesCard.innerText()).includes('Mercedes-Benz GLE 450d 4MATIC')
+    && (await mercedesCard.innerText()).includes('Year on request')
+    && (await mercedesCard.innerText()).includes('Price on request'),
+  'Journey 2: new Mercedes-Benz listing appears with on-request pricing');
+  await mercedesCard.locator('h3 a').click();
+  await page.waitForURL('**/vehicles/mercedes-benz-gle-450d-4matic');
+  await page.waitForFunction(() => document.querySelectorAll('.gallery-thumbnails button').length === 4);
+  assert((await page.locator('.gallery-thumbnails button').count()) === 4
+    && (await page.locator('.gallery-main > img').getAttribute('src')) === '/images/mercedes-gle-front.webp',
+  'Journey 2: Mercedes-Benz listing opens with all supplied photographs');
+
+  await page.goto(`${baseURL}/new-cars`, { waitUntil: 'networkidle' });
+  await page.getByLabel('Make').selectOption('Toyota');
+  const landCruiserCard = page.locator('.vehicle-card');
+  assert((await landCruiserCard.count()) === 1
+    && (await landCruiserCard.innerText()).includes('Toyota Land Cruiser ZX V8')
+    && (await landCruiserCard.innerText()).includes('Year on request')
+    && (await landCruiserCard.innerText()).includes('Price on request'),
+  'Journey 2: new Land Cruiser listing appears with on-request pricing');
+  await landCruiserCard.locator('h3 a').click();
+  await page.waitForURL('**/vehicles/toyota-land-cruiser-zx-v8');
+  await page.waitForFunction(() => document.querySelectorAll('.gallery-thumbnails button').length === 4);
+  assert((await page.locator('.gallery-thumbnails button').count()) === 4
+    && (await page.locator('.gallery-main > img').getAttribute('src')) === '/images/land-cruiser-zx-front.webp',
+  'Journey 2: Land Cruiser listing opens with all supplied photographs');
 
   // Journey 3: Auto-parts order enquiry.
   await page.goto(`${baseURL}/auto-parts`, { waitUntil: 'networkidle' });

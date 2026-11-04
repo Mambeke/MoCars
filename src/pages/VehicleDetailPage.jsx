@@ -31,7 +31,7 @@ export default function VehicleDetailPage() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', preferredDate: '', preferredTime: '', message: '' });
   const [status, setStatus] = useState({ loading: false, error: '', success: '' });
-  usePageMeta(vehicle?.title || 'Vehicle Not Found', vehicle ? `${vehicle.year} ${vehicle.title}. View photographs, supplied specifications and enquiry options.` : 'Vehicle listing not found.');
+  usePageMeta(vehicle?.title || 'Vehicle Not Found', vehicle ? `${vehicle.year ? `${vehicle.year} ` : ''}${vehicle.title}. View photographs, supplied specifications and enquiry options.` : 'Vehicle listing not found.');
 
   const similar = useMemo(() => {
     if (!vehicle) return [];
@@ -97,7 +97,7 @@ export default function VehicleDetailPage() {
               <span className="listing-reference">Ref: {vehicle.reference}</span>
               <h1>{vehicle.title}</h1>
               <div className="vehicle-summary-line">
-                <span>{vehicle.year}</span><span>{vehicle.fuel || 'Fuel on request'}</span><span>{vehicle.transmission || 'Transmission on request'}</span><span>{vehicle.bodyType || 'Body on request'}</span>
+                <span>{vehicle.year || 'Year on request'}</span><span>{vehicle.fuel || 'Fuel on request'}</span><span>{vehicle.transmission || 'Transmission on request'}</span><span>{vehicle.bodyType || 'Body on request'}</span>
               </div>
               <strong className="detail-price">{formatPrice(vehicle.price)}</strong>
             </div>

@@ -26,7 +26,7 @@ export function VehicleCard({ vehicle, compact = false }) {
       <div className="card-content">
         <h3><Link to={`/vehicles/${vehicle.id}`}>{vehicle.title}</Link></h3>
         <div className="vehicle-facts">
-          <span>{vehicle.year}</span>
+          <span>{vehicle.year || 'Year on request'}</span>
           <span>{formatMileage(vehicle.mileage)}</span>
           <span>{vehicle.fuel || 'Fuel on request'}</span>
           <span>{vehicle.transmission || 'Transmission on request'}</span>

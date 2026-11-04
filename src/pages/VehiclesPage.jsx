@@ -44,8 +44,8 @@ export default function VehiclesPage({ condition }) {
       if (term && !haystack.includes(term)) return false;
       if (filters.make && vehicle.make !== filters.make) return false;
       if (filters.model && vehicle.model !== filters.model) return false;
-      if (filters.minPrice && vehicle.price < Number(filters.minPrice)) return false;
-      if (filters.maxPrice && vehicle.price > Number(filters.maxPrice)) return false;
+      if (filters.minPrice && (!Number.isFinite(vehicle.price) || vehicle.price < Number(filters.minPrice))) return false;
+      if (filters.maxPrice && (!Number.isFinite(vehicle.price) || vehicle.price > Number(filters.maxPrice))) return false;
       if (filters.year && vehicle.year !== Number(filters.year)) return false;
       if (filters.maxMileage && (!Number.isFinite(vehicle.mileage) || vehicle.mileage > Number(filters.maxMileage))) return false;
       if (filters.fuel && vehicle.fuel !== filters.fuel) return false;
@@ -55,9 +55,9 @@ export default function VehiclesPage({ condition }) {
       return true;
     });
     return [...filtered].sort((a, b) => {
-      if (filters.sort === 'price-asc') return a.price - b.price;
-      if (filters.sort === 'price-desc') return b.price - a.price;
-      if (filters.sort === 'year-desc') return b.year - a.year;
+      if (filters.sort === 'price-asc') return (a.price ?? Infinity) - (b.price ?? Infinity);
+      if (filters.sort === 'price-desc') return (b.price ?? -Infinity) - (a.price ?? -Infinity);
+      if (filters.sort === 'year-desc') return (b.year ?? -Infinity) - (a.year ?? -Infinity);
       if (filters.sort === 'mileage-asc') return (a.mileage ?? Infinity) - (b.mileage ?? Infinity);
       if (filters.sort === 'newest') return (b.dateAdded || '').localeCompare(a.dateAdded || '');
       return Number(b.featured) - Number(a.featured);
