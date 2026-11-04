@@ -26,6 +26,24 @@ try {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.evaluate(() => localStorage.clear());
 
+  const header = page.locator('header');
+  assert((await header.locator('img[alt="MoCars"]').getAttribute('src')) === '/images/mocars-swoosh-logo.png'
+    && (await header.getByRole('button', { name: 'Inquire Now' }).count()) === 1
+    && (await header.getByRole('button', { name: 'Search MoCars' }).count()) === 0
+    && (await header.getByRole('link', { name: 'My account' }).count()) === 0
+    && (await header.getByRole('link', { name: /Shopping cart/i }).count()) === 0,
+  'Header uses the supplied logo and simplified inquiry action');
+  await header.getByRole('button', { name: 'Inquire Now' }).click();
+  await page.getByLabel('Full name').fill('Acceptance Test');
+  await page.getByLabel('Phone number').fill('+263 700 000 000');
+  await page.getByLabel(/Email address/).fill('acceptance@example.com');
+  await page.getByLabel('I am interested in').selectOption('vehicle');
+  await page.getByRole('textbox', { name: 'How can we help?' }).fill('I would like help choosing a vehicle.');
+  await page.getByRole('button', { name: 'Send Inquiry' }).click();
+  await page.getByText('Inquiry submitted').waitFor();
+  assert((await page.locator('.modal-panel .reference-box strong').innerText()).startsWith('ENQ-'), 'Header inquiry reaches the backend and returns a reference');
+  await page.getByRole('button', { name: 'Done' }).click();
+
   // Journey 1: Used car enquiry.
   await page.goto(`${baseURL}/used-cars`, { waitUntil: 'networkidle' });
   await page.getByLabel('Keyword').fill('Toyota');
@@ -63,8 +81,7 @@ try {
   await page.locator('.part-quick-facts').waitFor();
   assert((await page.locator('.part-quick-facts').innerText()).includes('Toyota Hilux'), 'Journey 3: compatibility appears on product detail');
   await page.getByRole('button', { name: /Add to Cart/i }).click();
-  await page.locator('a.cart-link').click();
-  await page.waitForURL('**/cart');
+  await page.goto(`${baseURL}/cart`, { waitUntil: 'networkidle' });
   await page.locator('.cart-item').waitFor();
   assert((await page.locator('.cart-item').count()) === 1, 'Journey 3: part is added to cart');
   await page.getByRole('link', { name: 'Proceed to Checkout' }).click();
@@ -96,7 +113,10 @@ try {
   await mobilePage.waitForURL('**/auto-parts/alternator-toyota-hilux');
   await mobilePage.getByRole('button', { name: /Add to Cart/i }).waitFor();
   await mobilePage.getByRole('button', { name: /Add to Cart/i }).click();
-  assert((await mobilePage.locator('.cart-count').innerText()) === '1', 'Journey 4: mobile navigation, search, product page and cart work');
+  await mobilePage.goto(`${baseURL}/cart`, { waitUntil: 'networkidle' });
+  await mobilePage.locator('.cart-item').waitFor();
+  assert((await mobilePage.locator('.cart-item').count()) === 1, 'Journey 4: mobile navigation, search, product page and cart work');
+  await mobilePage.goBack({ waitUntil: 'networkidle' });
   const detailOverflow = await mobilePage.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   assert(detailOverflow <= 1, 'Journey 4: mobile product detail has no horizontal overflow');
   await mobile.close();

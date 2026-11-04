@@ -1,76 +1,83 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
+  Check,
   Facebook,
   Instagram,
   Menu,
-  Search,
-  ShoppingCart,
-  UserRound,
+  MessageCircle,
   X,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext.jsx';
 import { businessConfig } from '../config/business.js';
+import { Modal } from './UI.jsx';
+
+const emptyEnquiry = {
+  name: '',
+  phone: '',
+  email: '',
+  interest: 'vehicle',
+  message: '',
+};
 
 function Header() {
-  const { cartCount, profile } = useShop();
+  const { submitEnquiry } = useShop();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const [type, setType] = useState('all');
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const [form, setForm] = useState(emptyEnquiry);
+  const [status, setStatus] = useState({ loading: false, error: '', reference: '' });
   const location = useLocation();
 
   useEffect(() => {
     setMobileOpen(false);
-    setSearchOpen(false);
+    setEnquiryOpen(false);
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (location.pathname.startsWith('/auto-parts')) setType('parts');
-    else if (location.pathname.includes('cars') || location.pathname.startsWith('/vehicles')) setType('vehicles');
-    else setType('all');
-  }, [location.pathname]);
-
-  const submitSearch = (event) => {
-    event.preventDefault();
-    const value = query.trim();
-    if (!value) return;
-    window.location.assign(`/search?q=${encodeURIComponent(value)}&type=${type}`);
-    setQuery('');
-    setSearchOpen(false);
-  };
 
   const navClass = ({ isActive }) => `nav-link${isActive ? ' active' : ''}`;
+
+  const openEnquiry = () => {
+    setStatus({ loading: false, error: '', reference: '' });
+    setEnquiryOpen(true);
+  };
+
+  const submitGeneralEnquiry = async (event) => {
+    event.preventDefault();
+    setStatus({ loading: true, error: '', reference: '' });
+    try {
+      const result = await submitEnquiry({
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+        type: form.interest,
+        itemName: form.interest === 'vehicle' ? 'Vehicle enquiry' : form.interest === 'auto-part' ? 'Auto-part enquiry' : 'General enquiry',
+        message: form.message,
+      });
+      setStatus({ loading: false, error: '', reference: result.reference });
+    } catch (error) {
+      setStatus({ loading: false, error: error.message, reference: '' });
+    }
+  };
 
   return (
     <>
       <header className="site-header">
         <div className="header-inner container-wide">
           <Link className="brand" to="/" aria-label="MoCars home">
-            <img src="/logo.svg" alt="MoCars" />
+            <span className="logo-surface header-logo">
+              <img src="/images/mocars-swoosh-logo.png" alt="MoCars" />
+            </span>
           </Link>
           <nav className={`main-nav${mobileOpen ? ' open' : ''}`} aria-label="Main navigation">
             <NavLink to="/" end className={navClass}>Home</NavLink>
             <NavLink to="/used-cars" className={navClass}>Used Cars</NavLink>
             <NavLink to="/new-cars" className={navClass}>New Cars</NavLink>
             <NavLink to="/auto-parts" className={navClass}>Auto Parts</NavLink>
-            <div className="mobile-nav-actions">
-              <NavLink to="/account" className={navClass}>My Account</NavLink>
-              <NavLink to="/cart" className={navClass}>Shopping Cart ({cartCount})</NavLink>
-            </div>
           </nav>
           <div className="header-actions">
-            <button className="icon-button" type="button" onClick={() => setSearchOpen(true)} aria-label="Search MoCars">
-              <Search />
+            <button className="btn btn-red header-enquiry-button" type="button" onClick={openEnquiry} aria-haspopup="dialog">
+              <MessageCircle aria-hidden="true" />
+              <span>Inquire Now</span>
             </button>
-            <Link className="account-link" to="/account" aria-label="My account">
-              <UserRound />
-              <span>{profile ? profile.name.split(' ')[0] : 'My Account'}</span>
-            </Link>
-            <Link className="cart-link" to="/cart" aria-label={`Shopping cart with ${cartCount} items`}>
-              <ShoppingCart />
-              {cartCount > 0 && <span className="cart-count">{cartCount > 99 ? '99+' : cartCount}</span>}
-            </Link>
             <button
               className="mobile-menu-button"
               type="button"
@@ -84,41 +91,30 @@ function Header() {
         </div>
       </header>
 
-      {searchOpen && (
-        <div className="modal-backdrop search-backdrop" role="presentation" onMouseDown={() => setSearchOpen(false)}>
-          <section className="search-dialog" role="dialog" aria-modal="true" aria-label="Search MoCars" onMouseDown={(event) => event.stopPropagation()}>
-            <div className="dialog-heading">
-              <div>
-                <span className="eyebrow">Find exactly what you need</span>
-                <h2>Search MoCars</h2>
-              </div>
-              <button className="icon-button dark" type="button" onClick={() => setSearchOpen(false)} aria-label="Close search"><X /></button>
+      <Modal open={enquiryOpen} onClose={() => setEnquiryOpen(false)} eyebrow="Talk to MoCars" title="How can we help?">
+        {status.reference ? (
+          <div className="form-success">
+            <Check />
+            <h3>Inquiry submitted</h3>
+            <p>Thank you. MoCars has received your inquiry.</p>
+            <div className="reference-box"><span>Your reference</span><strong>{status.reference}</strong><small>Keep this reference for follow-up.</small></div>
+            <button className="btn btn-navy btn-full" type="button" onClick={() => { setEnquiryOpen(false); setForm(emptyEnquiry); }}>Done</button>
+          </div>
+        ) : (
+          <form className="stacked-form" onSubmit={submitGeneralEnquiry}>
+            <p>Tell us whether you are looking for a vehicle or an auto part, and MoCars will follow up using the details below.</p>
+            <div className="form-grid two">
+              <label className="field"><span>Full name</span><input required minLength="2" autoComplete="name" value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} /></label>
+              <label className="field"><span>Phone number</span><input required minLength="6" type="tel" autoComplete="tel" value={form.phone} onChange={(event) => setForm({ ...form, phone: event.target.value })} /></label>
+              <label className="field"><span>Email address <small>(optional)</small></span><input type="email" autoComplete="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} /></label>
+              <label className="field"><span>I am interested in</span><select value={form.interest} onChange={(event) => setForm({ ...form, interest: event.target.value })}><option value="vehicle">Buying a vehicle</option><option value="auto-part">Finding an auto part</option><option value="general">A general question</option></select></label>
             </div>
-            <form className="global-search-form" onSubmit={submitSearch}>
-              <div className="global-search-input">
-                <Search aria-hidden="true" />
-                <input
-                  autoFocus
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder={type === 'parts' ? 'Part name, number, make or model' : type === 'vehicles' ? 'Make, model or keyword' : 'Search vehicles and auto parts'}
-                  aria-label="Search term"
-                />
-              </div>
-              <div className="search-type-tabs" aria-label="Search category">
-                {[
-                  ['all', 'Everything'],
-                  ['vehicles', 'Vehicles'],
-                  ['parts', 'Auto Parts'],
-                ].map(([value, label]) => (
-                  <button key={value} className={type === value ? 'active' : ''} type="button" onClick={() => setType(value)}>{label}</button>
-                ))}
-              </div>
-              <button className="btn btn-red btn-full" type="submit">Search catalogue <Search size={18} /></button>
-            </form>
-          </section>
-        </div>
-      )}
+            <label className="field"><span>How can we help?</span><textarea required minLength="3" rows="4" value={form.message} onChange={(event) => setForm({ ...form, message: event.target.value })} placeholder="Tell us what you are looking for" /></label>
+            {status.error && <p className="form-error" role="alert">{status.error}</p>}
+            <button className="btn btn-red btn-full" type="submit" disabled={status.loading}>{status.loading ? 'Submitting…' : 'Send Inquiry'}</button>
+          </form>
+        )}
+      </Modal>
     </>
   );
 }
@@ -132,7 +128,9 @@ function Footer() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <img src="/logo.svg" alt="MoCars" />
+          <span className="logo-surface footer-logo">
+            <img src="/images/mocars-swoosh-logo.png" alt="MoCars" />
+          </span>
           <p>New and used vehicles. New and used auto parts. One focused automotive marketplace.</p>
         </div>
         <div>
