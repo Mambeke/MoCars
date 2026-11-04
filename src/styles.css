@@ -155,8 +155,8 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
 .category-copy strong { display: inline-flex; align-items: center; gap: 6px; color: #ff5f69; }
 .featured-grid { display: grid; gap: 18px; }
 .featured-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.vehicle-featured-grid { scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--red) var(--silver-2); }
-.vehicle-featured-grid > * { scroll-snap-align: start; }
+.vehicle-featured-grid, .part-featured-grid { scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--red) var(--silver-2); }
+.vehicle-featured-grid > *, .part-featured-grid > * { scroll-snap-align: start; }
 .catalogue-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
 
 /* Cards */
@@ -512,7 +512,7 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
   .main-nav { gap: 5px; }
   .nav-link { padding: 11px 13px; }
   .featured-grid.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .featured-grid.four.vehicle-featured-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(260px, 30vw); padding-bottom: 14px; overflow-x: auto; overscroll-behavior-inline: contain; }
+  .featured-grid.four.vehicle-featured-grid, .featured-grid.four.part-featured-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(260px, 30vw); padding-bottom: 14px; overflow-x: auto; overscroll-behavior-inline: contain; }
   .catalogue-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .vehicle-detail-grid { grid-template-columns: minmax(0, 1.5fr) minmax(340px, .9fr); }
   .product-gallery { grid-template-columns: 78px minmax(0, 1fr); }
@@ -586,7 +586,7 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
   .category-card:first-child { grid-column: auto; }
   .category-card { min-height: 290px; }
   .featured-grid.four, .catalogue-grid { grid-template-columns: 1fr; }
-  .featured-grid.four.vehicle-featured-grid { grid-template-columns: none; grid-auto-columns: minmax(255px, 82vw); }
+  .featured-grid.four.vehicle-featured-grid, .featured-grid.four.part-featured-grid { grid-template-columns: none; grid-auto-columns: minmax(255px, 82vw); }
   .promo-banner { min-height: 480px; align-items: flex-end; }
   .promo-banner > img { object-position: 65% center; }
   .promo-gradient { background: linear-gradient(0deg, rgba(4,19,34,.98), rgba(4,19,34,.55) 70%, rgba(4,19,34,.08)); }

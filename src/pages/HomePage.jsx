@@ -68,7 +68,7 @@ export default function HomePage() {
       <section className="section featured-parts-section">
         <div className="container">
           <SectionHeading eyebrow="Selected parts" title="Featured Auto Parts" linkTo="/auto-parts" linkLabel="View All Parts" />
-          <div className="featured-grid four">
+          <div className="featured-grid four part-featured-grid">
             {parts.filter((part) => part.featured).map((part) => <PartCard key={part.id} part={part} compact />)}
           </div>
         </div>

@@ -53,11 +53,20 @@ try {
   const featuredFollowsHero = await page.evaluate(() => document.querySelector('.facts-strip-wrap')?.nextElementSibling?.classList.contains('featured-vehicles-section'));
   assert(featuredFollowsHero && featuredDesktop.length > 1 && new Set(featuredDesktop).size === 1,
     'Featured vehicles appear directly below the hero in one row');
-  const featuredPartsFollowVehicles = await page.evaluate(() => document.querySelector('.featured-vehicles-section')?.nextElementSibling?.classList.contains('featured-parts-section'));
-  assert(featuredPartsFollowVehicles
-    && (await page.locator('.featured-parts-section h2').innerText()) === 'Featured Auto Parts'
-    && (await page.locator('.featured-parts-section .part-card').count()) > 1,
-  'Featured auto parts appear directly below featured vehicles');
+  const featuredParts = await page.evaluate(() => {
+    const section = document.querySelector('.featured-parts-section');
+    const vehicles = document.querySelector('.featured-vehicles-section');
+    const cardTops = [...section.querySelectorAll('.part-card')].map((card) => Math.round(card.getBoundingClientRect().top));
+    return {
+      followsVehicles: vehicles?.nextElementSibling === section,
+      title: section.querySelector('h2')?.textContent.trim(),
+      cardCount: cardTops.length,
+      oneRow: cardTops.length > 1 && new Set(cardTops).size === 1,
+    };
+  });
+  assert(featuredParts.followsVehicles && featuredParts.title === 'Featured Auto Parts' && featuredParts.cardCount > 1,
+    'Featured auto parts appear directly below featured vehicles');
+  assert(featuredParts.oneRow, 'Featured auto parts appear inline in one row');
 
   // Journey 1: Used car enquiry.
   await page.goto(`${baseURL}/used-cars`, { waitUntil: 'networkidle' });
@@ -125,6 +134,12 @@ try {
   }));
   assert(mobileFeaturedLayout.cardTops.length > 1 && new Set(mobileFeaturedLayout.cardTops).size === 1 && mobileFeaturedLayout.scrollable,
     'Journey 4: featured vehicles remain inline in a horizontal row');
+  const mobilePartsLayout = await mobilePage.locator('.part-featured-grid').evaluate((grid) => ({
+    cardTops: [...grid.querySelectorAll('.part-card')].map((card) => Math.round(card.getBoundingClientRect().top)),
+    scrollable: grid.scrollWidth > grid.clientWidth,
+  }));
+  assert(mobilePartsLayout.cardTops.length > 1 && new Set(mobilePartsLayout.cardTops).size === 1 && mobilePartsLayout.scrollable,
+    'Journey 4: featured auto parts remain inline in a horizontal row');
   await mobilePage.getByRole('button', { name: 'Toggle navigation' }).click();
   await mobilePage.getByRole('link', { name: /Auto Parts/ }).first().click();
   await mobilePage.waitForURL('**/auto-parts');
