@@ -35,6 +35,7 @@ export default function HomePage() {
         <div className="hero-bg" aria-hidden="true" />
         <div className="hero-shade" aria-hidden="true" />
         <div className="container hero-content">
+          <span className="hero-kicker">Cars and Auto Parts in One Place</span>
           <h1>
             <span className="hero-line">Find Your Next Car.</span>
             <span className="hero-line">Discover Quality Auto Parts.</span>

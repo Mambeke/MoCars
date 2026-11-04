@@ -43,6 +43,12 @@ try {
   await page.getByText('Inquiry submitted').waitFor();
   assert((await page.locator('.modal-panel .reference-box strong').innerText()).startsWith('ENQ-'), 'Header inquiry reaches the backend and returns a reference');
   await page.getByRole('button', { name: 'Done' }).click();
+  const heroKicker = page.locator('.hero-kicker');
+  const kickerBox = await heroKicker.boundingBox();
+  const heroHeadingBox = await page.locator('.hero-content h1').boundingBox();
+  assert((await heroKicker.textContent()) === 'Cars and Auto Parts in One Place'
+    && kickerBox && heroHeadingBox && kickerBox.y + kickerBox.height <= heroHeadingBox.y,
+  'Homepage places the cars-and-parts message above the hero statement');
 
   // Journey 1: Used car enquiry.
   await page.goto(`${baseURL}/used-cars`, { waitUntil: 'networkidle' });
