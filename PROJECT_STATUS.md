@@ -1,5 +1,12 @@
 # MoCars — Implementation Status
 
+## Published project
+
+- Live Cloudflare URL: https://mocars-marketplace.brandonmambeke.workers.dev
+- GitHub repository: https://github.com/Mambeke/MoCars
+- Production API: Cloudflare Worker
+- Production persistence: Cloudflare D1 database (`mocars-db`)
+
 ## Implemented pages
 
 - Premium homepage with hero, category cards, featured vehicles, featured parts, promotional banner, latest arrivals and footer
@@ -25,32 +32,31 @@
 - Interactive galleries, thumbnails, next/previous controls, image count and full-screen zoom
 - Wishlist persistence
 - Pre-filled WhatsApp vehicle and part messages
-- Backed test-drive form with validation and a returned enquiry reference
+- Cloudflare-backed test-drive submissions with returned enquiry references
 - Auto-parts cart with quantities, removal, subtotals and totals
-- Backed checkout with server-side price calculation and returned order reference
-- Basic account registration/login with password hashing
+- Cloudflare-backed checkout with server-side price calculation and returned order references
+- Basic account registration/login with password hashing and D1 persistence
 - Dynamic page titles/descriptions
-- Local bundled fonts and local image assets
-- Production build and deep-route serving
+- Local bundled fonts and image assets
+- Production build, SPA deep routes and Cloudflare static-asset delivery
 
 ## Integrations still required before commercial launch
 
 1. Real MoCars telephone, WhatsApp, email, address and social links in environment configuration.
-2. Production inventory/CMS or database and the complete real vehicle/part catalogue.
-3. Production database for customers, enquiries and orders instead of JSON files.
-4. Secure server sessions, password recovery, email verification and account-history authorization.
-5. Staff notifications/CRM routing for enquiries and orders.
-6. Real payment provider only if MoCars chooses online payment; no payment integration is currently claimed.
-7. Delivery pricing/fulfilment integration.
-8. Final approved listing images and missing specifications/compatibility data.
+2. Production inventory/CMS and the complete real vehicle/part catalogue.
+3. Secure server sessions, password recovery, email verification and account-history authorization.
+4. Staff notifications/CRM routing for enquiries and orders.
+5. Real payment provider only if MoCars chooses online payment; no payment integration is currently claimed.
+6. Delivery pricing/fulfilment integration.
+7. Final approved listing images and missing specifications/compatibility data.
 
 ## Bugs / incomplete functionality
 
 - No known browser errors or responsive overflow in the tested journeys.
 - Call Us remains intentionally unconfigured because no genuine business number was supplied.
 - WhatsApp opens a correctly pre-filled message, but its business recipient is intentionally unset until the genuine number is provided.
-- Inventory administration has a complete shared data foundation but no staff-facing admin UI yet.
-- Local development uses JSON persistence; the published Cloudflare deployment uses D1. A staff-facing data-management interface is still required for operational use.
+- Inventory administration has a shared data foundation but no staff-facing admin UI yet.
+- Local development uses JSON persistence; the published Cloudflare deployment uses D1.
 
 ## Acceptance journeys demonstrated
 
@@ -61,4 +67,4 @@ Automated with `npm run test:acceptance`:
 3. **Auto-parts order** — “engine component” search, Used condition filter, Hilux compatibility check, add to cart, checkout submission and backend order reference.
 4. **Mobile experience** — compact navigation, Auto Parts search, product detail, cart update and horizontal-overflow checks at 390px.
 
-Final automated result: **15 checks passed**, including zero page or console errors.
+Final automated result: **15 checks passed**, including zero page or console errors. The published Cloudflare health, enquiry, order, registration and login endpoints were also verified successfully.
