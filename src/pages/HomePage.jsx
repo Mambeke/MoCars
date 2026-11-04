@@ -56,6 +56,15 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="section light-section featured-vehicles-section">
+        <div className="container">
+          <SectionHeading eyebrow="Selected inventory" title="Featured Vehicles" linkTo="/used-cars" linkLabel="View All Cars" />
+          <div className="featured-grid four vehicle-featured-grid">
+            {vehicles.filter((vehicle) => vehicle.featured).map((vehicle) => <VehicleCard key={vehicle.id} vehicle={vehicle} compact />)}
+          </div>
+        </div>
+      </section>
+
       <section className="section category-section">
         <div className="container">
           <SectionHeading eyebrow="Start here" title="Browse by Category" />
@@ -71,15 +80,6 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section light-section">
-        <div className="container">
-          <SectionHeading eyebrow="Selected inventory" title="Featured Vehicles" linkTo="/used-cars" linkLabel="View All Cars" />
-          <div className="featured-grid four">
-            {vehicles.filter((vehicle) => vehicle.featured).map((vehicle) => <VehicleCard key={vehicle.id} vehicle={vehicle} compact />)}
           </div>
         </div>
       </section>

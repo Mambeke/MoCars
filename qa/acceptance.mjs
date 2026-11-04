@@ -49,6 +49,10 @@ try {
   assert((await heroKicker.textContent()) === 'Cars and Auto Parts in One Place'
     && kickerBox && heroHeadingBox && kickerBox.y + kickerBox.height <= heroHeadingBox.y,
   'Homepage places the cars-and-parts message above the hero statement');
+  const featuredDesktop = await page.locator('.vehicle-featured-grid .vehicle-card').evaluateAll((cards) => cards.map((card) => Math.round(card.getBoundingClientRect().top)));
+  const featuredFollowsHero = await page.evaluate(() => document.querySelector('.facts-strip-wrap')?.nextElementSibling?.classList.contains('featured-vehicles-section'));
+  assert(featuredFollowsHero && featuredDesktop.length > 1 && new Set(featuredDesktop).size === 1,
+    'Featured vehicles appear directly below the hero in one row');
 
   // Journey 1: Used car enquiry.
   await page.goto(`${baseURL}/used-cars`, { waitUntil: 'networkidle' });
@@ -110,6 +114,12 @@ try {
   await mobilePage.goto(baseURL, { waitUntil: 'networkidle' });
   const homeOverflow = await mobilePage.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   assert(homeOverflow <= 1, 'Journey 4: homepage has no horizontal overflow');
+  const mobileFeaturedLayout = await mobilePage.locator('.vehicle-featured-grid').evaluate((grid) => ({
+    cardTops: [...grid.querySelectorAll('.vehicle-card')].map((card) => Math.round(card.getBoundingClientRect().top)),
+    scrollable: grid.scrollWidth > grid.clientWidth,
+  }));
+  assert(mobileFeaturedLayout.cardTops.length > 1 && new Set(mobileFeaturedLayout.cardTops).size === 1 && mobileFeaturedLayout.scrollable,
+    'Journey 4: featured vehicles remain inline in a horizontal row');
   await mobilePage.getByRole('button', { name: 'Toggle navigation' }).click();
   await mobilePage.getByRole('link', { name: /Auto Parts/ }).first().click();
   await mobilePage.waitForURL('**/auto-parts');
