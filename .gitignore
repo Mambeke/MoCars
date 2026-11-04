@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
+qa-*.png
+.auth/
+
+.github-device.json
+.github-token.json

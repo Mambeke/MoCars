@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 100" role="img" aria-label="MoCars">
+  <path d="M35 25c31-21 99-23 151-11 20 5 38 11 52 20-36-10-71-14-108-13-39 1-70 6-95 17" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  <path d="M174 18l28 3 23 15-36-5" fill="#fff"/>
+  <text x="6" y="78" fill="#fff" font-size="71" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" letter-spacing="-5">Mo</text>
+  <text x="107" y="78" fill="#E50918" font-size="71" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" letter-spacing="-5">Cars</text>
+</svg>
