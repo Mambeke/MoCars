@@ -33,6 +33,9 @@ try {
     && (await header.getByRole('link', { name: 'My account' }).count()) === 0
     && (await header.getByRole('link', { name: /Shopping cart/i }).count()) === 0,
   'Header uses the supplied logo and simplified inquiry action');
+  const adminLink = page.locator('footer a.footer-admin-link');
+  assert((await adminLink.textContent()) === 'Admin' && (await adminLink.getAttribute('href')) === '/admin',
+    'Footer provides the secure Admin link');
   await header.getByRole('button', { name: 'Inquire Now' }).click();
   await page.getByLabel('Full name').fill('Acceptance Test');
   await page.getByLabel('Phone number').fill('+263 700 000 000');

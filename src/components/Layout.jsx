@@ -160,7 +160,7 @@ function Footer() {
       </div>
       <div className="footer-bottom container">
         <span>© {new Date().getFullYear()} MoCars. All rights reserved.</span>
-        <span>Inventory details are subject to confirmation.</span>
+        <span>Inventory details are subject to confirmation. <a className="footer-admin-link" href="/admin">Admin</a></span>
       </div>
     </footer>
   );

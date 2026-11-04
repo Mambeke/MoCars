@@ -232,6 +232,8 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
 .social-links a { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.08); }
 .social-links svg { width: 18px; }
 .footer-bottom { padding: 21px 0; display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid rgba(255,255,255,.12); font-size: 12px; }
+.footer-admin-link { margin-left: 14px; color: rgba(255,255,255,.92); font-weight: 700; }
+.footer-admin-link:hover, .footer-admin-link:focus-visible { color: white; text-decoration: underline; }
 
 /* Page headers and breadcrumbs */
 .page-hero { min-height: 245px; padding: 66px 0 54px; display: flex; align-items: center; color: white; background: radial-gradient(circle at 77% 30%, #174a75 0, transparent 31%), linear-gradient(125deg, var(--navy), #0a2845); }
