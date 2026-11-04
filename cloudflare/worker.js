@@ -211,7 +211,28 @@ export default {
     const url = new URL(request.url);
     try {
       if (url.pathname.startsWith('/api/')) return await handleApi(request, env, url);
-      return env.ASSETS.fetch(request);
+
+      const asset = await env.ASSETS.fetch(request);
+      const headers = new Headers(asset.headers);
+      headers.set('x-content-type-options', 'nosniff');
+      headers.set('referrer-policy', 'strict-origin-when-cross-origin');
+
+      const contentType = headers.get('content-type') || '';
+      if (contentType.includes('text/html')) {
+        // Never let an old HTML shell point a browser at a superseded JS bundle.
+        headers.set('cache-control', 'no-store, no-cache, must-revalidate');
+        headers.set('pragma', 'no-cache');
+        headers.set('expires', '0');
+      } else if (url.pathname.startsWith('/assets/')) {
+        // Vite asset names are content-hashed and safe to cache permanently.
+        headers.set('cache-control', 'public, max-age=31536000, immutable');
+      }
+
+      return new Response(asset.body, {
+        status: asset.status,
+        statusText: asset.statusText,
+        headers,
+      });
     } catch (error) {
       console.error(error);
       return json({ error: 'The request could not be completed. Please try again.' }, 500);

@@ -32,7 +32,8 @@ try {
   await page.getByLabel('Maximum price').fill('120000');
   assert(await page.locator('.vehicle-card').count() >= 1, 'Journey 1: Toyota search and price filter returns a vehicle');
   await page.locator('.vehicle-card h3 a').filter({ hasText: 'Land Cruiser' }).first().click();
-  await page.waitForLoadState('networkidle');
+  await page.waitForURL('**/vehicles/toyota-land-cruiser-300');
+  await page.waitForFunction(() => document.querySelectorAll('.gallery-thumbnails button').length === 5);
   assert((await page.locator('.gallery-thumbnails button').count()) === 5, 'Journey 1: vehicle gallery exposes five supplied images');
   const initialImage = await page.locator('.gallery-main > img').getAttribute('src');
   await page.locator('.gallery-thumbnails button').nth(1).click();
@@ -47,7 +48,8 @@ try {
   await page.getByLabel('Maximum price').fill('50000');
   assert((await page.locator('.vehicle-card').count()) === 1, 'Journey 2: new-car make and price filters work');
   await page.locator('.vehicle-card h3 a').click();
-  await page.waitForLoadState('networkidle');
+  await page.waitForURL('**/vehicles/mazda-cx5');
+  await page.locator('h1').filter({ hasText: 'Mazda CX-5' }).waitFor();
   assert((await page.locator('h1').first().innerText()).includes('Mazda CX-5'), 'Journey 2: new vehicle detail opens');
   assert((await page.getByRole('link', { name: 'Enquire on WhatsApp' }).getAttribute('href')).includes('MOC-CX5-004'), 'Journey 2: contact action includes listing reference');
 
@@ -57,12 +59,17 @@ try {
   await page.getByLabel('Condition').selectOption('Used');
   assert((await page.locator('.part-card').count()) === 1, 'Journey 3: contextual part search and condition filter work');
   await page.locator('.part-card h3 a').click();
-  await page.waitForLoadState('networkidle');
+  await page.waitForURL('**/auto-parts/alternator-toyota-hilux');
+  await page.locator('.part-quick-facts').waitFor();
   assert((await page.locator('.part-quick-facts').innerText()).includes('Toyota Hilux'), 'Journey 3: compatibility appears on product detail');
   await page.getByRole('button', { name: /Add to Cart/i }).click();
   await page.locator('a.cart-link').click();
+  await page.waitForURL('**/cart');
+  await page.locator('.cart-item').waitFor();
   assert((await page.locator('.cart-item').count()) === 1, 'Journey 3: part is added to cart');
   await page.getByRole('link', { name: 'Proceed to Checkout' }).click();
+  await page.waitForURL('**/checkout');
+  await page.getByLabel('Full name').waitFor();
   await page.getByLabel('Full name').fill('Acceptance Test');
   await page.getByLabel('Phone number').fill('+263 700 000 000');
   await page.getByLabel('Email address').fill('acceptance@example.com');
@@ -82,9 +89,12 @@ try {
   assert(homeOverflow <= 1, 'Journey 4: homepage has no horizontal overflow');
   await mobilePage.getByRole('button', { name: 'Toggle navigation' }).click();
   await mobilePage.getByRole('link', { name: /Auto Parts/ }).first().click();
-  await mobilePage.waitForLoadState('networkidle');
+  await mobilePage.waitForURL('**/auto-parts');
+  await mobilePage.getByLabel('Search auto parts').waitFor();
   await mobilePage.getByLabel('Search auto parts').fill('alternator');
   await mobilePage.locator('.part-card h3 a').click();
+  await mobilePage.waitForURL('**/auto-parts/alternator-toyota-hilux');
+  await mobilePage.getByRole('button', { name: /Add to Cart/i }).waitFor();
   await mobilePage.getByRole('button', { name: /Add to Cart/i }).click();
   assert((await mobilePage.locator('.cart-count').innerText()) === '1', 'Journey 4: mobile navigation, search, product page and cart work');
   const detailOverflow = await mobilePage.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);

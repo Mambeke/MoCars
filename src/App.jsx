@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
+import NavigationReliability from './components/NavigationReliability.jsx';
 import { ScrollToTop } from './components/UI.jsx';
 import AccountPage from './pages/AccountPage.jsx';
 import CartPage from './pages/CartPage.jsx';
@@ -16,6 +17,7 @@ import VehiclesPage from './pages/VehiclesPage.jsx';
 export default function App() {
   return (
     <>
+      <NavigationReliability />
       <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
