@@ -48,4 +48,9 @@ export const generatedNewVehicles = [
   { id: 'mercedes-c-class-new', reference: 'MOC-GEN-N-012', make: 'Mercedes-Benz', model: 'C-Class', title: 'Mercedes-Benz C-Class', condition: 'New', bodyType: 'Sedan' },
 ].map(makeVehicle);
 
-export const generatedUsedVehicles = [];
+export const generatedUsedVehicles = [
+  { id: 'honda-fit-used', reference: 'MOC-GEN-U-001', make: 'Honda', model: 'Fit', title: 'Honda Fit', condition: 'Used', bodyType: 'Hatchback' },
+  { id: 'toyota-aqua-used', reference: 'MOC-GEN-U-002', make: 'Toyota', model: 'Aqua', title: 'Toyota Aqua', condition: 'Used', bodyType: 'Hatchback' },
+  { id: 'mazda-demio-used', reference: 'MOC-GEN-U-003', make: 'Mazda', model: 'Demio', title: 'Mazda Demio', condition: 'Used', bodyType: 'Hatchback' },
+  { id: 'nissan-note-used', reference: 'MOC-GEN-U-004', make: 'Nissan', model: 'Note', title: 'Nissan Note', condition: 'Used', bodyType: 'Hatchback' },
+].map(makeVehicle);
