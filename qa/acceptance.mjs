@@ -72,6 +72,8 @@ try {
     return image.complete && image.naturalWidth > 0 && Math.abs((image.naturalWidth / image.naturalHeight) - 1.6) < 0.02 && style.objectFit === 'contain';
   }));
   assert(partImagesShowWholeProduct, 'Featured part images fill their frames without cropping the product');
+  assert((await page.locator('.featured-parts-section .square-action').count()) === 0,
+    'Featured parts do not show add-to-cart controls');
 
   // Journey 1: Used car enquiry.
   await page.goto(`${baseURL}/used-cars`, { waitUntil: 'networkidle' });

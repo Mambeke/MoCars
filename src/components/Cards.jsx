@@ -72,7 +72,7 @@ export function PartCard({ part, compact = false }) {
           <strong className="price">{formatPrice(part.price)}</strong>
           <div className="mini-actions">
             <Link className="btn btn-outline btn-small" to={`/auto-parts/${part.id}`}>View Product</Link>
-            <button className="square-action" type="button" onClick={() => addToCart(part.id)} aria-label={`Add ${part.name} to cart`}><ShoppingCart size={18} /><Plus size={12} /></button>
+            {!compact && <button className="square-action" type="button" onClick={() => addToCart(part.id)} aria-label={`Add ${part.name} to cart`}><ShoppingCart size={18} /><Plus size={12} /></button>}
           </div>
         </div>
       </div>
