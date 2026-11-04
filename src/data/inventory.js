@@ -1,3 +1,5 @@
+import { generatedNewVehicles, generatedUsedVehicles } from './generatedVehicles.js';
+
 export const vehicles = [
   {
     id: 'toyota-land-cruiser-300',
@@ -190,6 +192,8 @@ export const vehicles = [
       'A new Toyota Land Cruiser ZX V8 listing supplied with exterior and cabin photographs. Contact MoCars to confirm the model year, price, mileage, full specification, availability and location.',
     features: [],
   },
+  ...generatedNewVehicles,
+  ...generatedUsedVehicles,
 ];
 
 export const parts = [

@@ -1,0 +1,51 @@
+const gallery = (id) => [
+  `/images/generated/${id}/front.jpg`,
+  `/images/generated/${id}/rear.jpg`,
+  `/images/generated/${id}/dashboard.jpg`,
+  `/images/generated/${id}/rear-seats.jpg`,
+];
+
+const makeVehicle = ({ id, reference, make, model, title, condition, bodyType }) => ({
+  id,
+  reference,
+  make,
+  model,
+  title,
+  year: null,
+  condition,
+  price: null,
+  mileage: null,
+  engine: null,
+  engineCapacity: null,
+  fuel: null,
+  transmission: null,
+  drivetrain: null,
+  bodyType,
+  exteriorColor: null,
+  interiorColor: null,
+  seatingCapacity: null,
+  location: null,
+  availability: 'Enquire to confirm',
+  dateAdded: '2026-11-04',
+  featured: false,
+  images: gallery(id),
+  description: `Illustrative gallery images are shown for this ${title} listing. Contact MoCars to confirm the actual vehicle, model year, colour, price, mileage, full specification, condition, availability and location.`,
+  features: [],
+});
+
+export const generatedNewVehicles = [
+  { id: 'toyota-corolla-cross-new', reference: 'MOC-GEN-N-001', make: 'Toyota', model: 'Corolla Cross', title: 'Toyota Corolla Cross', condition: 'New', bodyType: 'Compact SUV' },
+  { id: 'ford-ranger-wildtrak-new', reference: 'MOC-GEN-N-002', make: 'Ford', model: 'Ranger Wildtrak', title: 'Ford Ranger Wildtrak', condition: 'New', bodyType: 'Pickup' },
+  { id: 'isuzu-dmax-xrider-new', reference: 'MOC-GEN-N-003', make: 'Isuzu', model: 'D-Max X-Rider', title: 'Isuzu D-Max X-Rider', condition: 'New', bodyType: 'Pickup' },
+  { id: 'honda-crv-new', reference: 'MOC-GEN-N-004', make: 'Honda', model: 'CR-V', title: 'Honda CR-V', condition: 'New', bodyType: 'SUV' },
+  { id: 'hyundai-tucson-new', reference: 'MOC-GEN-N-005', make: 'Hyundai', model: 'Tucson', title: 'Hyundai Tucson', condition: 'New', bodyType: 'SUV' },
+  { id: 'kia-sportage-new', reference: 'MOC-GEN-N-006', make: 'Kia', model: 'Sportage', title: 'Kia Sportage', condition: 'New', bodyType: 'SUV' },
+  { id: 'volkswagen-tiguan-new', reference: 'MOC-GEN-N-007', make: 'Volkswagen', model: 'Tiguan', title: 'Volkswagen Tiguan', condition: 'New', bodyType: 'SUV' },
+  { id: 'toyota-corolla-sedan-new', reference: 'MOC-GEN-N-008', make: 'Toyota', model: 'Corolla Sedan', title: 'Toyota Corolla Sedan', condition: 'New', bodyType: 'Sedan' },
+  { id: 'suzuki-swift-new', reference: 'MOC-GEN-N-009', make: 'Suzuki', model: 'Swift', title: 'Suzuki Swift', condition: 'New', bodyType: 'Hatchback' },
+  { id: 'nissan-magnite-new', reference: 'MOC-GEN-N-010', make: 'Nissan', model: 'Magnite', title: 'Nissan Magnite', condition: 'New', bodyType: 'Compact SUV' },
+  { id: 'bmw-x5-new', reference: 'MOC-GEN-N-011', make: 'BMW', model: 'X5', title: 'BMW X5', condition: 'New', bodyType: 'SUV' },
+  { id: 'mercedes-c-class-new', reference: 'MOC-GEN-N-012', make: 'Mercedes-Benz', model: 'C-Class', title: 'Mercedes-Benz C-Class', condition: 'New', bodyType: 'Sedan' },
+].map(makeVehicle);
+
+export const generatedUsedVehicles = [];
