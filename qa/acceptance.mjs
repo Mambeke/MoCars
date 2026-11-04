@@ -53,6 +53,11 @@ try {
   const featuredFollowsHero = await page.evaluate(() => document.querySelector('.facts-strip-wrap')?.nextElementSibling?.classList.contains('featured-vehicles-section'));
   assert(featuredFollowsHero && featuredDesktop.length > 1 && new Set(featuredDesktop).size === 1,
     'Featured vehicles appear directly below the hero in one row');
+  const featuredPartsFollowVehicles = await page.evaluate(() => document.querySelector('.featured-vehicles-section')?.nextElementSibling?.classList.contains('featured-parts-section'));
+  assert(featuredPartsFollowVehicles
+    && (await page.locator('.featured-parts-section h2').innerText()) === 'Featured Auto Parts'
+    && (await page.locator('.featured-parts-section .part-card').count()) > 1,
+  'Featured auto parts appear directly below featured vehicles');
 
   // Journey 1: Used car enquiry.
   await page.goto(`${baseURL}/used-cars`, { waitUntil: 'networkidle' });

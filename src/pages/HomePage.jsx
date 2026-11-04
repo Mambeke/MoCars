@@ -65,6 +65,15 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="section featured-parts-section">
+        <div className="container">
+          <SectionHeading eyebrow="Selected parts" title="Featured Auto Parts" linkTo="/auto-parts" linkLabel="View All Parts" />
+          <div className="featured-grid four">
+            {parts.filter((part) => part.featured).map((part) => <PartCard key={part.id} part={part} compact />)}
+          </div>
+        </div>
+      </section>
+
       <section className="section category-section">
         <div className="container">
           <SectionHeading eyebrow="Start here" title="Browse by Category" />
@@ -80,15 +89,6 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <SectionHeading eyebrow="Parts catalogue" title="New & Used Auto Parts" linkTo="/auto-parts" linkLabel="View All Parts" />
-          <div className="featured-grid four">
-            {parts.filter((part) => part.featured).map((part) => <PartCard key={part.id} part={part} compact />)}
           </div>
         </div>
       </section>
