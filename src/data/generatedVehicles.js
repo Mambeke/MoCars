@@ -55,4 +55,7 @@ export const generatedUsedVehicles = [
   { id: 'nissan-note-used', reference: 'MOC-GEN-U-004', make: 'Nissan', model: 'Note', title: 'Nissan Note', condition: 'Used', bodyType: 'Hatchback' },
   { id: 'toyota-vitz-used', reference: 'MOC-GEN-U-005', make: 'Toyota', model: 'Vitz', title: 'Toyota Vitz', condition: 'Used', bodyType: 'Hatchback' },
   { id: 'volkswagen-golf-used', reference: 'MOC-GEN-U-006', make: 'Volkswagen', model: 'Golf', title: 'Volkswagen Golf', condition: 'Used', bodyType: 'Hatchback' },
+  { id: 'subaru-forester-used', reference: 'MOC-GEN-U-007', make: 'Subaru', model: 'Forester', title: 'Subaru Forester', condition: 'Used', bodyType: 'SUV' },
+  { id: 'nissan-navara-used', reference: 'MOC-GEN-U-008', make: 'Nissan', model: 'Navara', title: 'Nissan Navara', condition: 'Used', bodyType: 'Pickup' },
+  { id: 'ford-everest-used', reference: 'MOC-GEN-U-009', make: 'Ford', model: 'Everest', title: 'Ford Everest', condition: 'Used', bodyType: 'SUV' },
 ].map(makeVehicle);
