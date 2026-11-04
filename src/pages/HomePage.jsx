@@ -35,7 +35,7 @@ export default function HomePage() {
         <div className="hero-bg" aria-hidden="true" />
         <div className="hero-shade" aria-hidden="true" />
         <div className="container hero-content">
-          <h1>Find Your Next Car.<br />Discover Quality <span>Auto Parts.</span></h1>
+          <h1>Find Your Next Car.<br />Discover Quality Auto Parts.</h1>
           <div className="hero-actions">
             <Link className="btn btn-red btn-large" to="/used-cars"><CarFront /> Browse Cars <ArrowRight /></Link>
             <Link className="btn btn-glass btn-large" to="/auto-parts"><Cog /> Check Your Part <ArrowRight /></Link>

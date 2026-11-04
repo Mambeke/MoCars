@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
-  ChevronDown,
   Facebook,
   Instagram,
   Menu,
@@ -54,16 +53,7 @@ function Header() {
             <NavLink to="/" end className={navClass}>Home</NavLink>
             <NavLink to="/used-cars" className={navClass}>Used Cars</NavLink>
             <NavLink to="/new-cars" className={navClass}>New Cars</NavLink>
-            <div className="nav-dropdown">
-              <NavLink to="/auto-parts" className={navClass}>
-                Auto Parts <ChevronDown size={17} />
-              </NavLink>
-              <div className="nav-dropdown-menu">
-                <Link to="/auto-parts">All Auto Parts</Link>
-                <Link to="/auto-parts?condition=New">New Parts</Link>
-                <Link to="/auto-parts?condition=Used">Used Parts</Link>
-              </div>
-            </div>
+            <NavLink to="/auto-parts" className={navClass}>Auto Parts</NavLink>
             <div className="mobile-nav-actions">
               <NavLink to="/account" className={navClass}>My Account</NavLink>
               <NavLink to="/cart" className={navClass}>Shopping Cart ({cartCount})</NavLink>
