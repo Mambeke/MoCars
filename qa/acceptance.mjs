@@ -67,6 +67,11 @@ try {
   assert(featuredParts.followsVehicles && featuredParts.title === 'Featured Auto Parts' && featuredParts.cardCount > 1,
     'Featured auto parts appear directly below featured vehicles');
   assert(featuredParts.oneRow, 'Featured auto parts appear inline in one row');
+  const partImagesShowWholeProduct = await page.locator('.part-featured-grid .part-image img').evaluateAll((images) => images.length > 1 && images.every((image) => {
+    const style = getComputedStyle(image);
+    return image.complete && image.naturalWidth > 0 && Math.abs((image.naturalWidth / image.naturalHeight) - 1.6) < 0.02 && style.objectFit === 'contain';
+  }));
+  assert(partImagesShowWholeProduct, 'Featured part images fill their frames without cropping the product');
 
   // Journey 1: Used car enquiry.
   await page.goto(`${baseURL}/used-cars`, { waitUntil: 'networkidle' });
