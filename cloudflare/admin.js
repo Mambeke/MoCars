@@ -3,6 +3,62 @@ import { partCategories, parts as bundledParts, vehicles as bundledVehicles } fr
 const ALLOWED_STATUSES = new Set(['draft', 'published', 'archived']);
 const REQUEST_STATUSES = new Set(['received', 'contacted', 'in_progress', 'completed', 'closed']);
 const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+let accessKeysCache = { expiresAt: 0, keys: [] };
+
+function decodeBase64Url(value) {
+  const normalized = value.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(value.length / 4) * 4, '=');
+  return Uint8Array.from(atob(normalized), (character) => character.charCodeAt(0));
+}
+function accessOrigin(env) {
+  try {
+    const origin = new URL(env.ACCESS_TEAM_DOMAIN);
+    if (origin.protocol !== 'https:' || !origin.hostname.endsWith('.cloudflareaccess.com')) return null;
+    return origin.origin;
+  } catch { return null; }
+}
+async function accessKeys(env, forceRefresh = false) {
+  const now = Date.now();
+  if (!forceRefresh && accessKeysCache.keys.length && accessKeysCache.expiresAt > now) return accessKeysCache.keys;
+  const origin = accessOrigin(env);
+  if (!origin) return [];
+  const response = await fetch(`${origin}/cdn-cgi/access/certs`, { headers: { Accept: 'application/json' } });
+  if (!response.ok) return [];
+  const result = await response.json();
+  const keys = Array.isArray(result.keys) ? result.keys : [];
+  accessKeysCache = { keys, expiresAt: now + 60 * 60 * 1000 };
+  return keys;
+}
+async function verifyAccessJwt(request, env) {
+  const token = request.headers.get('cf-access-jwt-assertion');
+  if (!token) return null;
+  const pieces = token.split('.');
+  if (pieces.length !== 3) return null;
+  try {
+    const header = JSON.parse(new TextDecoder().decode(decodeBase64Url(pieces[0])));
+    const claims = JSON.parse(new TextDecoder().decode(decodeBase64Url(pieces[1])));
+    if (header.alg !== 'RS256' || !header.kid) return null;
+    let keys = await accessKeys(env);
+    let jwk = keys.find((key) => key.kid === header.kid);
+    if (!jwk) {
+      keys = await accessKeys(env, true);
+      jwk = keys.find((key) => key.kid === header.kid);
+    }
+    if (!jwk) return null;
+    const key = await crypto.subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
+    const verified = await crypto.subtle.verify(
+      'RSASSA-PKCS1-v1_5', key, decodeBase64Url(pieces[2]), new TextEncoder().encode(`${pieces[0]}.${pieces[1]}`),
+    );
+    if (!verified) return null;
+    const expectedAudience = cleanString(env.ACCESS_AUD, 100);
+    const audiences = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
+    const now = Math.floor(Date.now() / 1000);
+    if (!expectedAudience || !audiences.includes(expectedAudience)) return null;
+    if (claims.iss !== accessOrigin(env)) return null;
+    if (!Number.isFinite(claims.exp) || claims.exp <= now - 30) return null;
+    if (Number.isFinite(claims.nbf) && claims.nbf > now + 30) return null;
+    return claims;
+  } catch { return null; }
+}
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -117,15 +173,18 @@ export async function publishedPart(env, partId) {
   }
 }
 
-async function adminIdentity(ctx, env) {
-  if (!ctx?.access) return null;
-  const identity = await ctx.access.getIdentity();
+async function adminIdentity(ctx, env, request) {
+  let identity = null;
+  if (ctx?.access && (!env.ACCESS_AUD || ctx.access.aud === env.ACCESS_AUD)) {
+    identity = await ctx.access.getIdentity();
+  }
+  if (!identity && request) identity = await verifyAccessJwt(request, env);
   const email = cleanString(identity?.email, 160).toLowerCase();
   return email && email === cleanString(env.ADMIN_EMAIL, 160).toLowerCase() ? { ...identity, email } : null;
 }
 
-export async function requireAdmin(ctx, env) {
-  try { return await adminIdentity(ctx, env); } catch { return null; }
+export async function requireAdmin(ctx, env, request) {
+  try { return await adminIdentity(ctx, env, request); } catch { return null; }
 }
 
 function validAdminMutation(request) {
@@ -231,7 +290,7 @@ export async function serveMedia(env, mediaId) {
 }
 
 export async function handleAdminApi(request, env, ctx, url) {
-  const identity = await requireAdmin(ctx, env);
+  const identity = await requireAdmin(ctx, env, request);
   if (!identity) return json({ error: 'Owner authentication is required.' }, 403);
   if (!validAdminMutation(request)) return json({ error: 'The admin request could not be verified.' }, 403);
   if (!env.DB) return json({ error: 'The production database is not configured.' }, 503);

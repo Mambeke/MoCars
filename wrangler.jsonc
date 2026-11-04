@@ -14,7 +14,9 @@
 		"enabled": true
 	},
 	"vars": {
-		"ADMIN_EMAIL": "Brandonmambeke@gmail.com"
+		"ADMIN_EMAIL": "Brandonmambeke@gmail.com",
+		"ACCESS_TEAM_DOMAIN": "https://cell-connecta-pages.cloudflareaccess.com",
+		"ACCESS_AUD": "5aac018b0d25f69e8b16bb4386b903e9f8a86cb3a2d19bdb7b199616d377a8c8"
 	},
 	"d1_databases": [
 		{

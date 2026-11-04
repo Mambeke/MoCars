@@ -218,7 +218,7 @@ export default {
       if (url.pathname.startsWith('/media/') && request.method === 'GET') return serveMedia(env, url.pathname.slice('/media/'.length));
       if (url.pathname.startsWith('/admin/api/')) return handleAdminApi(request, env, ctx, url);
       if (url.pathname === '/admin' || url.pathname.startsWith('/admin/')) {
-        const identity = await requireAdmin(ctx, env);
+        const identity = await requireAdmin(ctx, env, request);
         if (!identity) return json({ error: 'Owner authentication is required.' }, 403);
       }
 
