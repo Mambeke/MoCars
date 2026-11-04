@@ -64,7 +64,7 @@ The data model already supports the requested vehicle and auto-part fields and c
 - `POST /api/auth/login` — credential validation
 - `GET /api/health` — health check
 
-Development submissions are stored in `data/*.json`. Replace this adapter with the production database and notification workflow before launch.
+Local Express development submissions are stored in `data/*.json`. The deployed Cloudflare Worker uses the bound `mocars-db` D1 database for enquiries, orders and accounts. A staff notification/CRM workflow is still recommended before commercial launch.
 
 ## Important behaviour
 

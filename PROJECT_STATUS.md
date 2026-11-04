@@ -50,7 +50,7 @@
 - Call Us remains intentionally unconfigured because no genuine business number was supplied.
 - WhatsApp opens a correctly pre-filled message, but its business recipient is intentionally unset until the genuine number is provided.
 - Inventory administration has a complete shared data foundation but no staff-facing admin UI yet.
-- Current JSON persistence is suitable for the prototype, not a multi-user production deployment.
+- Local development uses JSON persistence; the published Cloudflare deployment uses D1. A staff-facing data-management interface is still required for operational use.
 
 ## Acceptance journeys demonstrated
 
