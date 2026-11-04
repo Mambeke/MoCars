@@ -7,7 +7,8 @@ export default class AppErrorBoundary extends React.Component {
   }
 
   static getDerivedStateFromError(error) {
-    return { error };
+    // Keep the one-time automatic recovery completely invisible to customers.
+    return { error, recovering: true };
   }
 
   componentDidCatch(error, info) {
@@ -15,22 +16,17 @@ export default class AppErrorBoundary extends React.Component {
     const key = `mocars-route-recovery:${window.location.pathname}`;
     if (!sessionStorage.getItem(key)) {
       sessionStorage.setItem(key, String(Date.now()));
-      this.setState({ recovering: true });
-      window.setTimeout(() => window.location.reload(), 250);
+      window.location.reload();
+      return;
     }
+    // If the same route fails again after recovery, show a useful error action
+    // instead of entering an endless reload loop.
+    this.setState({ recovering: false });
   }
 
   render() {
     if (!this.state.error) return this.props.children;
-    if (this.state.recovering) {
-      return (
-        <main className="app-recovery" role="status">
-          <div className="recovery-spinner" />
-          <h1>Opening this page…</h1>
-          <p>MoCars is recovering the navigation automatically.</p>
-        </main>
-      );
-    }
+    if (this.state.recovering) return null;
     return (
       <main className="app-recovery" role="alert">
         <img src="/logo.svg" alt="MoCars" />
