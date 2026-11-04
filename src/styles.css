@@ -569,9 +569,9 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
   .header-logo { width: 135px; }
   .header-actions { gap: 5px; margin-left: auto; }
   .header-enquiry-button { min-height: 44px; padding: 10px 13px; gap: 7px; font-size: 12px; }
-  .home-hero { min-height: 580px; align-items: flex-end; padding-bottom: 78px; }
-  .hero-bg { background-position: 68% center; }
-  .hero-shade { background: linear-gradient(0deg, rgba(3,17,31,.97) 0%, rgba(3,17,31,.78) 52%, rgba(3,17,31,.2) 100%); }
+  .home-hero { min-height: 580px; align-items: flex-start; padding: 38px 0 0; }
+  .hero-bg { background-position: 68% center; transform: scale(1.12); transform-origin: 68% bottom; }
+  .hero-shade { background: linear-gradient(180deg, rgba(3,17,31,.66) 0%, rgba(3,17,31,.48) 42%, rgba(3,17,31,.93) 100%); }
   .hero-content { padding-bottom: 0; transform: none; }
   .hero-kicker { margin-bottom: 14px; gap: 8px; font-size: .68rem; letter-spacing: .08em; }
   .hero-kicker::before { width: 28px; height: 2px; }
