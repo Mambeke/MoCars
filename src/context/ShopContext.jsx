@@ -5,10 +5,18 @@ const ShopContext = createContext(null);
 
 function load(key, fallback) {
   try {
-    const value = localStorage.getItem(key);
+    const value = window.localStorage.getItem(key);
     return value ? JSON.parse(value) : fallback;
   } catch {
     return fallback;
+  }
+}
+
+function save(key, value) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Browsing must continue when storage is blocked, unavailable or full.
   }
 }
 
@@ -20,10 +28,10 @@ export function ShopProvider({ children }) {
   const [toast, setToast] = useState(null);
   const toastTimer = useRef(null);
 
-  useEffect(() => localStorage.setItem('mocars-cart', JSON.stringify(cart)), [cart]);
-  useEffect(() => localStorage.setItem('mocars-favorites', JSON.stringify(favorites)), [favorites]);
-  useEffect(() => localStorage.setItem('mocars-profile', JSON.stringify(profile)), [profile]);
-  useEffect(() => localStorage.setItem('mocars-history', JSON.stringify(history)), [history]);
+  useEffect(() => save('mocars-cart', cart), [cart]);
+  useEffect(() => save('mocars-favorites', favorites), [favorites]);
+  useEffect(() => save('mocars-profile', profile), [profile]);
+  useEffect(() => save('mocars-history', history), [history]);
 
   const notify = (message, tone = 'success') => {
     setToast({ message, tone });

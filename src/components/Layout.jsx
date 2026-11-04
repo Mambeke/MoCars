@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   ChevronDown,
   Facebook,
@@ -20,7 +20,6 @@ function Header() {
   const [query, setQuery] = useState('');
   const [type, setType] = useState('all');
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setMobileOpen(false);
@@ -37,7 +36,7 @@ function Header() {
     event.preventDefault();
     const value = query.trim();
     if (!value) return;
-    navigate(`/search?q=${encodeURIComponent(value)}&type=${type}`);
+    window.location.assign(`/search?q=${encodeURIComponent(value)}&type=${type}`);
     setQuery('');
     setSearchOpen(false);
   };

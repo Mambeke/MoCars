@@ -63,10 +63,6 @@ body.route-loading #main-content { opacity: .72; }
 body.route-loading .route-progress { opacity: 1; }
 body.route-loading .route-progress span { animation: route-progress 1.1s ease-in-out infinite; }
 @keyframes route-progress { 0% { transform: translateX(-110%); } 65% { transform: translateX(165%); } 100% { transform: translateX(290%); } }
-.app-recovery { min-height: 100vh; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--silver); }
-.app-recovery > img { width: 190px; margin-bottom: 25px; padding: 11px 18px; border-radius: 12px; background: var(--navy); }
-.app-recovery h1 { max-width: 680px; }
-.app-recovery p { margin: 12px 0 24px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .route-progress span { animation-duration: 0s; } #main-content { transition: none; } }
 
 /* Header */

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Check, ChevronRight, MessageCircle, Minus, Plus, ShoppingCart } from 'lucide-react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { PartCard } from '../components/Cards.jsx';
 import Gallery from '../components/Gallery.jsx';
 import { Breadcrumbs, SectionHeading } from '../components/UI.jsx';
@@ -13,7 +13,6 @@ export default function PartDetailPage() {
   const { id } = useParams();
   const part = parts.find((item) => item.id === id);
   const { addToCart } = useShop();
-  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   usePageMeta(part?.name || 'Part Not Found', part ? `${part.condition} ${part.name}. View compatibility, condition and order options.` : 'Auto part not found.');
 
@@ -25,7 +24,7 @@ export default function PartDetailPage() {
     ? part.compatibleMakes.map((make, index) => `${make}${part.compatibleModels[index] ? ` ${part.compatibleModels[index]}` : ''}`).join(', ')
     : 'Vehicle compatibility has not yet been supplied.';
   const message = `Hello MoCars, I am interested in ${part.name} (${part.reference}). Please confirm availability and compatibility for my vehicle.`;
-  const buyNow = () => { addToCart(part.id, quantity); navigate('/checkout'); };
+  const buyNow = () => { addToCart(part.id, quantity); window.location.assign('/checkout'); };
 
   return (
     <>

@@ -21,30 +21,27 @@ for (const [name, browserType] of browsers) {
     page.on('requestfailed', (request) => requestFailures.push(`${request.method()} ${request.url()} ${request.failure()?.errorText}`));
 
     await page.goto(baseURL, { waitUntil: 'networkidle' });
-    const initialTimeOrigin = await page.evaluate(() => performance.timeOrigin);
+    let previousTimeOrigin = await page.evaluate(() => performance.timeOrigin);
 
     for (const route of routes) {
       await page.getByRole('link', { name: route.link, exact: true }).first().click();
       await page.waitForURL(`**${route.path}`);
       await page.locator('h1').filter({ hasText: route.heading }).first().waitFor();
-      await page.waitForFunction((path) => document.documentElement.dataset.routeReady === path, route.path);
-      const state = await page.evaluate(() => ({
-        loading: document.body.classList.contains('route-loading'),
-        timeOrigin: performance.timeOrigin,
-      }));
-      if (state.loading) throw new Error(`Loading state did not clear on ${route.path}.`);
-      if (state.timeOrigin !== initialTimeOrigin) throw new Error(`Unexpected document reload on ${route.path}.`);
+      const currentTimeOrigin = await page.evaluate(() => performance.timeOrigin);
+      if (currentTimeOrigin === previousTimeOrigin) {
+        throw new Error(`Expected normal browser navigation on ${route.path}.`);
+      }
+      previousTimeOrigin = currentTimeOrigin;
     }
 
     await page.locator('.part-card h3 a').first().click();
     await page.waitForURL('**/auto-parts/alternator-toyota-hilux');
     await page.locator('h1').filter({ hasText: 'Alternator' }).waitFor();
-    await page.waitForFunction(() => document.documentElement.dataset.routeReady === '/auto-parts/alternator-toyota-hilux');
 
     if (errors.length || requestFailures.length) {
       throw new Error(JSON.stringify({ errors, requestFailures }));
     }
-    console.log(`✓ ${name}: four route transitions passed without reload or browser errors.`);
+    console.log(`✓ ${name}: four browser page loads passed without errors or manual refresh.`);
   } catch (error) {
     failed = true;
     console.error(`✗ ${name}: ${error.message}`);

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { PartCard, VehicleCard } from '../components/Cards.jsx';
 import { EmptyState, PageHero, SectionHeading } from '../components/UI.jsx';
 import { whatsappLink } from '../config/business.js';
@@ -9,7 +9,6 @@ import { usePageMeta } from '../hooks/usePageMeta.js';
 
 export default function SearchPage() {
   const [params] = useSearchParams();
-  const navigate = useNavigate();
   const query = params.get('q') || '';
   const type = params.get('type') || 'all';
   const [input, setInput] = useState(query);
@@ -25,9 +24,9 @@ export default function SearchPage() {
 
   const submit = (event) => {
     event.preventDefault();
-    if (input.trim()) navigate(`/search?q=${encodeURIComponent(input.trim())}&type=${type}`);
+    if (input.trim()) window.location.assign(`/search?q=${encodeURIComponent(input.trim())}&type=${type}`);
   };
-  const switchType = (next) => navigate(`/search?q=${encodeURIComponent(query)}&type=${next}`);
+  const switchType = (next) => window.location.assign(`/search?q=${encodeURIComponent(query)}&type=${next}`);
 
   return (
     <>
@@ -36,7 +35,7 @@ export default function SearchPage() {
         <div className="container">
           <form className="results-search" onSubmit={submit}><Search /><input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Search vehicles or auto parts" aria-label="Search query" /><button className="btn btn-red" type="submit">Search</button></form>
           <div className="result-tabs" role="tablist" aria-label="Result type">{[['all', 'Everything'], ['vehicles', `Vehicles (${vehicleResults.length})`], ['parts', `Auto Parts (${partResults.length})`]].map(([value, label]) => <button role="tab" aria-selected={type === value} className={type === value ? 'active' : ''} key={value} type="button" onClick={() => switchType(value)}>{label}</button>)}</div>
-          {!query ? <EmptyState title="What are you looking for?" description="Enter a vehicle make, model, auto-part name or part number." /> : total === 0 ? <EmptyState description="Check the spelling, clear your search or ask MoCars to help source the item." onClear={() => navigate('/search')} action={<a className="btn btn-red" href={whatsappLink(`Hello MoCars, I searched for “${query}” but could not find it. Can you help?`)} target="_blank" rel="noreferrer">Enquire on WhatsApp</a>} /> : <>
+          {!query ? <EmptyState title="What are you looking for?" description="Enter a vehicle make, model, auto-part name or part number." /> : total === 0 ? <EmptyState description="Check the spelling, clear your search or ask MoCars to help source the item." onClear={() => window.location.assign('/search')} action={<a className="btn btn-red" href={whatsappLink(`Hello MoCars, I searched for “${query}” but could not find it. Can you help?`)} target="_blank" rel="noreferrer">Enquire on WhatsApp</a>} /> : <>
             {shownVehicles.length > 0 && <section className="result-group"><SectionHeading eyebrow="Vehicle catalogue" title={`${shownVehicles.length} matching ${shownVehicles.length === 1 ? 'vehicle' : 'vehicles'}`} /><div className="catalogue-grid">{shownVehicles.map((vehicle) => <VehicleCard key={vehicle.id} vehicle={vehicle} />)}</div></section>}
             {shownParts.length > 0 && <section className="result-group"><SectionHeading eyebrow="Auto-parts catalogue" title={`${shownParts.length} matching ${shownParts.length === 1 ? 'part' : 'parts'}`} /><div className="catalogue-grid">{shownParts.map((part) => <PartCard key={part.id} part={part} />)}</div></section>}
           </>}
