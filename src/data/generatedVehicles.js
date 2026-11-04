@@ -58,4 +58,6 @@ export const generatedUsedVehicles = [
   { id: 'subaru-forester-used', reference: 'MOC-GEN-U-007', make: 'Subaru', model: 'Forester', title: 'Subaru Forester', condition: 'Used', bodyType: 'SUV' },
   { id: 'nissan-navara-used', reference: 'MOC-GEN-U-008', make: 'Nissan', model: 'Navara', title: 'Nissan Navara', condition: 'Used', bodyType: 'Pickup' },
   { id: 'ford-everest-used', reference: 'MOC-GEN-U-009', make: 'Ford', model: 'Everest', title: 'Ford Everest', condition: 'Used', bodyType: 'SUV' },
+  { id: 'toyota-fortuner-used', reference: 'MOC-GEN-U-010', make: 'Toyota', model: 'Fortuner', title: 'Toyota Fortuner', condition: 'Used', bodyType: 'SUV' },
+  { id: 'isuzu-kb-double-cab-used', reference: 'MOC-GEN-U-011', make: 'Isuzu', model: 'KB Double Cab', title: 'Isuzu KB Double Cab', condition: 'Used', bodyType: 'Pickup' },
 ].map(makeVehicle);
