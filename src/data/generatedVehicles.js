@@ -53,4 +53,6 @@ export const generatedUsedVehicles = [
   { id: 'toyota-aqua-used', reference: 'MOC-GEN-U-002', make: 'Toyota', model: 'Aqua', title: 'Toyota Aqua', condition: 'Used', bodyType: 'Hatchback' },
   { id: 'mazda-demio-used', reference: 'MOC-GEN-U-003', make: 'Mazda', model: 'Demio', title: 'Mazda Demio', condition: 'Used', bodyType: 'Hatchback' },
   { id: 'nissan-note-used', reference: 'MOC-GEN-U-004', make: 'Nissan', model: 'Note', title: 'Nissan Note', condition: 'Used', bodyType: 'Hatchback' },
+  { id: 'toyota-vitz-used', reference: 'MOC-GEN-U-005', make: 'Toyota', model: 'Vitz', title: 'Toyota Vitz', condition: 'Used', bodyType: 'Hatchback' },
+  { id: 'volkswagen-golf-used', reference: 'MOC-GEN-U-006', make: 'Volkswagen', model: 'Golf', title: 'Volkswagen Golf', condition: 'Used', bodyType: 'Hatchback' },
 ].map(makeVehicle);
