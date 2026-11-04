@@ -9,15 +9,18 @@ import '@fontsource/montserrat/600.css';
 import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/800.css';
 import App from './App.jsx';
+import { InventoryProvider } from './context/InventoryContext.jsx';
 import { ShopProvider } from './context/ShopContext.jsx';
 import './styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ShopProvider>
-        <App />
-      </ShopProvider>
+      <InventoryProvider>
+        <ShopProvider>
+          <App />
+        </ShopProvider>
+      </InventoryProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );

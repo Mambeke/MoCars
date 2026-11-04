@@ -3,7 +3,7 @@ import { SlidersHorizontal, X } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { VehicleCard } from '../components/Cards.jsx';
 import { EmptyState, PageHero } from '../components/UI.jsx';
-import { vehicles } from '../data/inventory.js';
+import { useInventory } from '../context/InventoryContext.jsx';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 
 const initialFilters = {
@@ -14,11 +14,12 @@ const initialFilters = {
 const unique = (values) => [...new Set(values.filter(Boolean))].sort();
 
 export default function VehiclesPage({ condition }) {
+  const { vehicles } = useInventory();
   const [searchParams] = useSearchParams();
   const [filters, setFilters] = useState(() => ({ ...initialFilters, keyword: searchParams.get('q') || '' }));
   const [filtersOpen, setFiltersOpen] = useState(false);
   const title = condition === 'Used' ? 'Used Cars for Sale' : 'New Cars for Sale';
-  const catalogue = useMemo(() => vehicles.filter((vehicle) => vehicle.condition === condition), [condition]);
+  const catalogue = useMemo(() => vehicles.filter((vehicle) => vehicle.condition === condition), [condition, vehicles]);
 
   usePageMeta(title, `Browse ${condition.toLowerCase()} cars from MoCars and filter by make, price, year, fuel type, transmission and body type.`);
 

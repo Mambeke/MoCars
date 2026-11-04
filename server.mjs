@@ -3,7 +3,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { parts } from './src/data/inventory.js';
+import { partCategories, parts, vehicles } from './src/data/inventory.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -12,6 +12,31 @@ const dataDir = path.join(__dirname, 'data');
 
 app.disable('x-powered-by');
 app.use(express.json({ limit: '250kb' }));
+
+let localListings = [
+  ...vehicles.map((data) => ({ id: data.id, type: 'vehicle', reference: data.reference, title: data.title, status: 'published', featured: Boolean(data.featured), data: structuredClone(data), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), publishedAt: new Date().toISOString() })),
+  ...parts.map((data) => ({ id: data.id, type: 'part', reference: data.reference, title: data.name, status: 'published', featured: Boolean(data.featured), data: structuredClone(data), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), publishedAt: new Date().toISOString() })),
+];
+const localMedia = new Map();
+const adminEmail = 'Brandonmambeke@gmail.com';
+
+function localCatalogue() {
+  const published = localListings.filter((item) => item.status === 'published');
+  const liveVehicles = published.filter((item) => item.type === 'vehicle').map((item) => item.data);
+  const liveParts = published.filter((item) => item.type === 'part').map((item) => item.data);
+  return { vehicles: liveVehicles, parts: liveParts, partCategories: [...new Set([...partCategories, ...liveParts.map((part) => part.category).filter(Boolean)])] };
+}
+function localAdminRecord(type, payload, existing = null) {
+  const data = structuredClone(payload.data || {});
+  const now = new Date().toISOString();
+  data.id = existing?.id || cleanString(data.id, 100);
+  data.reference = cleanString(data.reference, 80).toUpperCase();
+  data.featured = Boolean(data.featured);
+  data.images = Array.isArray(data.images) ? data.images.slice(0, 12) : [];
+  const title = cleanString(type === 'vehicle' ? data.title : data.name, 180);
+  if (!data.id || !data.reference || !title) throw new Error('A listing title, ID and reference are required.');
+  return { id: data.id, type, reference: data.reference, title, status: ['draft', 'published', 'archived'].includes(payload.status) ? payload.status : 'draft', featured: data.featured, data, createdAt: existing?.createdAt || now, updatedAt: now, publishedAt: payload.status === 'published' ? (existing?.publishedAt || now) : existing?.publishedAt || null };
+}
 
 async function ensureJsonFile(name) {
   await fs.mkdir(dataDir, { recursive: true });
@@ -50,6 +75,69 @@ function reference(prefix) {
 }
 
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
+app.get('/api/catalogue', (_req, res) => res.json(localCatalogue()));
+
+app.get('/admin/api/session', (_req, res) => res.json({ email: adminEmail, name: 'Website owner', localDevelopment: true }));
+app.get('/admin/api/listings', (_req, res) => res.json({ listings: [...localListings].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)) }));
+app.post('/admin/api/listings', (req, res) => {
+  try {
+    const type = req.body.type === 'part' ? 'part' : 'vehicle';
+    const record = localAdminRecord(type, req.body);
+    if (localListings.some((item) => item.id === record.id || item.reference === record.reference)) return res.status(409).json({ error: 'That listing ID or reference is already in use.' });
+    if (record.status === 'published' && !record.data.images.length) return res.status(400).json({ error: 'Add at least one photograph before publishing.' });
+    localListings = [record, ...localListings];
+    return res.status(201).json({ listing: record });
+  } catch (error) { return res.status(400).json({ error: error.message }); }
+});
+app.put('/admin/api/listings/:id', (req, res) => {
+  try {
+    const index = localListings.findIndex((item) => item.id === req.params.id);
+    if (index < 0) return res.status(404).json({ error: 'Listing not found.' });
+    const current = localListings[index];
+    const type = req.body.type === 'part' ? 'part' : 'vehicle';
+    const record = localAdminRecord(type, req.body, current);
+    if (localListings.some((item, itemIndex) => itemIndex !== index && item.reference === record.reference)) return res.status(409).json({ error: 'That listing reference is already in use.' });
+    if (record.status === 'published' && !record.data.images.length) return res.status(400).json({ error: 'Add at least one photograph before publishing.' });
+    localListings[index] = record;
+    return res.json({ listing: record });
+  } catch (error) { return res.status(400).json({ error: error.message }); }
+});
+app.delete('/admin/api/listings/:id', (req, res) => {
+  const record = localListings.find((item) => item.id === req.params.id);
+  if (!record) return res.status(404).json({ error: 'Listing not found.' });
+  record.status = 'archived'; record.updatedAt = new Date().toISOString();
+  return res.json({ ok: true });
+});
+app.post('/admin/api/media', express.raw({ type: ['image/jpeg', 'image/png', 'image/webp'], limit: '1.5mb' }), (req, res) => {
+  const contentType = (req.headers['content-type'] || '').split(';')[0];
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(contentType) || !Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Choose a valid JPEG, PNG or WebP image.' });
+  const mediaId = `img_${crypto.randomBytes(8).toString('hex')}`;
+  localMedia.set(mediaId, { contentType, data: req.body });
+  return res.status(201).json({ id: mediaId, url: `/media/${mediaId}` });
+});
+app.get('/media/:id', (req, res) => {
+  const media = localMedia.get(req.params.id);
+  if (!media) return res.status(404).send('Not found');
+  res.set('Content-Type', media.contentType); res.set('Cache-Control', 'no-store');
+  return res.send(media.data);
+});
+app.get('/admin/api/enquiries', async (_req, res) => {
+  const enquiries = await readList('enquiries.json');
+  return res.json({ enquiries: enquiries.map((item) => ({ ...item, createdAt: item.createdAt || item.created_at })) .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || '')) });
+});
+app.get('/admin/api/orders', async (_req, res) => {
+  const raw = await readList('orders.json');
+  const orders = raw.map((item) => ({ id: item.id, customerName: item.customer?.name || item.customerName, customerPhone: item.customer?.phone || item.customerPhone, customerEmail: item.customer?.email || item.customerEmail, deliveryAddress: item.customer?.address || item.deliveryAddress, city: item.customer?.city || item.city, items: item.items || [], total: item.total, paymentMethod: item.paymentMethod, status: item.status, createdAt: item.createdAt }));
+  return res.json({ orders: orders.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || '')) });
+});
+async function updateLocalRequest(fileName, requestId, status) {
+  const allowed = ['received', 'contacted', 'in_progress', 'completed', 'closed'];
+  if (!allowed.includes(status)) throw new Error('Select a valid request status.');
+  const file = await ensureJsonFile(fileName); const list = JSON.parse(await fs.readFile(file, 'utf8')); const item = list.find((record) => record.id === requestId);
+  if (!item) return false; item.status = status; await fs.writeFile(file, `${JSON.stringify(list, null, 2)}\n`, 'utf8'); return true;
+}
+app.patch('/admin/api/enquiries/:id', async (req, res) => { try { return await updateLocalRequest('enquiries.json', req.params.id, req.body.status) ? res.json({ ok: true, status: req.body.status }) : res.status(404).json({ error: 'Request not found.' }); } catch (error) { return res.status(400).json({ error: error.message }); } });
+app.patch('/admin/api/orders/:id', async (req, res) => { try { return await updateLocalRequest('orders.json', req.params.id, req.body.status) ? res.json({ ok: true, status: req.body.status }) : res.status(404).json({ error: 'Request not found.' }); } catch (error) { return res.status(400).json({ error: error.message }); } });
 
 app.post('/api/enquiries', async (req, res) => {
   try {
@@ -102,7 +190,7 @@ app.post('/api/orders', async (req, res) => {
       return res.status(400).json({ error: 'Your order enquiry is empty.' });
     }
     const items = requestedItems.map((requested) => {
-      const product = parts.find((part) => part.id === requested.id);
+      const product = localCatalogue().parts.find((part) => part.id === requested.id);
       if (!product) throw new Error('An item in this order is no longer available.');
       const quantity = Math.max(1, Math.min(99, Number(requested.quantity) || 1));
       return {
@@ -110,11 +198,11 @@ app.post('/api/orders', async (req, res) => {
         name: product.name,
         reference: product.reference,
         quantity,
-        unitPrice: product.price,
-        subtotal: product.price * quantity,
+        unitPrice: Number.isFinite(product.price) ? product.price : null,
+        subtotal: Number.isFinite(product.price) ? product.price * quantity : null,
       };
     });
-    const total = items.reduce((sum, item) => sum + item.subtotal, 0);
+    const total = items.reduce((sum, item) => sum + (Number.isFinite(item.subtotal) ? item.subtotal : 0), 0);
     const record = {
       id: reference('ORD'),
       customer: { name, phone, email, address, city },

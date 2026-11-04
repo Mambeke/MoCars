@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { parts } from '../data/inventory.js';
+import { useInventory } from './InventoryContext.jsx';
 
 const ShopContext = createContext(null);
 
@@ -21,6 +21,7 @@ function save(key, value) {
 }
 
 export function ShopProvider({ children }) {
+  const { parts } = useInventory();
   const [cart, setCart] = useState(() => load('mocars-cart', []));
   const [favorites, setFavorites] = useState(() => load('mocars-favorites', []));
   const [profile, setProfile] = useState(() => load('mocars-profile', null));
@@ -140,13 +141,15 @@ export function ShopProvider({ children }) {
       cart
         .map((item) => {
           const product = parts.find((part) => part.id === item.id);
-          return product ? { ...item, product, subtotal: item.quantity * product.price } : null;
+          return product ? { ...item, product, subtotal: Number.isFinite(product.price) ? item.quantity * product.price : null } : null;
         })
         .filter(Boolean),
-    [cart],
+    [cart, parts],
   );
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const cartTotal = cartDetails.reduce((sum, item) => sum + item.subtotal, 0);
+  const cartTotal = cartDetails.some((item) => item.subtotal === null)
+    ? null
+    : cartDetails.reduce((sum, item) => sum + item.subtotal, 0);
 
   const value = {
     cart,

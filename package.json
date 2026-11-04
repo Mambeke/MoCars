@@ -8,6 +8,7 @@
     "build": "vite build",
     "start": "NODE_ENV=production node server.mjs",
     "test:acceptance": "node qa/acceptance.mjs",
+    "test:admin": "node qa/admin-acceptance.mjs",
     "test:navigation": "node qa/navigation.mjs",
     "deploy:cloudflare": "npm run build && wrangler deploy",
     "cloudflare:db:migrate": "wrangler d1 execute mocars-db --remote --file=cloudflare/schema.sql"

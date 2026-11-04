@@ -45,3 +45,30 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE INDEX IF NOT EXISTS users_email_idx ON users(email);
+
+CREATE TABLE IF NOT EXISTS inventory_listings (
+  id TEXT PRIMARY KEY,
+  item_type TEXT NOT NULL CHECK (item_type IN ('vehicle', 'part')),
+  reference TEXT NOT NULL UNIQUE,
+  title TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
+  featured INTEGER NOT NULL DEFAULT 0,
+  data_json TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  published_at TEXT
+);
+
+CREATE INDEX IF NOT EXISTS inventory_listings_type_status_idx ON inventory_listings(item_type, status);
+CREATE INDEX IF NOT EXISTS inventory_listings_updated_at_idx ON inventory_listings(updated_at DESC);
+
+CREATE TABLE IF NOT EXISTS media_assets (
+  id TEXT PRIMARY KEY,
+  file_name TEXT NOT NULL,
+  content_type TEXT NOT NULL,
+  byte_size INTEGER NOT NULL,
+  data BLOB NOT NULL,
+  created_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS media_assets_created_at_idx ON media_assets(created_at DESC);

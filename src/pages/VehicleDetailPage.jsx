@@ -18,13 +18,15 @@ import Gallery from '../components/Gallery.jsx';
 import { VehicleCard } from '../components/Cards.jsx';
 import { Breadcrumbs, Modal, SectionHeading } from '../components/UI.jsx';
 import { businessConfig, telLink, whatsappLink } from '../config/business.js';
+import { useInventory } from '../context/InventoryContext.jsx';
 import { useShop } from '../context/ShopContext.jsx';
-import { formatMileage, formatPrice, vehicles } from '../data/inventory.js';
+import { formatMileage, formatPrice } from '../data/inventory.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 
 const icons = { mileage: Gauge, engine: Cog, transmission: Settings2, fuel: Fuel, drivetrain: Route, bodyType: CarFront };
 
 export default function VehicleDetailPage() {
+  const { vehicles } = useInventory();
   const { id } = useParams();
   const vehicle = vehicles.find((item) => item.id === id);
   const { notify, submitEnquiry } = useShop();
@@ -36,7 +38,7 @@ export default function VehicleDetailPage() {
   const similar = useMemo(() => {
     if (!vehicle) return [];
     return vehicles.filter((item) => item.id !== vehicle.id && (item.make === vehicle.make || item.bodyType === vehicle.bodyType)).slice(0, 3);
-  }, [vehicle]);
+  }, [vehicle, vehicles]);
 
   if (!vehicle) {
     return <section className="not-found section"><div className="container"><span className="eyebrow">Listing unavailable</span><h1>Vehicle not found</h1><p>This listing may have moved or is no longer available.</p><Link className="btn btn-red" to="/used-cars">Browse vehicles</Link></div></section>;

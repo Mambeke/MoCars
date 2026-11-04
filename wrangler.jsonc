@@ -13,6 +13,9 @@
 	"observability": {
 		"enabled": true
 	},
+	"vars": {
+		"ADMIN_EMAIL": "Brandonmambeke@gmail.com"
+	},
 	"d1_databases": [
 		{
 			"binding": "DB",

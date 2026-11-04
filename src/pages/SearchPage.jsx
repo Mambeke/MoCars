@@ -4,10 +4,11 @@ import { useSearchParams } from 'react-router-dom';
 import { PartCard, VehicleCard } from '../components/Cards.jsx';
 import { EmptyState, PageHero, SectionHeading } from '../components/UI.jsx';
 import { whatsappLink } from '../config/business.js';
-import { parts, vehicles } from '../data/inventory.js';
+import { useInventory } from '../context/InventoryContext.jsx';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 
 export default function SearchPage() {
+  const { parts, vehicles } = useInventory();
   const [params] = useSearchParams();
   const query = params.get('q') || '';
   const type = params.get('type') || 'all';
@@ -16,8 +17,8 @@ export default function SearchPage() {
   usePageMeta(query ? `Search: ${query}` : 'Search', 'Search the MoCars vehicle and auto-parts catalogues.');
 
   const term = query.toLowerCase().trim();
-  const vehicleResults = useMemo(() => !term ? [] : vehicles.filter((vehicle) => [vehicle.title, vehicle.make, vehicle.model, vehicle.year, vehicle.fuel, vehicle.transmission, vehicle.bodyType, vehicle.reference].filter(Boolean).join(' ').toLowerCase().includes(term)), [term]);
-  const partResults = useMemo(() => !term ? [] : parts.filter((part) => [part.name, part.category, part.partNumber, part.reference, ...part.compatibleMakes, ...part.compatibleModels, ...part.searchableKeywords].filter(Boolean).join(' ').toLowerCase().includes(term)), [term]);
+  const vehicleResults = useMemo(() => !term ? [] : vehicles.filter((vehicle) => [vehicle.title, vehicle.make, vehicle.model, vehicle.year, vehicle.fuel, vehicle.transmission, vehicle.bodyType, vehicle.reference].filter(Boolean).join(' ').toLowerCase().includes(term)), [term, vehicles]);
+  const partResults = useMemo(() => !term ? [] : parts.filter((part) => [part.name, part.category, part.partNumber, part.reference, ...part.compatibleMakes, ...part.compatibleModels, ...part.searchableKeywords].filter(Boolean).join(' ').toLowerCase().includes(term)), [term, parts]);
   const shownVehicles = type !== 'parts' ? vehicleResults : [];
   const shownParts = type !== 'vehicles' ? partResults : [];
   const total = shownVehicles.length + shownParts.length;

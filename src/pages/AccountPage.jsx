@@ -2,11 +2,13 @@ import React, { useMemo, useState } from 'react';
 import { Heart, LogOut, PackageCheck, UserRound } from 'lucide-react';
 import { PartCard, VehicleCard } from '../components/Cards.jsx';
 import { Breadcrumbs } from '../components/UI.jsx';
+import { useInventory } from '../context/InventoryContext.jsx';
 import { useShop } from '../context/ShopContext.jsx';
-import { formatPrice, parts, vehicles } from '../data/inventory.js';
+import { formatPrice } from '../data/inventory.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 
 export default function AccountPage() {
+  const { parts, vehicles } = useInventory();
   const { profile, favorites, history, login, register, logout, updateProfile } = useShop();
   const [authMode, setAuthMode] = useState('login');
   const [active, setActive] = useState('overview');
@@ -15,8 +17,8 @@ export default function AccountPage() {
   const [status, setStatus] = useState({ loading: false, error: '' });
   usePageMeta('My Account', 'Sign in to MoCars to manage saved vehicles, saved auto parts and order enquiry history.');
 
-  const savedVehicles = useMemo(() => vehicles.filter((item) => favorites.includes(item.id)), [favorites]);
-  const savedParts = useMemo(() => parts.filter((item) => favorites.includes(item.id)), [favorites]);
+  const savedVehicles = useMemo(() => vehicles.filter((item) => favorites.includes(item.id)), [favorites, vehicles]);
+  const savedParts = useMemo(() => parts.filter((item) => favorites.includes(item.id)), [favorites, parts]);
 
   const authenticate = async (event) => {
     event.preventDefault();

@@ -3,7 +3,7 @@ import { ArrowRight, CarFront, Cog, SearchCheck, ShoppingBag } from 'lucide-reac
 import { Link } from 'react-router-dom';
 import { PartCard, VehicleCard } from '../components/Cards.jsx';
 import { SectionHeading } from '../components/UI.jsx';
-import { parts, vehicles } from '../data/inventory.js';
+import { useInventory } from '../context/InventoryContext.jsx';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 
 const categories = [
@@ -28,6 +28,7 @@ const categories = [
 ];
 
 export default function HomePage() {
+  const { parts, vehicles } = useInventory();
   usePageMeta('Cars & Auto Parts', 'Browse new and used cars and shop new and used auto parts from MoCars.');
   return (
     <>

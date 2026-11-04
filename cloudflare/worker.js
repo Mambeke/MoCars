@@ -1,4 +1,5 @@
-import { parts } from '../src/data/inventory.js';
+import { parts as bundledParts } from '../src/data/inventory.js';
+import { handleAdminApi, publicCatalogue, publishedPart, requireAdmin, serveMedia } from './admin.js';
 
 const encoder = new TextEncoder();
 
@@ -125,20 +126,22 @@ async function createOrder(request, env) {
 
   const items = [];
   for (const requested of requestedItems) {
-    const product = parts.find((part) => part.id === requested.id);
+    const product = await publishedPart(env, cleanString(requested.id, 100))
+      || bundledParts.find((part) => part.id === requested.id);
     if (!product) return json({ error: 'An item in this order is no longer available.' }, 400);
     const quantity = Math.max(1, Math.min(99, Number(requested.quantity) || 1));
+    const unitPrice = Number.isFinite(product.price) ? product.price : null;
     items.push({
       id: product.id,
       name: product.name,
       reference: product.reference,
       quantity,
-      unitPrice: product.price,
-      subtotal: product.price * quantity,
+      unitPrice,
+      subtotal: unitPrice === null ? null : unitPrice * quantity,
     });
   }
 
-  const total = items.reduce((sum, item) => sum + item.subtotal, 0);
+  const total = items.reduce((sum, item) => sum + (Number.isFinite(item.subtotal) ? item.subtotal : 0), 0);
   const id = reference('ORD');
   const createdAt = new Date().toISOString();
   await env.DB.prepare(
@@ -199,6 +202,7 @@ async function handleApi(request, env, url) {
     return json({ ok: true, runtime: 'cloudflare-workers' });
   }
   if (!env.DB) return json({ error: 'The production database is not configured.' }, 503);
+  if (url.pathname === '/api/catalogue' && request.method === 'GET') return publicCatalogue(env);
   if (url.pathname === '/api/enquiries' && request.method === 'POST') return createEnquiry(request, env);
   if (url.pathname === '/api/orders' && request.method === 'POST') return createOrder(request, env);
   if (url.pathname === '/api/auth/register' && request.method === 'POST') return register(request, env);
@@ -207,10 +211,16 @@ async function handleApi(request, env, url) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     try {
       if (url.pathname.startsWith('/api/')) return await handleApi(request, env, url);
+      if (url.pathname.startsWith('/media/') && request.method === 'GET') return serveMedia(env, url.pathname.slice('/media/'.length));
+      if (url.pathname.startsWith('/admin/api/')) return handleAdminApi(request, env, ctx, url);
+      if (url.pathname === '/admin' || url.pathname.startsWith('/admin/')) {
+        const identity = await requireAdmin(ctx, env);
+        if (!identity) return json({ error: 'Owner authentication is required.' }, 403);
+      }
 
       const asset = await env.ASSETS.fetch(request);
       const headers = new Headers(asset.headers);

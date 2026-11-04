@@ -4,6 +4,7 @@ import Layout from './components/Layout.jsx';
 import NavigationReliability from './components/NavigationReliability.jsx';
 import { ScrollToTop } from './components/UI.jsx';
 import AccountPage from './pages/AccountPage.jsx';
+import AdminPage from './pages/AdminPage.jsx';
 import CartPage from './pages/CartPage.jsx';
 import CheckoutPage from './pages/CheckoutPage.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -20,6 +21,7 @@ export default function App() {
       <NavigationReliability />
       <ScrollToTop />
       <Routes>
+        <Route path="admin/*" element={<AdminPage />} />
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="used-cars" element={<VehiclesPage condition="Used" />} />

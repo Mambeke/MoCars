@@ -5,18 +5,20 @@ import { PartCard } from '../components/Cards.jsx';
 import Gallery from '../components/Gallery.jsx';
 import { Breadcrumbs, SectionHeading } from '../components/UI.jsx';
 import { businessConfig, whatsappLink } from '../config/business.js';
+import { useInventory } from '../context/InventoryContext.jsx';
 import { useShop } from '../context/ShopContext.jsx';
-import { formatPrice, parts } from '../data/inventory.js';
+import { formatPrice } from '../data/inventory.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 
 export default function PartDetailPage() {
+  const { parts } = useInventory();
   const { id } = useParams();
   const part = parts.find((item) => item.id === id);
   const { addToCart } = useShop();
   const [quantity, setQuantity] = useState(1);
   usePageMeta(part?.name || 'Part Not Found', part ? `${part.condition} ${part.name}. View compatibility, condition and order options.` : 'Auto part not found.');
 
-  const related = useMemo(() => part ? parts.filter((item) => item.id !== part.id && (item.category === part.category || item.compatibleMakes.some((make) => part.compatibleMakes.includes(make)))).slice(0, 3) : [], [part]);
+  const related = useMemo(() => part ? parts.filter((item) => item.id !== part.id && (item.category === part.category || item.compatibleMakes.some((make) => part.compatibleMakes.includes(make)))).slice(0, 3) : [], [part, parts]);
 
   if (!part) return <section className="not-found section"><div className="container"><span className="eyebrow">Product unavailable</span><h1>Auto part not found</h1><p>This product may have moved or is no longer listed.</p><Link className="btn btn-red" to="/auto-parts">Browse auto parts</Link></div></section>;
 

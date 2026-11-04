@@ -3,7 +3,7 @@ import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { PartCard } from '../components/Cards.jsx';
 import { EmptyState, PageHero } from '../components/UI.jsx';
-import { partCategories, parts } from '../data/inventory.js';
+import { useInventory } from '../context/InventoryContext.jsx';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import { whatsappLink } from '../config/business.js';
 
@@ -11,6 +11,7 @@ const initialFilters = { keyword: '', category: '', condition: '', make: '', mod
 const unique = (values) => [...new Set(values.filter(Boolean))].sort();
 
 export default function PartsPage() {
+  const { partCategories, parts } = useInventory();
   const [searchParams] = useSearchParams();
   const [filters, setFilters] = useState(() => ({ ...initialFilters, keyword: searchParams.get('q') || '', condition: searchParams.get('condition') || '' }));
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -25,7 +26,7 @@ export default function PartsPage() {
     models: unique(parts.filter((part) => !filters.make || part.compatibleMakes.includes(filters.make)).flatMap((part) => part.compatibleModels)),
     years: unique(parts.flatMap((part) => part.compatibleYears)).sort((a, b) => b - a),
     availability: unique(parts.map((part) => part.availability)),
-  }), [filters.make]);
+  }), [filters.make, parts]);
 
   const results = useMemo(() => {
     const term = filters.keyword.trim().toLowerCase();
@@ -49,7 +50,7 @@ export default function PartsPage() {
       if (filters.sort === 'newest') return (b.dateAdded || '').localeCompare(a.dateAdded || '');
       return Number(b.featured) - Number(a.featured);
     });
-  }, [filters]);
+  }, [filters, parts]);
 
   const update = (key, value) => setFilters((current) => ({ ...current, [key]: value, ...(key === 'make' ? { model: '' } : {}) }));
   const clear = () => setFilters(initialFilters);
