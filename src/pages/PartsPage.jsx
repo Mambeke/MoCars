@@ -80,9 +80,7 @@ export default function PartsPage() {
 
   return (
     <>
-      <PageHero eyebrow="Dedicated parts catalogue" title="Auto Parts">
-        <p>Search new and used parts by product name, part number, vehicle make, model or keyword.</p>
-      </PageHero>
+      <PageHero statement="Search new and used auto parts by product name, part number, vehicle make, model or keyword." />
       <section className="parts-search-band">
         <div className="container">
           <div className="prominent-search"><Search /><input value={filters.keyword} onChange={(event) => update('keyword', event.target.value)} placeholder="Try “engine component”, “brake pad” or a part number" aria-label="Search auto parts" /><button className="btn btn-red" type="button">Search Parts</button></div>

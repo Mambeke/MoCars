@@ -1,12 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   Check,
   Facebook,
   Instagram,
-  Menu,
   MessageCircle,
-  X,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext.jsx';
 import { businessConfig } from '../config/business.js';
@@ -22,14 +20,37 @@ const emptyEnquiry = {
 
 function Header() {
   const { submitEnquiry } = useShop();
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [form, setForm] = useState(emptyEnquiry);
   const [status, setStatus] = useState({ loading: false, error: '', reference: '' });
+  const navRef = useRef(null);
+  const [navScroll, setNavScroll] = useState({ scrollable: false, width: 0, offset: 0 });
+
+  const syncNavScroll = useCallback(() => {
+    const element = navRef.current;
+    if (!element) return;
+    const { scrollWidth, clientWidth, scrollLeft } = element;
+    const overflow = scrollWidth - clientWidth;
+    const scrollable = overflow > 2;
+    const width = scrollable ? Math.max((clientWidth / scrollWidth) * 100, 22) : 0;
+    const offset = scrollable ? (scrollLeft / overflow) * (100 - width) : 0;
+    setNavScroll({ scrollable, width, offset });
+  }, []);
+
+  useEffect(() => {
+    syncNavScroll();
+    const element = navRef.current;
+    if (!element) return undefined;
+    element.addEventListener('scroll', syncNavScroll, { passive: true });
+    window.addEventListener('resize', syncNavScroll);
+    return () => {
+      element.removeEventListener('scroll', syncNavScroll);
+      window.removeEventListener('resize', syncNavScroll);
+    };
+  }, [syncNavScroll]);
   const location = useLocation();
 
   useEffect(() => {
-    setMobileOpen(false);
     setEnquiryOpen(false);
   }, [location.pathname]);
 
@@ -67,25 +88,23 @@ function Header() {
               <img src="/images/mocars-swoosh-logo.png" alt="MoCars" />
             </span>
           </Link>
-          <nav className={`main-nav${mobileOpen ? ' open' : ''}`} aria-label="Main navigation">
-            <NavLink to="/" end className={navClass}>Home</NavLink>
-            <NavLink to="/used-cars" className={navClass}>Used Cars</NavLink>
-            <NavLink to="/new-cars" className={navClass}>New Cars</NavLink>
-            <NavLink to="/auto-parts" className={navClass}>Auto Parts</NavLink>
-          </nav>
+          <div className="nav-scroll">
+            <nav className="main-nav" aria-label="Main navigation" ref={navRef}>
+              <NavLink to="/" end className={navClass}>Home</NavLink>
+              <NavLink to="/new-cars" className={navClass}>New Cars</NavLink>
+              <NavLink to="/used-cars" className={navClass}>Used Cars</NavLink>
+              <NavLink to="/auto-parts" className={navClass}>Auto Parts</NavLink>
+            </nav>
+            {navScroll.scrollable && (
+              <div className="nav-scroll-bar" aria-hidden="true">
+                <span style={{ width: `${navScroll.width}%`, left: `${navScroll.offset}%` }} />
+              </div>
+            )}
+          </div>
           <div className="header-actions">
             <button className="btn btn-red header-enquiry-button" type="button" onClick={openEnquiry} aria-haspopup="dialog">
               <MessageCircle aria-hidden="true" />
               <span>Inquire Now</span>
-            </button>
-            <button
-              className="mobile-menu-button"
-              type="button"
-              onClick={() => setMobileOpen((open) => !open)}
-              aria-expanded={mobileOpen}
-              aria-label="Toggle navigation"
-            >
-              {mobileOpen ? <X /> : <Menu />}
             </button>
           </div>
         </div>

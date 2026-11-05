@@ -180,8 +180,7 @@ try {
   }));
   assert(mobilePartsLayout.cardTops.length > 1 && new Set(mobilePartsLayout.cardTops).size === 1 && mobilePartsLayout.scrollable,
     'Journey 4: featured auto parts remain inline in a horizontal row');
-  await mobilePage.getByRole('button', { name: 'Toggle navigation' }).click();
-  await mobilePage.getByRole('link', { name: /Auto Parts/ }).first().click();
+  await mobilePage.locator('.main-nav .nav-link', { hasText: 'Auto Parts' }).click();
   await mobilePage.waitForURL('**/auto-parts');
   await mobilePage.getByLabel('Search auto parts').waitFor();
   await mobilePage.getByLabel('Search auto parts').fill('alternator');

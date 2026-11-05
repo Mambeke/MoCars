@@ -46,12 +46,13 @@ export function Modal({ open, onClose, title, eyebrow, children, wide = false })
   );
 }
 
-export function PageHero({ eyebrow, title, children, compact = false }) {
+export function PageHero({ eyebrow, title, statement, children, compact = false }) {
   return (
     <section className={`page-hero${compact ? ' compact' : ''}`}>
       <div className="container">
         {eyebrow && <span className="eyebrow light">{eyebrow}</span>}
-        <h1>{title}</h1>
+        {title && <h1>{title}</h1>}
+        {!title && statement && <h1 className="page-hero-statement">{statement}</h1>}
         {children && <div className="page-hero-copy">{children}</div>}
       </div>
     </section>

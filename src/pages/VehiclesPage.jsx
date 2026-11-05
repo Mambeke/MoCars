@@ -25,7 +25,8 @@ export default function VehiclesPage({ condition = 'All' }) {
   const [filters, setFilters] = useState(() => ({ ...initialFilters, keyword: searchParams.get('q') || '' }));
   const [filtersOpen, setFiltersOpen] = useState(false);
   const title = condition === 'All' ? 'All Cars for Sale' : `${condition} Cars for Sale`;
-  const eyebrow = condition === 'All' ? 'New and used vehicle catalogue' : `${condition.toLowerCase()} vehicle catalogue`;
+  const scope = condition === 'All' ? 'new and used' : condition.toLowerCase();
+  const statement = `Search the supplied MoCars ${scope} vehicle inventory and compare factual listing details before making an enquiry.`;
   const catalogue = useMemo(
     () => (condition === 'All' ? vehicles : vehicles.filter((vehicle) => vehicle.condition === condition)),
     [condition, vehicles],
@@ -109,9 +110,7 @@ export default function VehiclesPage({ condition = 'All' }) {
 
   return (
     <>
-      <PageHero eyebrow={eyebrow} title={title}>
-        <p>Search the supplied MoCars inventory and compare factual listing details before making an enquiry.</p>
-      </PageHero>
+      <PageHero statement={statement} />
       <section className="catalogue-section section">
         <div className="container">
           <div className="vehicle-condition-toggle" role="group" aria-label="Choose vehicle condition">
