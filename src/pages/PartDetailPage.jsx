@@ -33,7 +33,7 @@ export default function PartDetailPage() {
       <Breadcrumbs items={[{ label: 'Auto Parts', to: '/auto-parts' }, { label: part.category, to: `/auto-parts?q=${encodeURIComponent(part.category)}` }, { label: part.name }]} />
       <section className="part-detail-section">
         <div className="container part-detail-grid">
-          <Gallery images={part.images} alt={part.name} badge={part.condition} />
+          <Gallery images={part.images} alt={part.name} />
           <div className="part-info-panel">
             <div className="product-kicker"><span className={`condition-pill ${part.condition.toLowerCase()}`}>{part.condition}</span><span>{part.category}</span></div>
             <h1>{part.name}</h1>

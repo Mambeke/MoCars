@@ -92,7 +92,7 @@ export default function VehicleDetailPage() {
       ]} />
       <section className="vehicle-detail-section">
         <div className="container vehicle-detail-grid">
-          <Gallery images={vehicle.images} alt={vehicle.title} badge={vehicle.condition} />
+          <Gallery images={vehicle.images} alt={vehicle.title} />
           <div className="vehicle-panel">
             <div className="vehicle-title-block">
               <span className={`condition-pill ${vehicle.condition.toLowerCase()}`}>{vehicle.condition}</span>
@@ -136,17 +136,12 @@ export default function VehicleDetailPage() {
             <h2>About this {vehicle.model}</h2>
             <p>{vehicle.description}</p>
           </article>
-          <article className="features-card">
-            <span className="eyebrow">Supplied equipment</span>
-            <h2>Key Features</h2>
-            {vehicle.features.length ? <ul className="feature-list">{vehicle.features.map((feature) => <li key={feature}><Check />{feature}</li>)}</ul> : <p>Feature information has not yet been supplied for this listing. Contact MoCars for a full equipment list.</p>}
-          </article>
         </div>
       </section>
 
       <section className="section specs-section light-section">
         <div className="container">
-          <SectionHeading eyebrow="Vehicle data" title="Additional Specifications" />
+          <SectionHeading eyebrow="Vehicle Specifications" title="Additional Specifications" />
           <dl className="spec-table">
             {fullSpecs.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>
