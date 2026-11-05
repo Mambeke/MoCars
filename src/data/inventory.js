@@ -1,3 +1,4 @@
+import { generatedNewParts, generatedUsedParts } from './generatedParts.js';
 import { generatedNewVehicles, generatedUsedVehicles } from './generatedVehicles.js';
 
 export const vehicles = [
@@ -208,7 +209,7 @@ export const parts = [
     compatibleModels: ['Hilux'],
     compatibleYears: [],
     description:
-      'Used alternator listed for Toyota Hilux applications. Compatibility can vary by engine and production year; confirm the vehicle details with MoCars before ordering. Gallery images are illustrative; contact MoCars to confirm the actual part and its condition.',
+      'Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
     specifications: [],
     manufacturer: null,
     price: 140,
@@ -220,7 +221,6 @@ export const parts = [
     images: [
       '/images/generated/parts/alternator-toyota-hilux/front.jpg',
       '/images/generated/parts/alternator-toyota-hilux/rear.jpg',
-      '/images/generated/parts/alternator-toyota-hilux/detail.jpg',
     ],
   },
   {
@@ -234,7 +234,7 @@ export const parts = [
     compatibleModels: [],
     compatibleYears: [],
     description:
-      'New brake disc and pad set. Vehicle compatibility has not yet been supplied; share the make, model, year and engine details with MoCars before ordering.',
+      'Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
     specifications: [],
     manufacturer: null,
     price: 85,
@@ -243,7 +243,10 @@ export const parts = [
     dateAdded: null,
     featured: true,
     searchableKeywords: ['brakes', 'rotor', 'pads'],
-    images: ['/images/brake-kit.jpg'],
+    images: [
+      '/images/generated/parts/brake-disc-pads-set/front.jpg',
+      '/images/generated/parts/brake-disc-pads-set/rear.jpg',
+    ],
   },
   {
     id: 'headlight-volkswagen-polo',
@@ -256,7 +259,7 @@ export const parts = [
     compatibleModels: ['Polo'],
     compatibleYears: [],
     description:
-      'Used headlight listed for Volkswagen Polo applications. Confirm the model year, body variant and side required with MoCars before ordering.',
+      'Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
     specifications: [],
     manufacturer: null,
     price: 120,
@@ -265,7 +268,10 @@ export const parts = [
     dateAdded: null,
     featured: true,
     searchableKeywords: ['lamp', 'lighting', 'body part'],
-    images: ['/images/headlight.jpg'],
+    images: [
+      '/images/generated/parts/headlight-volkswagen-polo/front.jpg',
+      '/images/generated/parts/headlight-volkswagen-polo/rear.jpg',
+    ],
   },
   {
     id: 'side-mirror-mazda-cx5',
@@ -278,7 +284,7 @@ export const parts = [
     compatibleModels: ['CX-5'],
     compatibleYears: [],
     description:
-      'New side mirror listed for Mazda CX-5 applications. Confirm the model year, mirror side, colour and electrical functions with MoCars before ordering.',
+      'Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
     specifications: [],
     manufacturer: null,
     price: 95,
@@ -287,8 +293,13 @@ export const parts = [
     dateAdded: null,
     featured: true,
     searchableKeywords: ['door mirror', 'wing mirror', 'body component'],
-    images: ['/images/side-mirror.jpg'],
+    images: [
+      '/images/generated/parts/side-mirror-mazda-cx5/front.jpg',
+      '/images/generated/parts/side-mirror-mazda-cx5/rear.jpg',
+    ],
   },
+  ...generatedNewParts,
+  ...generatedUsedParts,
 ];
 
 export const partCategories = [

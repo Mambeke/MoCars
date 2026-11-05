@@ -1,0 +1,802 @@
+[
+  {
+    "id": "alternator-toyota-hilux",
+    "reference": "MOC-PART-001",
+    "name": "Alternator – Toyota Hilux",
+    "condition": "Used",
+    "category": "Electrical Components",
+    "existing": true
+  },
+  {
+    "id": "brake-disc-pads-set",
+    "reference": "MOC-PART-002",
+    "name": "Brake Disc & Pads Set",
+    "condition": "New",
+    "category": "Brake Components",
+    "existing": true
+  },
+  {
+    "id": "headlight-volkswagen-polo",
+    "reference": "MOC-PART-003",
+    "name": "Headlight – Volkswagen Polo",
+    "condition": "Used",
+    "category": "Lighting",
+    "existing": true
+  },
+  {
+    "id": "side-mirror-mazda-cx5",
+    "reference": "MOC-PART-004",
+    "name": "Side Mirror – Mazda CX-5",
+    "condition": "New",
+    "category": "Body Parts",
+    "existing": true
+  },
+  {
+    "id": "starter-motor-new",
+    "reference": "MOC-GEN-PN-001",
+    "name": "Starter Motor",
+    "condition": "New",
+    "category": "Electrical Components",
+    "existing": false
+  },
+  {
+    "id": "engine-air-filter-new",
+    "reference": "MOC-GEN-PN-002",
+    "name": "Engine Air Filter",
+    "condition": "New",
+    "category": "Service Parts",
+    "existing": false
+  },
+  {
+    "id": "cabin-air-filter-new",
+    "reference": "MOC-GEN-PN-003",
+    "name": "Cabin Air Filter",
+    "condition": "New",
+    "category": "Service Parts",
+    "existing": false
+  },
+  {
+    "id": "oil-filter-new",
+    "reference": "MOC-GEN-PN-004",
+    "name": "Oil Filter",
+    "condition": "New",
+    "category": "Service Parts",
+    "existing": false
+  },
+  {
+    "id": "fuel-filter-new",
+    "reference": "MOC-GEN-PN-005",
+    "name": "Fuel Filter",
+    "condition": "New",
+    "category": "Fuel System",
+    "existing": false
+  },
+  {
+    "id": "spark-plug-set-new",
+    "reference": "MOC-GEN-PN-006",
+    "name": "Spark Plug Set",
+    "condition": "New",
+    "category": "Ignition Components",
+    "existing": false
+  },
+  {
+    "id": "ignition-coil-pack-new",
+    "reference": "MOC-GEN-PN-007",
+    "name": "Ignition Coil Pack",
+    "condition": "New",
+    "category": "Ignition Components",
+    "existing": false
+  },
+  {
+    "id": "serpentine-drive-belt-new",
+    "reference": "MOC-GEN-PN-008",
+    "name": "Serpentine Drive Belt",
+    "condition": "New",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "timing-belt-kit-new",
+    "reference": "MOC-GEN-PN-009",
+    "name": "Timing Belt Kit",
+    "condition": "New",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "timing-chain-kit-new",
+    "reference": "MOC-GEN-PN-010",
+    "name": "Timing Chain Kit",
+    "condition": "New",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "water-pump-new",
+    "reference": "MOC-GEN-PN-011",
+    "name": "Water Pump",
+    "condition": "New",
+    "category": "Cooling System",
+    "existing": false
+  },
+  {
+    "id": "thermostat-housing-new",
+    "reference": "MOC-GEN-PN-012",
+    "name": "Thermostat Housing",
+    "condition": "New",
+    "category": "Cooling System",
+    "existing": false
+  },
+  {
+    "id": "radiator-new",
+    "reference": "MOC-GEN-PN-013",
+    "name": "Radiator",
+    "condition": "New",
+    "category": "Cooling System",
+    "existing": false
+  },
+  {
+    "id": "radiator-cooling-fan-new",
+    "reference": "MOC-GEN-PN-014",
+    "name": "Radiator Cooling Fan",
+    "condition": "New",
+    "category": "Cooling System",
+    "existing": false
+  },
+  {
+    "id": "coolant-expansion-tank-new",
+    "reference": "MOC-GEN-PN-015",
+    "name": "Coolant Expansion Tank",
+    "condition": "New",
+    "category": "Cooling System",
+    "existing": false
+  },
+  {
+    "id": "intercooler-hose-new",
+    "reference": "MOC-GEN-PN-016",
+    "name": "Intercooler Hose",
+    "condition": "New",
+    "category": "Cooling System",
+    "existing": false
+  },
+  {
+    "id": "brake-master-cylinder-new",
+    "reference": "MOC-GEN-PN-017",
+    "name": "Brake Master Cylinder",
+    "condition": "New",
+    "category": "Brake Components",
+    "existing": false
+  },
+  {
+    "id": "brake-caliper-new",
+    "reference": "MOC-GEN-PN-018",
+    "name": "Brake Caliper",
+    "condition": "New",
+    "category": "Brake Components",
+    "existing": false
+  },
+  {
+    "id": "brake-hose-set-new",
+    "reference": "MOC-GEN-PN-019",
+    "name": "Brake Hose Set",
+    "condition": "New",
+    "category": "Brake Components",
+    "existing": false
+  },
+  {
+    "id": "wheel-bearing-hub-new",
+    "reference": "MOC-GEN-PN-020",
+    "name": "Wheel Bearing Hub",
+    "condition": "New",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "front-shock-absorber-new",
+    "reference": "MOC-GEN-PN-021",
+    "name": "Front Shock Absorber",
+    "condition": "New",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "rear-shock-absorber-new",
+    "reference": "MOC-GEN-PN-022",
+    "name": "Rear Shock Absorber",
+    "condition": "New",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "lower-control-arm-new",
+    "reference": "MOC-GEN-PN-023",
+    "name": "Lower Control Arm",
+    "condition": "New",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "tie-rod-end-pair-new",
+    "reference": "MOC-GEN-PN-024",
+    "name": "Tie Rod End Pair",
+    "condition": "New",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "ball-joint-pair-new",
+    "reference": "MOC-GEN-PN-025",
+    "name": "Ball Joint Pair",
+    "condition": "New",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "stabiliser-link-pair-new",
+    "reference": "MOC-GEN-PN-026",
+    "name": "Stabiliser Link Pair",
+    "condition": "New",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "cv-joint-kit-new",
+    "reference": "MOC-GEN-PN-027",
+    "name": "CV Joint Kit",
+    "condition": "New",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "clutch-kit-new",
+    "reference": "MOC-GEN-PN-028",
+    "name": "Clutch Kit",
+    "condition": "New",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "clutch-master-cylinder-new",
+    "reference": "MOC-GEN-PN-029",
+    "name": "Clutch Master Cylinder",
+    "condition": "New",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "cv-axle-assembly-new",
+    "reference": "MOC-GEN-PN-030",
+    "name": "CV Axle Assembly",
+    "condition": "New",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "universal-joint-new",
+    "reference": "MOC-GEN-PN-031",
+    "name": "Universal Joint",
+    "condition": "New",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "oxygen-sensor-new",
+    "reference": "MOC-GEN-PN-032",
+    "name": "Oxygen Sensor",
+    "condition": "New",
+    "category": "Electrical Sensors",
+    "existing": false
+  },
+  {
+    "id": "crankshaft-position-sensor-new",
+    "reference": "MOC-GEN-PN-033",
+    "name": "Crankshaft Position Sensor",
+    "condition": "New",
+    "category": "Electrical Sensors",
+    "existing": false
+  },
+  {
+    "id": "camshaft-position-sensor-new",
+    "reference": "MOC-GEN-PN-034",
+    "name": "Camshaft Position Sensor",
+    "condition": "New",
+    "category": "Electrical Sensors",
+    "existing": false
+  },
+  {
+    "id": "mass-airflow-sensor-new",
+    "reference": "MOC-GEN-PN-035",
+    "name": "Mass Airflow Sensor",
+    "condition": "New",
+    "category": "Electrical Sensors",
+    "existing": false
+  },
+  {
+    "id": "fuel-pump-module-new",
+    "reference": "MOC-GEN-PN-036",
+    "name": "Fuel Pump Module",
+    "condition": "New",
+    "category": "Fuel System",
+    "existing": false
+  },
+  {
+    "id": "injector-nozzle-set-new",
+    "reference": "MOC-GEN-PN-037",
+    "name": "Injector Nozzle Set",
+    "condition": "New",
+    "category": "Fuel System",
+    "existing": false
+  },
+  {
+    "id": "headlight-bulb-set-new",
+    "reference": "MOC-GEN-PN-038",
+    "name": "Headlight Bulb Set",
+    "condition": "New",
+    "category": "Lighting",
+    "existing": false
+  },
+  {
+    "id": "fog-lamp-assembly-new",
+    "reference": "MOC-GEN-PN-039",
+    "name": "Fog Lamp Assembly",
+    "condition": "New",
+    "category": "Lighting",
+    "existing": false
+  },
+  {
+    "id": "tail-lamp-assembly-new",
+    "reference": "MOC-GEN-PN-040",
+    "name": "Tail Lamp Assembly",
+    "condition": "New",
+    "category": "Lighting",
+    "existing": false
+  },
+  {
+    "id": "window-regulator-new",
+    "reference": "MOC-GEN-PN-041",
+    "name": "Window Regulator",
+    "condition": "New",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "wiper-motor-new",
+    "reference": "MOC-GEN-PN-042",
+    "name": "Wiper Motor",
+    "condition": "New",
+    "category": "Electrical Components",
+    "existing": false
+  },
+  {
+    "id": "wiper-blade-set-new",
+    "reference": "MOC-GEN-PN-043",
+    "name": "Wiper Blade Set",
+    "condition": "New",
+    "category": "Service Parts",
+    "existing": false
+  },
+  {
+    "id": "door-handle-assembly-new",
+    "reference": "MOC-GEN-PN-044",
+    "name": "Door Handle Assembly",
+    "condition": "New",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "bonnet-latch-new",
+    "reference": "MOC-GEN-PN-045",
+    "name": "Bonnet Latch",
+    "condition": "New",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "engine-mount-set-new",
+    "reference": "MOC-GEN-PN-046",
+    "name": "Engine Mount Set",
+    "condition": "New",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "gearbox-mount-new",
+    "reference": "MOC-GEN-PN-047",
+    "name": "Gearbox Mount",
+    "condition": "New",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "exhaust-silencer-new",
+    "reference": "MOC-GEN-PN-048",
+    "name": "Exhaust Silencer",
+    "condition": "New",
+    "category": "Exhaust System",
+    "existing": false
+  },
+  {
+    "id": "turbocharger-assembly-used",
+    "reference": "MOC-GEN-PU-001",
+    "name": "Turbocharger Assembly",
+    "condition": "Used",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "intake-manifold-used",
+    "reference": "MOC-GEN-PU-002",
+    "name": "Intake Manifold",
+    "condition": "Used",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "exhaust-manifold-used",
+    "reference": "MOC-GEN-PU-003",
+    "name": "Exhaust Manifold",
+    "condition": "Used",
+    "category": "Exhaust System",
+    "existing": false
+  },
+  {
+    "id": "throttle-body-used",
+    "reference": "MOC-GEN-PU-004",
+    "name": "Throttle Body",
+    "condition": "Used",
+    "category": "Fuel & Air Intake",
+    "existing": false
+  },
+  {
+    "id": "cylinder-head-used",
+    "reference": "MOC-GEN-PU-005",
+    "name": "Cylinder Head",
+    "condition": "Used",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "engine-block-used",
+    "reference": "MOC-GEN-PU-006",
+    "name": "Engine Block",
+    "condition": "Used",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "oil-sump-used",
+    "reference": "MOC-GEN-PU-007",
+    "name": "Oil Sump",
+    "condition": "Used",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "valve-cover-used",
+    "reference": "MOC-GEN-PU-008",
+    "name": "Valve Cover",
+    "condition": "Used",
+    "category": "Engine Components",
+    "existing": false
+  },
+  {
+    "id": "power-steering-pump-used",
+    "reference": "MOC-GEN-PU-009",
+    "name": "Power Steering Pump",
+    "condition": "Used",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "steering-rack-used",
+    "reference": "MOC-GEN-PU-010",
+    "name": "Steering Rack",
+    "condition": "Used",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "abs-pump-module-used",
+    "reference": "MOC-GEN-PU-011",
+    "name": "ABS Pump Module",
+    "condition": "Used",
+    "category": "Brake Components",
+    "existing": false
+  },
+  {
+    "id": "brake-booster-used",
+    "reference": "MOC-GEN-PU-012",
+    "name": "Brake Booster",
+    "condition": "Used",
+    "category": "Brake Components",
+    "existing": false
+  },
+  {
+    "id": "front-differential-used",
+    "reference": "MOC-GEN-PU-013",
+    "name": "Front Differential",
+    "condition": "Used",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "rear-differential-used",
+    "reference": "MOC-GEN-PU-014",
+    "name": "Rear Differential",
+    "condition": "Used",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "transfer-case-used",
+    "reference": "MOC-GEN-PU-015",
+    "name": "Transfer Case",
+    "condition": "Used",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "manual-gearbox-used",
+    "reference": "MOC-GEN-PU-016",
+    "name": "Manual Gearbox",
+    "condition": "Used",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "automatic-transmission-used",
+    "reference": "MOC-GEN-PU-017",
+    "name": "Automatic Transmission",
+    "condition": "Used",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "driveshaft-used",
+    "reference": "MOC-GEN-PU-018",
+    "name": "Driveshaft",
+    "condition": "Used",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "rear-axle-assembly-used",
+    "reference": "MOC-GEN-PU-019",
+    "name": "Rear Axle Assembly",
+    "condition": "Used",
+    "category": "Transmission & Drivetrain",
+    "existing": false
+  },
+  {
+    "id": "front-subframe-used",
+    "reference": "MOC-GEN-PU-020",
+    "name": "Front Subframe",
+    "condition": "Used",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "rear-subframe-used",
+    "reference": "MOC-GEN-PU-021",
+    "name": "Rear Subframe",
+    "condition": "Used",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "steering-column-used",
+    "reference": "MOC-GEN-PU-022",
+    "name": "Steering Column",
+    "condition": "Used",
+    "category": "Suspension & Steering",
+    "existing": false
+  },
+  {
+    "id": "instrument-cluster-used",
+    "reference": "MOC-GEN-PU-023",
+    "name": "Instrument Cluster",
+    "condition": "Used",
+    "category": "Interior Components",
+    "existing": false
+  },
+  {
+    "id": "infotainment-head-unit-used",
+    "reference": "MOC-GEN-PU-024",
+    "name": "Infotainment Head Unit",
+    "condition": "Used",
+    "category": "Interior Components",
+    "existing": false
+  },
+  {
+    "id": "climate-control-panel-used",
+    "reference": "MOC-GEN-PU-025",
+    "name": "Climate Control Panel",
+    "condition": "Used",
+    "category": "Interior Components",
+    "existing": false
+  },
+  {
+    "id": "gear-selector-assembly-used",
+    "reference": "MOC-GEN-PU-026",
+    "name": "Gear Selector Assembly",
+    "condition": "Used",
+    "category": "Interior Components",
+    "existing": false
+  },
+  {
+    "id": "window-switch-panel-used",
+    "reference": "MOC-GEN-PU-027",
+    "name": "Window Switch Panel",
+    "condition": "Used",
+    "category": "Interior Components",
+    "existing": false
+  },
+  {
+    "id": "body-control-module-used",
+    "reference": "MOC-GEN-PU-028",
+    "name": "Body Control Module",
+    "condition": "Used",
+    "category": "Electrical Components",
+    "existing": false
+  },
+  {
+    "id": "engine-control-unit-used",
+    "reference": "MOC-GEN-PU-029",
+    "name": "Engine Control Unit",
+    "condition": "Used",
+    "category": "Electrical Components",
+    "existing": false
+  },
+  {
+    "id": "fuse-box-used",
+    "reference": "MOC-GEN-PU-030",
+    "name": "Fuse Box",
+    "condition": "Used",
+    "category": "Electrical Components",
+    "existing": false
+  },
+  {
+    "id": "wiring-harness-used",
+    "reference": "MOC-GEN-PU-031",
+    "name": "Wiring Harness",
+    "condition": "Used",
+    "category": "Electrical Components",
+    "existing": false
+  },
+  {
+    "id": "blower-motor-used",
+    "reference": "MOC-GEN-PU-032",
+    "name": "Blower Motor",
+    "condition": "Used",
+    "category": "Heating & Air Conditioning",
+    "existing": false
+  },
+  {
+    "id": "air-conditioning-compressor-used",
+    "reference": "MOC-GEN-PU-033",
+    "name": "Air Conditioning Compressor",
+    "condition": "Used",
+    "category": "Heating & Air Conditioning",
+    "existing": false
+  },
+  {
+    "id": "air-conditioning-condenser-used",
+    "reference": "MOC-GEN-PU-034",
+    "name": "Air Conditioning Condenser",
+    "condition": "Used",
+    "category": "Heating & Air Conditioning",
+    "existing": false
+  },
+  {
+    "id": "intercooler-used",
+    "reference": "MOC-GEN-PU-035",
+    "name": "Intercooler",
+    "condition": "Used",
+    "category": "Cooling System",
+    "existing": false
+  },
+  {
+    "id": "heater-core-used",
+    "reference": "MOC-GEN-PU-036",
+    "name": "Heater Core",
+    "condition": "Used",
+    "category": "Heating & Air Conditioning",
+    "existing": false
+  },
+  {
+    "id": "fuel-rail-used",
+    "reference": "MOC-GEN-PU-037",
+    "name": "Fuel Rail",
+    "condition": "Used",
+    "category": "Fuel System",
+    "existing": false
+  },
+  {
+    "id": "diesel-injection-pump-used",
+    "reference": "MOC-GEN-PU-038",
+    "name": "Diesel Injection Pump",
+    "condition": "Used",
+    "category": "Fuel System",
+    "existing": false
+  },
+  {
+    "id": "fuel-tank-used",
+    "reference": "MOC-GEN-PU-039",
+    "name": "Fuel Tank",
+    "condition": "Used",
+    "category": "Fuel System",
+    "existing": false
+  },
+  {
+    "id": "door-lock-actuator-used",
+    "reference": "MOC-GEN-PU-040",
+    "name": "Door Lock Actuator",
+    "condition": "Used",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "front-grille-used",
+    "reference": "MOC-GEN-PU-041",
+    "name": "Front Grille",
+    "condition": "Used",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "front-bumper-used",
+    "reference": "MOC-GEN-PU-042",
+    "name": "Front Bumper",
+    "condition": "Used",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "rear-bumper-used",
+    "reference": "MOC-GEN-PU-043",
+    "name": "Rear Bumper",
+    "condition": "Used",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "left-front-fender-used",
+    "reference": "MOC-GEN-PU-044",
+    "name": "Left Front Fender",
+    "condition": "Used",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "bonnet-panel-used",
+    "reference": "MOC-GEN-PU-045",
+    "name": "Bonnet Panel",
+    "condition": "Used",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "tailgate-assembly-used",
+    "reference": "MOC-GEN-PU-046",
+    "name": "Tailgate Assembly",
+    "condition": "Used",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "rear-wiper-assembly-used",
+    "reference": "MOC-GEN-PU-047",
+    "name": "Rear Wiper Assembly",
+    "condition": "Used",
+    "category": "Body Parts",
+    "existing": false
+  },
+  {
+    "id": "seat-belt-retractor-used",
+    "reference": "MOC-GEN-PU-048",
+    "name": "Seat Belt Retractor",
+    "condition": "Used",
+    "category": "Interior Components",
+    "existing": false
+  }
+]
