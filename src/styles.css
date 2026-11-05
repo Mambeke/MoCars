@@ -291,6 +291,10 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
 .vehicle-condition-pill span { min-width: 24px; padding: 1px 7px; border-radius: 999px; background: var(--silver-2); color: var(--muted); font-size: 11.5px; font-weight: 800; text-align: center; }
 .vehicle-condition-pill.is-active span { background: rgba(255, 255, 255, 0.18); color: white; }
 
+/* The switcher only appears on small screens; laptop and desktop navigation
+   already expose Used Cars and New Cars as visible tabs in the header. */
+@media (min-width: 1025px) { .vehicle-condition-toggle { display: none; } }
+
 /* Gallery and vehicle detail */
 .vehicle-detail-section, .part-detail-section { padding: 16px 0 66px; }
 .vehicle-detail-grid { display: grid; grid-template-columns: minmax(0, 1.72fr) minmax(360px, .92fr); align-items: start; gap: 34px; }

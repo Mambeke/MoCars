@@ -14,7 +14,6 @@ const initialFilters = {
 const unique = (values) => [...new Set(values.filter(Boolean))].sort();
 
 const conditionTabs = [
-  { key: 'All', label: 'All Cars', path: '/cars' },
   { key: 'New', label: 'New Cars', path: '/new-cars' },
   { key: 'Used', label: 'Used Cars', path: '/used-cars' },
 ];
@@ -32,7 +31,6 @@ export default function VehiclesPage({ condition = 'All' }) {
     [condition, vehicles],
   );
   const conditionCounts = useMemo(() => ({
-    All: vehicles.length,
     New: vehicles.filter((vehicle) => vehicle.condition === 'New').length,
     Used: vehicles.filter((vehicle) => vehicle.condition === 'Used').length,
   }), [vehicles]);
