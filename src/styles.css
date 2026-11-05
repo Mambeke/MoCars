@@ -258,6 +258,23 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
 .catalogue-section { background: #fafbfc; }
 .catalogue-layout { display: grid; grid-template-columns: 292px minmax(0, 1fr); align-items: start; gap: 30px; }
 .desktop-filters { position: sticky; top: calc(var(--header-height) + 24px); }
+
+/* Laptop and desktop: the filter panel is often taller than the viewport, so give it
+   its own vertical scrollbar instead of letting its lower fields fall out of reach. */
+@media (min-width: 1025px) {
+  .desktop-filters {
+    max-height: calc(100vh - var(--header-height) - 44px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 9px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--red) var(--silver-2);
+  }
+  .desktop-filters::-webkit-scrollbar { width: 10px; }
+  .desktop-filters::-webkit-scrollbar-track { background: var(--silver-2); border-radius: 999px; }
+  .desktop-filters::-webkit-scrollbar-thumb { background: var(--red); border: 2px solid var(--silver-2); border-radius: 999px; }
+  .desktop-filters::-webkit-scrollbar-thumb:hover { background: var(--red-dark); }
+}
 .filters-panel { padding: 22px; display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--border); border-radius: var(--radius); background: white; box-shadow: var(--shadow-sm); }
 .filter-heading { padding-bottom: 13px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
 .filter-heading h2 { font-size: 1.4rem; }
