@@ -238,9 +238,9 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
 .footer-admin-link:hover, .footer-admin-link:focus-visible { color: white; text-decoration: underline; }
 
 /* Page headers and breadcrumbs */
-.page-hero { min-height: 245px; padding: 66px 0 54px; display: flex; align-items: center; color: white; background: radial-gradient(circle at 77% 30%, #174a75 0, transparent 31%), linear-gradient(125deg, var(--navy), #0a2845); }
+.page-hero { min-height: 148px; padding: 34px 0 28px; display: flex; align-items: center; color: white; background: radial-gradient(circle at 77% 30%, #174a75 0, transparent 31%), linear-gradient(125deg, var(--navy), #0a2845); }
 .page-hero h1 { color: white; font-size: clamp(2.5rem, 4vw, 4rem); }
-.page-hero h1.page-hero-statement { max-width: 940px; color: white; font-size: clamp(1.3rem, 2.6vw, 1.95rem); font-weight: 700; line-height: 1.4; }
+.page-hero h1.page-hero-statement { max-width: 940px; color: rgba(255,255,255,.86); font-size: clamp(0.95rem, 1.15vw, 1.075rem); font-weight: 500; line-height: 1.5; }
 .page-hero-copy { max-width: 710px; margin-top: 14px; color: rgba(255,255,255,.73); font-size: 1rem; }
 .breadcrumbs { min-height: 62px; display: flex; align-items: center; gap: 9px; overflow: auto; color: var(--muted); font-size: 12px; white-space: nowrap; }
 .breadcrumbs > span { display: flex; align-items: center; gap: 9px; }
@@ -263,8 +263,17 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
 .filter-heading h2 { font-size: 1.4rem; }
 .filter-heading button { padding: 0; color: var(--red); border: 0; background: none; font-size: 11px; font-weight: 750; }
 .results-toolbar { min-height: 58px; margin-bottom: 20px; padding: 10px 12px 10px 18px; display: flex; align-items: center; justify-content: space-between; gap: 15px; border: 1px solid var(--border); border-radius: 12px; background: white; }
-.results-toolbar > div { color: var(--muted); }
-.results-toolbar > div strong { color: var(--navy); }
+.results-toolbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.results-toolbar-left .mobile-filter-trigger { flex: none; }
+.results-count { color: var(--muted); white-space: nowrap; }
+.results-count strong { color: var(--navy); }
+.catalogue-search { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; }
+.catalogue-search-field { position: relative; flex: 1; min-width: 0; display: block; }
+.catalogue-search-field > svg { position: absolute; left: 13px; top: 50%; width: 17px; transform: translateY(-50%); color: var(--muted); }
+.catalogue-search-field input { width: 100%; min-height: 46px; padding: 10px 14px 10px 39px; border: 1px solid #ccd3da; border-radius: 10px; background: white; }
+.catalogue-search-field input:focus { outline: 2px solid var(--blue); outline-offset: 1px; border-color: var(--blue); }
+.catalogue-search-button { flex: none; min-height: 46px; }
+.catalogue-search-clear { flex: none; padding: 0 6px; border: 0; background: none; color: var(--muted); font-weight: 650; text-decoration: underline; cursor: pointer; }
 .sort-control { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 12px; }
 .sort-control select { min-width: 190px; padding: 9px 32px 9px 10px; border: 1px solid #ccd3da; border-radius: 8px; background: white; }
 .inventory-note { margin-top: 24px; padding: 15px 18px; color: var(--muted); border-left: 3px solid var(--blue); background: #edf5fd; font-size: 12px; }
@@ -284,19 +293,6 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
 .empty-state h2 { max-width: 600px; }
 .empty-state p { max-width: 570px; margin: 12px auto 22px; color: var(--muted); }
 
-/* Vehicle condition pills (page-level switcher; separate from the .condition-pill card badge) */
-.vehicle-condition-toggle { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
-.vehicle-condition-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 17px; border: 1px solid var(--border); border-radius: 999px; background: white; color: var(--navy); font-family: 'Montserrat', Arial, sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease; }
-.vehicle-condition-pill:hover { border-color: var(--navy-3); background: var(--silver); }
-.vehicle-condition-pill:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-.vehicle-condition-pill.is-active { border-color: var(--navy); background: var(--navy); color: white; }
-.vehicle-condition-pill.is-active:hover { background: var(--navy-2); }
-.vehicle-condition-pill span { min-width: 24px; padding: 1px 7px; border-radius: 999px; background: var(--silver-2); color: var(--muted); font-size: 11.5px; font-weight: 800; text-align: center; }
-.vehicle-condition-pill.is-active span { background: rgba(255, 255, 255, 0.18); color: white; }
-
-/* The switcher only appears on small screens; laptop and desktop navigation
-   already expose Used Cars and New Cars as visible tabs in the header. */
-@media (min-width: 1025px) { .vehicle-condition-toggle { display: none; } }
 
 /* Gallery and vehicle detail */
 .vehicle-detail-section, .part-detail-section { padding: 16px 0 66px; }
@@ -621,13 +617,12 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
   .footer-brand { grid-column: 1 / -1; }
   .footer-grid > div:last-child { grid-column: 1 / -1; }
   .footer-bottom { flex-direction: column; }
-  .page-hero { min-height: 220px; padding: 48px 0; }
-  .vehicle-condition-toggle { gap: 11px; margin: -34px 0 20px; }
-  .vehicle-condition-pill { min-height: 44px; padding: 11px 21px; border-color: var(--navy); background: transparent; font-size: 14.5px; }
-  .vehicle-condition-pill span { min-width: 28px; padding: 2px 9px; font-size: 12.5px; }
-  .results-toolbar { flex-wrap: wrap; }
-  .results-toolbar > div { width: 100%; }
+  .page-hero { min-height: 122px; padding: 26px 0 22px; }
+  .results-toolbar { flex-wrap: wrap; gap: 8px; }
+  .results-toolbar > .results-toolbar-left { width: auto; flex: 0 1 auto; min-width: 0; }
+  .results-count-tail { display: none; }
   .sort-control { margin-left: auto; }
+  .sort-control select { min-width: 120px; }
   .product-gallery { display: flex; flex-direction: column-reverse; }
   .gallery-thumbnails { max-height: none; overflow-x: auto; flex-direction: row; }
   .gallery-thumbnails button { flex: 0 0 78px; height: 62px; }
@@ -685,8 +680,10 @@ body.route-loading .route-progress span { animation: route-progress 1.1s ease-in
   .latest-row > svg { display: none; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-brand, .footer-grid > div:last-child { grid-column: auto; }
-  .sort-control { width: 100%; }
-  .sort-control select { flex: 1; min-width: 0; }
+  .sort-control { width: auto; margin-left: auto; }
+  .sort-control > span { display: none; }
+  .sort-control select { flex: none; min-width: 120px; }
+  .results-count { display: none; }
   .prominent-search { flex-wrap: wrap; }
   .prominent-search input { min-height: 42px; }
   .prominent-search .btn { width: 100%; }

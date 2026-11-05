@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { SlidersHorizontal, X } from 'lucide-react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Search, SlidersHorizontal, X } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import { VehicleCard } from '../components/Cards.jsx';
 import { EmptyState, PageHero } from '../components/UI.jsx';
 import { useInventory } from '../context/InventoryContext.jsx';
@@ -13,17 +13,12 @@ const initialFilters = {
 
 const unique = (values) => [...new Set(values.filter(Boolean))].sort();
 
-const conditionTabs = [
-  { key: 'New', label: 'New Cars', path: '/new-cars' },
-  { key: 'Used', label: 'Used Cars', path: '/used-cars' },
-];
-
 export default function VehiclesPage({ condition = 'All' }) {
   const { vehicles } = useInventory();
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [filters, setFilters] = useState(() => ({ ...initialFilters, keyword: searchParams.get('q') || '' }));
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [searchDraft, setSearchDraft] = useState(searchParams.get('q') || '');
   const title = condition === 'All' ? 'All Cars for Sale' : `${condition} Cars for Sale`;
   const scope = condition === 'All' ? 'new and used' : condition.toLowerCase();
   const statement = `Search the supplied MoCars ${scope} vehicle inventory and compare factual listing details before making an enquiry.`;
@@ -31,10 +26,6 @@ export default function VehiclesPage({ condition = 'All' }) {
     () => (condition === 'All' ? vehicles : vehicles.filter((vehicle) => vehicle.condition === condition)),
     [condition, vehicles],
   );
-  const conditionCounts = useMemo(() => ({
-    New: vehicles.filter((vehicle) => vehicle.condition === 'New').length,
-    Used: vehicles.filter((vehicle) => vehicle.condition === 'Used').length,
-  }), [vehicles]);
 
   usePageMeta(title, `Browse ${condition === 'All' ? 'new and used' : condition.toLowerCase()} cars from MoCars and filter by make, price, year, fuel type, transmission and body type.`);
 
@@ -42,6 +33,10 @@ export default function VehiclesPage({ condition = 'All' }) {
     const q = searchParams.get('q');
     if (q) setFilters((current) => ({ ...current, keyword: q }));
   }, [searchParams]);
+
+  useEffect(() => {
+    setSearchDraft(filters.keyword);
+  }, [filters.keyword]);
 
   const options = useMemo(() => ({
     makes: unique(catalogue.map((vehicle) => vehicle.make)),
@@ -81,6 +76,14 @@ export default function VehiclesPage({ condition = 'All' }) {
   }, [catalogue, filters]);
 
   const update = (key, value) => setFilters((current) => ({ ...current, [key]: value, ...(key === 'make' ? { model: '' } : {}) }));
+  const submitSearch = (event) => {
+    event.preventDefault();
+    setFilters((current) => ({ ...current, keyword: searchDraft.trim() }));
+  };
+  const resetSearch = () => {
+    setSearchDraft('');
+    setFilters((current) => ({ ...current, keyword: '' }));
+  };
   const clear = () => setFilters(initialFilters);
   const activeCount = Object.entries(filters).filter(([key, value]) => value && key !== 'sort').length;
 
@@ -112,29 +115,15 @@ export default function VehiclesPage({ condition = 'All' }) {
     <>
       <PageHero statement={statement} />
       <section className="catalogue-section section">
-        <div className="container">
-          <div className="vehicle-condition-toggle" role="group" aria-label="Choose vehicle condition">
-            {conditionTabs.map((tab) => (
-              <button
-                key={tab.key}
-                type="button"
-                className={`vehicle-condition-pill${condition === tab.key ? ' is-active' : ''}`}
-                aria-pressed={condition === tab.key}
-                onClick={() => navigate(tab.path)}
-              >
-                {tab.label}
-                <span>{conditionCounts[tab.key]}</span>
-              </button>
-            ))}
-          </div>
-        </div>
         <div className="container catalogue-layout">
           <aside className="desktop-filters">{panel}</aside>
           <div className="catalogue-results">
             <div className="results-toolbar">
-              <div><strong>{results.length}</strong> {results.length === 1 ? 'vehicle' : 'vehicles'} found</div>
-              <button className="mobile-filter-trigger" type="button" onClick={() => setFiltersOpen(true)}><SlidersHorizontal /> Filters {activeCount > 0 && <span>{activeCount}</span>}</button>
-              <label className="sort-control"><span>Sort by</span><select value={filters.sort} onChange={(event) => update('sort', event.target.value)}>
+              <div className="results-toolbar-left">
+                <button className="mobile-filter-trigger" type="button" onClick={() => setFiltersOpen(true)}><SlidersHorizontal /> Filters {activeCount > 0 && <span>{activeCount}</span>}</button>
+                <div className="results-count"><strong>{results.length}</strong> {results.length === 1 ? 'vehicle' : 'vehicles'}<span className="results-count-tail"> found</span></div>
+              </div>
+              <label className="sort-control"><span>Sort by</span><select aria-label="Sort by" value={filters.sort} onChange={(event) => update('sort', event.target.value)}>
                 <option value="featured">Featured</option>
                 <option value="newest">Newest Arrivals</option>
                 <option value="price-asc">Price: Low to High</option>
@@ -143,6 +132,19 @@ export default function VehiclesPage({ condition = 'All' }) {
                 <option value="mileage-asc">Lowest Mileage</option>
               </select></label>
             </div>
+            <form className="catalogue-search" onSubmit={submitSearch} role="search">
+              <label className="catalogue-search-field">
+                <Search aria-hidden="true" />
+                <input
+                  value={searchDraft}
+                  onChange={(event) => setSearchDraft(event.target.value)}
+                  placeholder={`Search ${condition === 'All' ? 'all cars' : `${condition.toLowerCase()} cars`} by make, model or keyword`}
+                  aria-label={`Search ${condition === 'All' ? 'all' : condition.toLowerCase()} cars`}
+                />
+              </label>
+              <button className="btn btn-red catalogue-search-button" type="submit">Search</button>
+              {filters.keyword && <button className="catalogue-search-clear" type="button" onClick={resetSearch}>Clear</button>}
+            </form>
             {results.length ? <div className="catalogue-grid">{results.map((vehicle) => <VehicleCard key={vehicle.id} vehicle={vehicle} />)}</div> : <EmptyState onClear={clear} description="Try a different make, price range or keyword." />}
             <p className="inventory-note">Only details supplied with the catalogue are shown. Confirm mileage, specification, availability and location with MoCars before making a decision.</p>
           </div>
