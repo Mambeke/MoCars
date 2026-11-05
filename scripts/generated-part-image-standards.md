@@ -21,12 +21,17 @@
 
 ## Accuracy and customer trust
 
-- Never invent a brand, manufacturer, part number, serial number, engine code, certification mark, specification label, compatibility claim, price or stock quantity.
-- Do not place fake text or unreadable pseudo-labels on a product.
-- Generated products must not be described as photographs of a specific physical stock unit.
-- Customer-facing confirmation line:
+- Never invent a brand, OEM number, serial number, engine code or certification mark, and never place fake text or unreadable pseudo-labels on a product image.
+- Use the MoCars listing reference as the catalogue part number unless a verified OEM number is supplied.
+- Every published part must have a numeric estimated USD price, formatted publicly as `US$ 120`.
+- Every published part must have a full description covering its function, included components, condition, potential multi-vehicle applications and the measurements or specifications that determine fitment.
+- Compatibility examples must be qualified as selected or potential applications; do not claim that one generic component fits every listed vehicle.
+- Every description must state that the price is a rough estimate and end with:
   `Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.`
-- Unsupported listing fields remain null, empty or “On request.”
+- Use `Various manufacturers` when no verified manufacturer is supplied.
+- Use `Available to order` for New parts and `Available` for Used parts unless verified stock information is supplied.
+- Public part pages must not display “On request,” “Not supplied” or empty compatibility fields.
+- Generated products must not be described as photographs of a specific physical stock unit.
 - Used-part condition must be confirmed by MoCars before ordering.
 
 ## Review checklist

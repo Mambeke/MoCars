@@ -3,37 +3,291 @@ const gallery = (id) => [
   `/images/generated/parts/${id}/rear.jpg`,
 ];
 
-const confirmation = 'Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.';
-
-const makePart = ({ id, reference, name, condition, category }) => ({
+const makePart = ({
+  id,
+  reference,
+  name,
+  condition,
+  category,
+  price,
+  description,
+  compatibleMakes,
+  compatibleModels,
+  searchableKeywords,
+}) => ({
   id,
   reference,
   name,
   category,
   condition,
-  partNumber: null,
-  compatibleMakes: [],
-  compatibleModels: [],
+  partNumber: reference,
+  compatibleMakes,
+  compatibleModels,
   compatibleYears: [],
-  description: confirmation,
+  description,
   specifications: [],
-  manufacturer: null,
-  price: null,
+  manufacturer: 'Various manufacturers',
+  price,
   stockQuantity: null,
-  availability: 'Enquire to confirm',
+  availability: condition === 'New' ? 'Available to order' : 'Available',
   dateAdded: '2026-11-05',
   featured: false,
-  searchableKeywords: [],
+  searchableKeywords,
   images: gallery(id),
 });
 
 export const generatedNewParts = [
-  { id: 'starter-motor-new', reference: 'MOC-GEN-PN-001', name: 'Starter Motor', condition: 'New', category: 'Electrical Components' },
-  { id: 'engine-air-filter-new', reference: 'MOC-GEN-PN-002', name: 'Engine Air Filter', condition: 'New', category: 'Service Parts' },
-  { id: 'cabin-air-filter-new', reference: 'MOC-GEN-PN-003', name: 'Cabin Air Filter', condition: 'New', category: 'Service Parts' },
-  { id: 'oil-filter-new', reference: 'MOC-GEN-PN-004', name: 'Oil Filter', condition: 'New', category: 'Service Parts' },
-  { id: 'fuel-filter-new', reference: 'MOC-GEN-PN-005', name: 'Fuel Filter', condition: 'New', category: 'Fuel System' },
-  { id: 'spark-plug-set-new', reference: 'MOC-GEN-PN-006', name: 'Spark Plug Set', condition: 'New', category: 'Ignition Components' },
+  {
+    id: 'starter-motor-new', reference: 'MOC-GEN-PN-001', name: 'Starter Motor', condition: 'New', category: 'Electrical Components', price: 120,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['starter', 'starting system', 'solenoid', 'pinion'],
+    description: 'New replacement starter motor that engages the flywheel to crank the engine during starting. Potential applications include selected Toyota Hilux, Nissan Navara and Isuzu D-Max variants. Engine type, mounting pattern, pinion tooth count, terminal layout and electrical specification must match the vehicle. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'engine-air-filter-new', reference: 'MOC-GEN-PN-002', name: 'Engine Air Filter', condition: 'New', category: 'Service Parts', price: 25,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Demio'], searchableKeywords: ['air filter', 'engine filter', 'intake', 'service part'],
+    description: 'New pleated engine air filter designed to trap dust and debris before intake air reaches the engine. Similar panel filters are used on selected Toyota Corolla, Honda Fit, Nissan Note and Mazda Demio variants. Filter length, width, depth, frame profile and air-box shape must match the existing filter. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'cabin-air-filter-new', reference: 'MOC-GEN-PN-003', name: 'Cabin Air Filter', condition: 'New', category: 'Service Parts', price: 20,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Volkswagen'], compatibleModels: ['Aqua', 'Fit', 'Note', 'Polo'], searchableKeywords: ['cabin filter', 'pollen filter', 'air conditioning', 'hvac'],
+    description: 'New cabin air filter designed to reduce dust, pollen and airborne debris entering the passenger compartment through the ventilation system. Similar filters are used on selected Toyota Aqua, Honda Fit, Nissan Note and Volkswagen Polo variants. Housing dimensions, filter thickness, edge shape and airflow orientation must match the vehicle. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'oil-filter-new', reference: 'MOC-GEN-PN-004', name: 'Oil Filter', condition: 'New', category: 'Service Parts', price: 15,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda', 'Isuzu'], compatibleModels: ['Corolla', 'Navara', 'Mazda3', 'D-Max'], searchableKeywords: ['oil filter', 'engine service', 'lubrication', 'spin-on filter'],
+    description: 'New spin-on engine oil filter designed to remove contaminants from circulating engine oil. Similar canister filters are used across selected Toyota Corolla, Nissan Navara, Mazda3 and Isuzu D-Max engine variants. Thread size, gasket diameter, canister clearance, bypass-valve setting and engine specification must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'fuel-filter-new', reference: 'MOC-GEN-PN-005', name: 'Fuel Filter', condition: 'New', category: 'Fuel System', price: 28,
+    compatibleMakes: ['Toyota', 'Volkswagen', 'Mazda'], compatibleModels: ['Corolla', 'Polo', 'Mazda3'], searchableKeywords: ['fuel filter', 'inline filter', 'fuel system', 'service part'],
+    description: 'New inline fuel filter designed to capture particles before fuel reaches the engine. Comparable filters are used on selected Toyota Corolla, Volkswagen Polo and Mazda3 variants. Fuel type, line diameter, fitting style, operating pressure, flow direction and mounting arrangement must match the vehicle. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'spark-plug-set-new', reference: 'MOC-GEN-PN-006', name: 'Spark Plug Set', condition: 'New', category: 'Ignition Components', price: 35,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Mazda'], compatibleModels: ['Vitz', 'Fit', 'Note', 'Demio'], searchableKeywords: ['spark plugs', 'ignition', 'petrol engine', 'service set'],
+    description: 'New matching set of four spark plugs for petrol-engine ignition service. Comparable plug configurations are used on selected Toyota Vitz, Honda Fit, Nissan Note and Mazda Demio variants. Thread diameter, reach, seat type, heat range, electrode design and engine code must match before installation. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'ignition-coil-pack-new', reference: 'MOC-GEN-PN-007', name: 'Ignition Coil Pack', condition: 'New', category: 'Ignition Components', price: 45,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan'], compatibleModels: ['Corolla', 'Fit', 'Note'], searchableKeywords: ['ignition coil', 'coil pack', 'coil on plug', 'petrol engine'],
+    description: 'New single coil-on-plug ignition coil with a molded body, electrical connector and rubber spark-plug boot, designed to transform low battery voltage into the high voltage needed to fire one cylinder. Potential applications include selected Toyota Corolla, Honda Fit and Nissan Note petrol variants. Engine code, connector pin count and keying, boot length, coil-body dimensions, mounting arrangement and electrical specification must match the vehicle. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'serpentine-drive-belt-new', reference: 'MOC-GEN-PN-008', name: 'Serpentine Drive Belt', condition: 'New', category: 'Engine Components', price: 30,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Note', 'Mazda3', 'Polo'], searchableKeywords: ['serpentine belt', 'drive belt', 'accessory belt', 'multi rib belt'],
+    description: 'New single multi-rib EPDM serpentine belt for transferring crankshaft rotation to compatible engine accessories such as the alternator, air-conditioning compressor or power-steering pump. Potential applications include selected Toyota Corolla, Nissan Note, Mazda3 and Volkswagen Polo variants. Belt circumference, width, rib count, rib pitch, pulley routing, tensioner range and fitted accessory layout must all match the engine. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'timing-belt-kit-new', reference: 'MOC-GEN-PN-009', name: 'Timing Belt Kit', condition: 'New', category: 'Engine Components', price: 110,
+    compatibleMakes: ['Volkswagen', 'Ford', 'Hyundai'], compatibleModels: ['Polo', 'Fiesta', 'i20'], searchableKeywords: ['timing belt', 'tensioner', 'idler pulley', 'engine timing kit'],
+    description: 'New three-piece engine timing service kit containing one toothed timing belt, one larger tensioner-pulley assembly and one smaller idler pulley. Potential applications include selected Volkswagen Polo, Ford Fiesta and Hyundai i20 engine variants that use a belt-driven camshaft. Engine code, belt tooth count, width and pitch, tensioner mounting pattern, idler dimensions, pulley offsets and model generation must match; this is not a universal kit. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'timing-chain-kit-new', reference: 'MOC-GEN-PN-010', name: 'Timing Chain Kit', condition: 'New', category: 'Engine Components', price: 180,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Note', 'Mazda3'], searchableKeywords: ['timing chain', 'sprockets', 'chain guides', 'chain tensioner'],
+    description: 'New six-element engine timing service kit containing one roller timing chain, two timing sprockets, two polymer guide rails and one hydraulic tensioner. Potential applications include selected chain-driven Toyota Corolla, Nissan Note and Mazda3 petrol-engine variants. Engine code, chain pitch and link count, sprocket tooth counts and timing marks, guide profiles, tensioner type, mounting holes and oil-feed arrangement must match before installation. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'water-pump-new', reference: 'MOC-GEN-PN-011', name: 'Water Pump', condition: 'New', category: 'Cooling System', price: 85,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu', 'Mazda'], compatibleModels: ['Corolla', 'Navara', 'D-Max', 'Mazda3'], searchableKeywords: ['water pump', 'coolant pump', 'engine cooling', 'impeller'],
+    description: 'New mechanical engine-coolant water pump with a cast-aluminium housing, integrated metal impeller, bearing assembly and four-hole pulley hub. It circulates coolant through the engine and radiator when driven by the vehicle belt system. Potential applications include selected Toyota Corolla, Nissan Navara, Isuzu D-Max and Mazda3 variants. Engine code, mounting-flange shape and bolt pattern, impeller depth, outlet orientation, pulley offset, drive arrangement and rotation direction must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'thermostat-housing-new', reference: 'MOC-GEN-PN-012', name: 'Thermostat Housing', condition: 'New', category: 'Cooling System', price: 50,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Note', 'Mazda3'], searchableKeywords: ['thermostat housing', 'coolant outlet', 'engine cooling', 'water neck'],
+    description: 'New cast-aluminium engine-coolant thermostat housing with a machined three-hole mounting flange, angled hose outlet and threaded sensor port. The housing directs coolant between the engine and radiator; a thermostat insert, gasket, sensor and mounting bolts are not included. Potential applications include selected Toyota Corolla, Nissan Note and Mazda3 engine variants. Engine code, flange shape, bolt spacing, thermostat-seat diameter, hose-neck diameter and angle, port thread and sealing arrangement must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'radiator-new', reference: 'MOC-GEN-PN-013', name: 'Radiator', condition: 'New', category: 'Cooling System', price: 180,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Mazda3'], searchableKeywords: ['radiator', 'cooling core', 'engine cooling', 'cross flow radiator'],
+    description: 'New cross-flow engine radiator with an aluminium fin-and-tube core, moulded side tanks, inlet and outlet necks, filler neck and integrated mounting tabs. It transfers engine heat from circulating coolant to the passing air; a pressure cap, cooling fan, hoses and coolant are not included. Potential applications include selected Toyota Corolla, Honda Fit, Nissan Note and Mazda3 variants. Overall core dimensions, tank orientation, mounting-tab positions, inlet and outlet diameters and locations, filler arrangement and transmission specification must match the vehicle. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'radiator-cooling-fan-new', reference: 'MOC-GEN-PN-014', name: 'Radiator Cooling Fan', condition: 'New', category: 'Cooling System', price: 125,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Mazda3'], searchableKeywords: ['radiator fan', 'cooling fan', 'fan motor', 'fan shroud'],
+    description: 'New electric radiator cooling-fan assembly supplied with a seven-blade fan, central motor, moulded shroud, mounting tabs and integrated electrical connector. It draws air through the radiator when vehicle speed alone does not provide enough cooling. Potential applications include selected Toyota Corolla, Honda Fit, Nissan Note and Mazda3 variants. Shroud dimensions, mounting-tab spacing, fan diameter and clearance, connector shape and pin layout, polarity, voltage and motor power requirement must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'coolant-expansion-tank-new', reference: 'MOC-GEN-PN-015', name: 'Coolant Expansion Tank', condition: 'New', category: 'Cooling System', price: 45,
+    compatibleMakes: ['Volkswagen', 'Ford', 'Mazda'], compatibleModels: ['Polo', 'Fiesta', 'Mazda3'], searchableKeywords: ['expansion tank', 'coolant reservoir', 'overflow bottle', 'pressure cap'],
+    description: 'New translucent coolant expansion tank supplied with a plain pressure cap, upper return connection, lower outlet and integrated mounting tabs. It provides space for coolant expansion and recovery as engine temperature changes. Potential applications include selected Volkswagen Polo, Ford Fiesta and Mazda3 variants. Reservoir shape and capacity, mounting-point positions, hose-port diameters and locations, cap thread and required pressure rating, and available engine-bay clearance must match the vehicle. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'intercooler-hose-new', reference: 'MOC-GEN-PN-016', name: 'Intercooler Hose', condition: 'New', category: 'Cooling System', price: 60,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['intercooler hose', 'boost hose', 'charge air hose', 'turbo hose'],
+    description: 'New single moulded reinforced-rubber intercooler hose for carrying pressurised charge air between compatible turbocharger, intercooler and intake connections. The bare hose is supplied without clamps. Potential applications include selected turbo-diesel Toyota Hilux, Nissan Navara and Isuzu D-Max variants. Engine and turbo configuration, hose routing, overall length, bend positions, both internal diameters, locating ridges, boost-pressure requirement and surrounding clearance must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'brake-master-cylinder-new', reference: 'MOC-GEN-PN-017', name: 'Brake Master Cylinder', condition: 'New', category: 'Brake Components', price: 95,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan'], compatibleModels: ['Corolla', 'Fit', 'Tiida'], searchableKeywords: ['brake master cylinder', 'hydraulic brakes', 'fluid reservoir', 'tandem cylinder'],
+    description: 'New tandem hydraulic brake master-cylinder assembly with a cast-aluminium cylinder body, dual-chamber fluid reservoir, two plain reservoir caps, firewall mounting flange and two hydraulic outlet ports. It converts brake-pedal force into hydraulic pressure for the service-brake circuits; a booster, pipes and brake fluid are not included. Potential applications include selected Toyota Corolla, Honda Fit and Nissan Tiida variants. Cylinder bore and stroke, flange and pushrod dimensions, outlet-port threads and positions, reservoir arrangement and braking-system specification must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'brake-caliper-new', reference: 'MOC-GEN-PN-018', name: 'Brake Caliper', condition: 'New', category: 'Brake Components', price: 110,
+    compatibleMakes: ['Toyota', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Mazda3', 'Polo'], searchableKeywords: ['brake caliper', 'disc brake', 'caliper carrier', 'single piston'],
+    description: 'New floating single-piston front disc-brake caliper supplied with its matching carrier bracket, slide-pin boots, bleeder screw and hose inlet. Brake pads, mounting bolts, brake hose and rotor are not included. Potential applications include selected Toyota Corolla, Mazda3 and Volkswagen Polo variants, but installation side and axle specification must be confirmed. Carrier mounting-hole spacing, piston diameter, rotor diameter and thickness, hose-port thread, pad shape, wheel clearance and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'brake-hose-set-new', reference: 'MOC-GEN-PN-019', name: 'Brake Hose Set', condition: 'New', category: 'Brake Components', price: 70,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Tiida', 'Mazda3'], searchableKeywords: ['brake hose set', 'hydraulic hose', 'brake line', 'four piece hose set'],
+    description: 'New four-piece hydraulic brake-hose set containing two longer front hoses with banjo-eye ends and two shorter rear hoses with straight female ends; every hose has a threaded male fitting at the opposite end. Clips, sealing washers and mounting bolts are not included. Potential applications include selected Toyota Corolla, Nissan Tiida and Mazda3 variants. Front and rear hose lengths, fitting threads, banjo-eye diameter, bracket and routing requirements, axle layout, model generation and braking-system specification must all match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'wheel-bearing-hub-new', reference: 'MOC-GEN-PN-020', name: 'Wheel Bearing Hub', condition: 'New', category: 'Suspension & Steering', price: 120,
+    compatibleMakes: ['Toyota', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Mazda3', 'Polo'], searchableKeywords: ['wheel bearing hub', 'hub assembly', 'sealed bearing', 'wheel flange'],
+    description: 'New bolt-on wheel-bearing hub assembly with a sealed bearing housing, five-stud wheel flange, internally splined axle bore, rear mounting flange and integrated encoder seal. An axle nut, mounting bolts and separate sensor lead are not included. Potential applications include selected five-stud Toyota Corolla, Mazda3 and Volkswagen Polo variants. Axle position, wheel-stud count and pitch-circle diameter, spline count and bore diameter, flange offset, rear mounting pattern, encoder type and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'front-shock-absorber-new', reference: 'MOC-GEN-PN-021', name: 'Front Shock Absorber', condition: 'New', category: 'Suspension & Steering', price: 130,
+    compatibleMakes: ['Toyota', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Mazda3', 'Polo'], searchableKeywords: ['front shock absorber', 'macpherson strut', 'front strut', 'suspension damper'],
+    description: 'New single bare MacPherson-type front shock-absorber strut with a steel damper body, chrome piston rod, formed spring seat, two-position steering-knuckle bracket and brake-hose bracket. A coil spring, upper mount, dust boot, bump stop and mounting fasteners are not included. Potential applications include selected Toyota Corolla, Mazda3 and Volkswagen Polo variants. Installation side, extended and compressed length, damper-body diameter, spring-seat profile, lower bracket spacing and bolt diameter, rod thread and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'rear-shock-absorber-new', reference: 'MOC-GEN-PN-022', name: 'Rear Shock Absorber', condition: 'New', category: 'Suspension & Steering', price: 85,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Tiida', 'Mazda3'], searchableKeywords: ['rear shock absorber', 'rear damper', 'eye mount shock', 'suspension damper'],
+    description: 'New single conventional telescopic rear shock absorber with a steel damper body, chrome piston rod and rubber-bushed eye mounting at each end. It is supplied as one bare damper without mounting bolts, coil spring, dust boot or external reservoir. Potential applications include selected Toyota Corolla, Nissan Tiida and Mazda3 variants. Extended and compressed length, body diameter, upper and lower eye width, sleeve-bore diameter, mounting orientation, damping specification, axle layout and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'lower-control-arm-new', reference: 'MOC-GEN-PN-023', name: 'Lower Control Arm', condition: 'New', category: 'Suspension & Steering', price: 105,
+    compatibleMakes: ['Toyota', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Mazda3', 'Polo'], searchableKeywords: ['lower control arm', 'wishbone', 'suspension arm', 'control arm bushings'],
+    description: 'New complete front lower suspension control arm with a black pressed-steel wishbone, two installed inner rubber bushings and one integrated outer ball joint with dust boot and nut. Additional mounting bolts are not included. Potential applications include selected Toyota Corolla, Mazda3 and Volkswagen Polo variants, but the required left or right installation side must be confirmed. Arm shape and dimensions, bushing widths and sleeve bores, pivot spacing, ball-joint taper and thread, knuckle connection, subframe layout and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'tie-rod-end-pair-new', reference: 'MOC-GEN-PN-024', name: 'Tie Rod End Pair', condition: 'New', category: 'Suspension & Steering', price: 65,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Tiida', 'Mazda3'], searchableKeywords: ['tie rod ends', 'outer tie rod', 'steering linkage', 'ball joint steering'],
+    description: 'New matched pair of outer steering tie-rod ends, each supplied with a forged housing, tapered ball stud, rubber dust boot, female-threaded shank and lock nut. The listing contains two tie-rod ends; cotter pins and steering-rack components are not included. Potential applications include selected Toyota Corolla, Nissan Tiida and Mazda3 variants. Shank thread diameter, pitch and direction, stud taper and thread, joint length, lock-nut size, steering-knuckle connection, installation side and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'ball-joint-pair-new', reference: 'MOC-GEN-PN-025', name: 'Ball Joint Pair', condition: 'New', category: 'Suspension & Steering', price: 75,
+    compatibleMakes: ['Toyota', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Mazda3', 'Polo'], searchableKeywords: ['ball joint pair', 'suspension ball joint', 'lower ball joint', 'bolt on joint'],
+    description: 'New matched pair of bolt-on suspension ball joints, each supplied with a forged two-hole mounting flange, sealed housing, tapered threaded stud, rubber dust boot and plain nut. Mounting bolts and cotter pins are not included. Potential applications include selected Toyota Corolla, Mazda3 and Volkswagen Polo variants. Installation axle and side, flange shape and bolt spacing, housing diameter and depth, stud taper and thread, knuckle and control-arm design, suspension layout and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'stabiliser-link-pair-new', reference: 'MOC-GEN-PN-026', name: 'Stabiliser Link Pair', condition: 'New', category: 'Suspension & Steering', price: 55,
+    compatibleMakes: ['Toyota', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Mazda3', 'Polo'], searchableKeywords: ['stabiliser links', 'sway bar links', 'anti roll bar', 'suspension link pair'],
+    description: 'New matched pair of stabiliser-bar end links, each supplied with a straight forged-steel rod, two sealed ball-joint housings, tapered threaded studs, rubber dust boots and plain nuts. The listing contains two complete links; additional mounting hardware is not included. Potential applications include selected Toyota Corolla, Mazda3 and Volkswagen Polo variants. Link length, rod and housing offsets, upper and lower stud orientation, stud taper and thread, mounting-point layout, axle position and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'cv-joint-kit-new', reference: 'MOC-GEN-PN-027', name: 'CV Joint Kit', condition: 'New', category: 'Transmission & Drivetrain', price: 95,
+    compatibleMakes: ['Toyota', 'Honda', 'Mazda'], compatibleModels: ['Corolla', 'Fit', 'Mazda3'], searchableKeywords: ['cv joint kit', 'outer cv joint', 'drive joint', 'cv boot kit'],
+    description: 'New outer constant-velocity joint kit containing one machined joint, one black accordion boot, one large clamp, one small clamp and one axle nut. Grease, a retaining circlip and installation tools are not included. Potential applications include selected Toyota Corolla, Honda Fit and Mazda3 front-wheel-drive variants. Transmission-side and hub-side spline counts and diameters, joint-body size, axle-stub length and thread, boot dimensions, clamp diameters, installation side and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'clutch-kit-new', reference: 'MOC-GEN-PN-028', name: 'Clutch Kit', condition: 'New', category: 'Transmission & Drivetrain', price: 260,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['clutch kit', 'pressure plate', 'clutch disc', 'release bearing'],
+    description: 'New three-piece manual-transmission clutch kit containing one pressure-plate and cover assembly, one sprung-hub driven friction disc and one release bearing. A flywheel, alignment tool, pilot bearing and mounting bolts are not included. Potential applications include selected manual Toyota Hilux, Nissan Navara and Isuzu D-Max variants. Engine and gearbox codes, friction-disc diameter and spline count, pressure-plate bolt pattern and clamp load, release-bearing type, flywheel design and required torque capacity must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'clutch-master-cylinder-new', reference: 'MOC-GEN-PN-029', name: 'Clutch Master Cylinder', condition: 'New', category: 'Transmission & Drivetrain', price: 80,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['clutch master cylinder', 'clutch hydraulics', 'manual transmission', 'pedal cylinder'],
+    description: 'New single-circuit hydraulic clutch master-cylinder assembly with a cast-aluminium cylinder body, single-chamber fluid reservoir and plain cap, two-hole firewall flange, pushrod and pedal clevis, and one hydraulic outlet. It converts clutch-pedal movement into hydraulic pressure; a slave cylinder, pipe, mounting fasteners and fluid are not included. Potential applications include selected manual-transmission Toyota Hilux, Nissan Navara and Isuzu D-Max variants. Cylinder bore and stroke, flange bolt spacing, pushrod length and clevis dimensions, outlet thread and position, reservoir arrangement, pedal geometry and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'cv-axle-assembly-new', reference: 'MOC-GEN-PN-030', name: 'CV Axle Assembly', condition: 'New', category: 'Transmission & Drivetrain', price: 190,
+    compatibleMakes: ['Toyota', 'Honda', 'Mazda'], compatibleModels: ['Corolla', 'Fit', 'Mazda3'], searchableKeywords: ['cv axle', 'driveshaft', 'half shaft', 'drive axle assembly'],
+    description: 'New complete front CV axle assembly with a steel center shaft, outer constant-velocity joint and threaded hub stub, inner plunge joint and transmission stub, two accordion boots and their retaining bands. An axle nut, gearbox seal and mounting hardware are not included. Potential applications include selected Toyota Corolla, Honda Fit and Mazda3 front-wheel-drive variants. Installation side, compressed overall length, inner and outer spline counts and diameters, seal surface, joint-housing type, hub thread and transmission specification must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'universal-joint-new', reference: 'MOC-GEN-PN-031', name: 'Universal Joint', condition: 'New', category: 'Transmission & Drivetrain', price: 45,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['universal joint', 'u joint', 'propshaft joint', 'driveshaft cross'],
+    description: 'New complete driveshaft universal joint with a forged four-trunnion cross, four installed needle-bearing caps and four dust seals. It allows torque transfer through an articulated propeller shaft; circlips, grease and installation tools are not included. Potential applications include selected Toyota Hilux, Nissan Navara and Isuzu D-Max propeller-shaft assemblies. Bearing-cap diameter and length, overall joint span in both axes, retention method, yoke dimensions, lubrication provision, driveshaft position and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'oxygen-sensor-new', reference: 'MOC-GEN-PN-032', name: 'Oxygen Sensor', condition: 'New', category: 'Electrical Sensors', price: 85,
+    compatibleMakes: ['Toyota', 'Honda', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Fit', 'Mazda3', 'Polo'], searchableKeywords: ['oxygen sensor', 'lambda sensor', 'exhaust sensor', 'air fuel sensor'],
+    description: 'New heated exhaust oxygen sensor supplied as one complete threaded sensor with a perforated sensing shield, sealing washer, heat-resistant lead and moulded electrical connector. It provides exhaust oxygen feedback to a compatible engine-control system; an exhaust bung, tools and wiring adaptors are not included. Potential applications include selected petrol Toyota Corolla, Honda Fit, Mazda3 and Volkswagen Polo variants. Upstream or downstream location, thread and seat, sensing technology, connector shape and contact layout, cable length, heater and signal specification, engine code and emissions-control system must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'crankshaft-position-sensor-new', reference: 'MOC-GEN-PN-033', name: 'Crankshaft Position Sensor', condition: 'New', category: 'Electrical Sensors', price: 50,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Note', 'Mazda3', 'Polo'], searchableKeywords: ['crankshaft position sensor', 'crank sensor', 'engine speed sensor', 'engine management'],
+    description: 'New crankshaft position sensor with a moulded polymer body, cylindrical metal probe, sealing O-ring, single-bolt mounting ear, short insulated lead and moulded electrical connector. It reports crankshaft position and rotational speed to a compatible engine-control unit; a mounting bolt, trigger wheel and vehicle wiring loom are not included. Potential applications include selected Toyota Corolla, Nissan Note, Mazda3 and Volkswagen Polo engine variants. Engine code, sensing principle, probe diameter and insertion depth, required air gap, mounting-hole position, O-ring size, cable length, connector shape and contact layout, supply and signal specification and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'camshaft-position-sensor-new', reference: 'MOC-GEN-PN-034', name: 'Camshaft Position Sensor', condition: 'New', category: 'Electrical Sensors', price: 45,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Note', 'Mazda3', 'Polo'], searchableKeywords: ['camshaft position sensor', 'cam sensor', 'engine timing sensor', 'engine management'],
+    description: 'New camshaft position sensor with a moulded polymer body, insertion probe, sealing O-ring, single-bolt mounting flange and integrated electrical connector. It reports camshaft position to a compatible engine-control unit for injection, ignition and timing control; a mounting bolt and wiring loom are not included. Potential applications include selected Toyota Corolla, Nissan Note, Mazda3 and Volkswagen Polo engine variants. Engine code, sensing principle, probe diameter and insertion depth, mounting-hole position, O-ring size, connector shape, contact count and keying, supply and signal specification and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'mass-airflow-sensor-new', reference: 'MOC-GEN-PN-035', name: 'Mass Airflow Sensor', condition: 'New', category: 'Electrical Sensors', price: 90,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Navara', 'Mazda3', 'Polo'], searchableKeywords: ['mass airflow sensor', 'maf sensor', 'air metering sensor', 'intake sensor'],
+    description: 'New insert-style mass airflow sensor with a moulded electronics head, integrated electrical connector, two-hole mounting flange, sealing O-ring and protected hot-film sampling probe. It measures incoming air for a compatible engine-management system; mounting screws, an intake housing and wiring loom are not included. Potential applications include selected Toyota Corolla, Nissan Navara, Mazda3 and Volkswagen Polo engine variants. Engine code and induction system, sensor technology, probe length and orientation, flange shape and hole spacing, sealing diameter, connector shape and contact layout, calibration and electrical specification and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'fuel-pump-module-new', reference: 'MOC-GEN-PN-036', name: 'Fuel Pump Module', condition: 'New', category: 'Fuel System', price: 165,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Mazda3'], searchableKeywords: ['fuel pump module', 'in tank fuel pump', 'fuel sender', 'fuel level float'],
+    description: 'New complete in-tank fuel-pump module with a moulded top flange, electric pump, reservoir bucket, internal pressure hose, support rods, fuel-level sender, float arm and float. It supplies fuel from the tank and reports fuel level; a tank seal, retaining ring, external pipes and mounting tools are not included. Potential applications include selected petrol Toyota Corolla, Honda Fit, Nissan Note and Mazda3 variants. Fuel type, required pressure and flow, flange diameter and retention pattern, installed module depth, outlet diameters and orientation, electrical connector and terminal layout, sender resistance range, float sweep, tank shape and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'injector-nozzle-set-new', reference: 'MOC-GEN-PN-037', name: 'Injector Nozzle Set', condition: 'New', category: 'Fuel System', price: 320,
+    compatibleMakes: ['Mazda', 'Volkswagen', 'Hyundai'], compatibleModels: ['Mazda3', 'Polo', 'Tucson'], searchableKeywords: ['injector nozzle set', 'fuel injectors', 'direct injection', 'high pressure injector set'],
+    description: 'New matched set of four electronically controlled high-pressure fuel injectors, each supplied as one complete machined body with solenoid connector, threaded fuel inlet, mounting ears, lower sealing ring and nozzle tip. A fuel rail, high-pressure pipes, wiring loom, mounting fasteners and installation tools are not included. Potential applications include selected four-cylinder direct-injection Mazda3, Volkswagen Polo and Hyundai Tucson engine variants; one set does not fit every listed vehicle. Engine code and fuel type, system operating pressure, inlet thread, connector and control specification, injector length and mounting geometry, nozzle reach, spray pattern, flow rate, calibration class and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'headlight-bulb-set-new', reference: 'MOC-GEN-PN-038', name: 'Headlight Bulb Set', condition: 'New', category: 'Lighting', price: 35,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Volkswagen'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Polo'], searchableKeywords: ['headlight bulb set', 'halogen bulbs', 'headlamp bulbs', 'replacement light bulbs'],
+    description: 'New matched pair of clear halogen headlight bulbs, each supplied with a quartz glass capsule, internal filament assembly, stamped-metal locating flange and keyed polymer electrical base. The listing contains exactly two bulbs; headlamp housings, wiring, dust caps and installation tools are not included. Potential applications include selected Toyota Corolla, Honda Fit, Nissan Note and Volkswagen Polo headlamp assemblies that use the matching halogen configuration. Bulb-base standard, connector contact layout, flange diameter and locating-tab pattern, voltage and wattage, single- or multi-filament circuit requirement, beam function, headlamp housing and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'fog-lamp-assembly-new', reference: 'MOC-GEN-PN-039', name: 'Fog Lamp Assembly', condition: 'New', category: 'Lighting', price: 65,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['fog lamp assembly', 'fog light', 'bumper lamp', 'auxiliary lamp'],
+    description: 'New single round bumper-mounted fog-lamp assembly with a clear fluted lens, silver reflector, black moulded housing, rear access cap, integrated electrical connector and two-hole mounting bracket. It provides a low, wide auxiliary beam in reduced visibility; a vehicle wiring loom, switch, relay, mounting fasteners and second lamp are not included. Potential applications include selected Toyota Hilux, Nissan Navara and Isuzu D-Max bumper configurations. Required installation side, lens and housing diameter, overall depth, bracket shape and hole spacing, connector shape and contact layout, bulb type, voltage and wattage, aiming arrangement, bumper aperture and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'tail-lamp-assembly-new', reference: 'MOC-GEN-PN-040', name: 'Tail Lamp Assembly', condition: 'New', category: 'Lighting', price: 120,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['tail lamp assembly', 'rear combination lamp', 'brake light', 'reverse lamp'],
+    description: 'New single vertically oriented rear combination tail-lamp assembly with a clear outer lens, red upper and lower optical chambers, clear central chamber, black moulded rear housing, three service covers, integrated connector and mounting tabs. It combines compatible rear position, stop, direction-indicator or reversing functions according to the vehicle circuit; loose bulbs, wiring loom, mounting fasteners and the opposite-side lamp are not included. Potential applications include selected Toyota Hilux, Nissan Navara and Isuzu D-Max body variants. Required left or right installation side, outer dimensions and contour, chamber functions, mounting-tab and hole positions, connector and terminal layout, bulb or circuit specification, body aperture and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'window-regulator-new', reference: 'MOC-GEN-PN-041', name: 'Window Regulator', condition: 'New', category: 'Body Parts', price: 110,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Volkswagen'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Polo'], searchableKeywords: ['window regulator', 'power window mechanism', 'window lift motor', 'door glass regulator'],
+    description: 'New electric scissor-type window-regulator assembly with two crossed stamped-steel lift arms, central pivot, toothed drive sector, upper glass-support channel, clamp saddles, reduction gearbox and fitted electric motor. It raises and lowers compatible door glass; the glass, door wiring, switch, mounting fasteners and trim panel are not included. Potential applications include selected Toyota Corolla, Honda Fit, Nissan Note and Volkswagen Polo door variants. Front or rear door position, left or right side, arm lengths and pivot geometry, glass-channel length and clamp positions, door mounting-hole pattern, travel range, motor voltage and direction, connector layout and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'wiper-motor-new', reference: 'MOC-GEN-PN-042', name: 'Wiper Motor', condition: 'New', category: 'Electrical Components', price: 95,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Volkswagen'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Polo'], searchableKeywords: ['wiper motor', 'windscreen wiper motor', 'wiper gearbox', 'wiper drive'],
+    description: 'New windscreen wiper-motor assembly with a cylindrical electric motor, cast reduction gearbox, threaded output spindle and retaining nut, short crank arm with linkage pin, three-point mounting bracket and integrated electrical connector. It drives a compatible windscreen-wiper linkage; linkage rods, wiring loom, mounting fasteners and wiper arms are not included. Potential applications include selected Toyota Corolla, Honda Fit, Nissan Note and Volkswagen Polo variants. Motor voltage and park circuit, sweep direction and angle, output-spindle spline and thread, crank-arm length and parked index, linkage-pin diameter, mounting-hole pattern and offsets, connector shape and terminal layout and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'wiper-blade-set-new', reference: 'MOC-GEN-PN-043', name: 'Wiper Blade Set', condition: 'New', category: 'Service Parts', price: 30,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Volkswagen'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Polo'], searchableKeywords: ['wiper blade set', 'windscreen wipers', 'frameless wiper blades', 'beam blades'],
+    description: 'New matched pair of frameless windscreen wiper blades containing one longer driver-side blade and one shorter passenger-side blade, each with an aerodynamic beam spoiler, full-length rubber wiping edge, closed end caps and integrated central adaptor. Vehicle wiper arms and separate adaptor pieces are not included. Potential applications include selected Toyota Corolla, Honda Fit, Nissan Note and Volkswagen Polo windscreen configurations. Both required blade lengths, driver and passenger positions, windscreen curvature, arm-end connection and locking method, adaptor width, parked orientation, sweep clearance and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'door-handle-assembly-new', reference: 'MOC-GEN-PN-044', name: 'Door Handle Assembly', condition: 'New', category: 'Body Parts', price: 45,
+    compatibleMakes: ['Toyota', 'Honda', 'Nissan', 'Volkswagen'], compatibleModels: ['Corolla', 'Fit', 'Note', 'Polo'], searchableKeywords: ['door handle assembly', 'exterior door handle', 'door release handle', 'door latch lever'],
+    description: 'New plain black exterior pull-type door-handle assembly with a moulded handle and backing bezel, recessed grip, two threaded mounting studs, rear pivot bracket, return spring and latch operating lever. The handle is supplied without a lock cylinder, key, linkage rod or mounting nuts. Potential applications include selected Toyota Corolla, Honda Fit, Nissan Note and Volkswagen Polo door variants. Front or rear door position, left or right installation side, outer bezel contour and dimensions, stud spacing and thread, pivot orientation, lever length and travel, linkage-rod connection, door-skin aperture and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'bonnet-latch-new', reference: 'MOC-GEN-PN-045', name: 'Bonnet Latch', condition: 'New', category: 'Body Parts', price: 50,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['bonnet latch', 'hood latch', 'bonnet lock', 'safety catch'],
+    description: 'New bonnet-latch assembly with a zinc-plated stamped-steel base plate, rotating striker claw, separate secondary safety catch, cable-actuation lever, two return springs, pivot rivets and three mounting holes. It secures the bonnet and provides a secondary catch after primary release; the bonnet striker, release cable and mounting fasteners are not included. Potential applications include selected Toyota Hilux, Nissan Navara and Isuzu D-Max variants. Base-plate dimensions, mounting-hole pattern, latch orientation, striker diameter and position, claw depth, safety-catch reach, cable-end attachment and pull direction, surrounding panel clearance and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'engine-mount-set-new', reference: 'MOC-GEN-PN-046', name: 'Engine Mount Set', condition: 'New', category: 'Engine Components', price: 220,
+    compatibleMakes: ['Toyota', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Mazda3', 'Polo'], searchableKeywords: ['engine mount set', 'motor mounts', 'torque mount', 'engine isolators'],
+    description: 'New matched three-piece engine-mount set containing one large cast-aluminium side mount with a circular rubber bushing, one elongated stamped-steel torque mount with two rubber-bushed ends and one compact plated-steel bracket mount with a rectangular bonded-rubber isolator. Loose mounting bolts and brackets not shown are not included. Potential applications include selected transverse-engine Toyota Corolla, Mazda3 and Volkswagen Polo variants, but one set does not fit every listed vehicle. Engine and transmission codes, required mount count and positions, bracket shapes and offsets, mounting-hole and stud patterns, bushing and sleeve diameters, installed heights, drivetrain layout, rubber stiffness requirement and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'gearbox-mount-new', reference: 'MOC-GEN-PN-047', name: 'Gearbox Mount', condition: 'New', category: 'Transmission & Drivetrain', price: 95,
+    compatibleMakes: ['Toyota', 'Mazda', 'Volkswagen'], compatibleModels: ['Corolla', 'Mazda3', 'Polo'], searchableKeywords: ['gearbox mount', 'transmission mount', 'drivetrain isolator', 'rubber mount'],
+    description: 'New single gearbox-mount assembly with a four-hole pressed-steel base plate, bonded rubber isolator, central metal sleeve and cast-alloy upper saddle with two threaded studs. It supports a compatible transmission while isolating normal drivetrain vibration; loose nuts, bolts and vehicle brackets are not included. Potential applications include selected transverse-drivetrain Toyota Corolla, Mazda3 and Volkswagen Polo variants, but this is not a universal mount. Engine and transmission codes, installed position, base-hole spacing, stud spacing and thread, central-sleeve dimensions, mount height, bracket offsets, load direction, rubber stiffness requirement and model generation must match. The listed US-dollar price is a rough estimate and may vary by specification and supplier. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
 ].map(makePart);
 
-export const generatedUsedParts = [];
+export const generatedUsedParts = [
+  {
+    id: 'turbocharger-assembly-used', reference: 'MOC-GEN-PU-001', name: 'Turbocharger Assembly', condition: 'Used', category: 'Engine Components', price: 450,
+    compatibleMakes: ['Toyota', 'Nissan', 'Isuzu'], compatibleModels: ['Hilux', 'Navara', 'D-Max'], searchableKeywords: ['used turbocharger', 'turbo assembly', 'exhaust turbine', 'compressor housing', 'wastegate actuator'],
+    description: 'Used complete turbocharger assembly with a cast-iron turbine housing, aluminium compressor housing, visible compressor and turbine inlets, mounting flanges, internal-wastegate actuator and operating linkage. External pipes, gaskets, mounting fasteners and installation hardware are not included. Potential applications include selected turbo-diesel Toyota Hilux, Nissan Navara and Isuzu D-Max variants, but one turbocharger does not fit every listed vehicle. Engine code, turbine-inlet and outlet flanges, compressor-inlet and outlet diameters and orientations, oil and coolant connections, shaft and wheel specification, wastegate calibration, mounting clearances and required boost control must match. Used-part condition, shaft play and serviceability must be confirmed before installation. The listed US-dollar price is a rough estimate and may vary by specification and condition. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'intake-manifold-used', reference: 'MOC-GEN-PU-002', name: 'Intake Manifold', condition: 'Used', category: 'Engine Components', price: 140,
+    compatibleMakes: ['Toyota', 'Nissan', 'Mazda'], compatibleModels: ['Corolla', 'Tiida', 'Mazda3'], searchableKeywords: ['used intake manifold', 'four runner manifold', 'intake plenum', 'throttle body flange'],
+    description: 'Used four-runner moulded intake-manifold assembly with an integrated plenum, four-port cylinder-head flange, round throttle-body flange, hose connections and mounting bosses. A throttle body, sensors, fuel rail, injectors, gaskets, hoses and mounting fasteners are not included. Potential applications include selected four-cylinder petrol Toyota Corolla, Nissan Tiida and Mazda3 variants, but the manifold must be matched to the specific engine. Engine code, cylinder-head port count, shape and spacing, bolt pattern, throttle-bore diameter and orientation, vacuum and breather connections, sensor provision, runner clearance and model generation must match. Used-part condition, sealing faces and internal cleanliness must be confirmed before installation. The listed US-dollar price is a rough estimate and may vary by specification and condition. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+  {
+    id: 'exhaust-manifold-used', reference: 'MOC-GEN-PU-003', name: 'Exhaust Manifold', condition: 'Used', category: 'Exhaust System', price: 150,
+    compatibleMakes: ['Toyota', 'Mazda', 'Hyundai'], compatibleModels: ['Corolla', 'Mazda3', 'Tucson'], searchableKeywords: ['used exhaust manifold', 'four branch manifold', 'exhaust header', 'collector flange'],
+    description: 'Used cast-metal four-branch exhaust manifold with a four-port cylinder-head flange, merged collector, outlet mounting flange and threaded sensor port, showing restrained service wear and light surface oxidation. Heat shields, oxygen sensor, gaskets, studs, nuts and downstream exhaust pipe are not included. Potential applications include selected four-cylinder Toyota Corolla, Mazda3 and Hyundai Tucson engine variants, but one manifold does not fit every listed vehicle. Engine code, cylinder-head port shape and spacing, flange bolt pattern, outlet-flange dimensions and orientation, sensor-port thread and position, surrounding clearance, emissions equipment and model generation must match. Used-part condition, sealing faces and crack-free serviceability must be confirmed before installation. The listed US-dollar price is a rough estimate and may vary by specification and condition. Contact MoCars to confirm the actual part, condition, fitment and availability before ordering.',
+  },
+].map(makePart);

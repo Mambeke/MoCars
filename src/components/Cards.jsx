@@ -44,8 +44,8 @@ export function PartCard({ part, compact = false }) {
   const { addToCart, favorites, toggleFavorite } = useShop();
   const saved = favorites.includes(part.id);
   const compatibility = part.compatibleMakes.length
-    ? `${part.compatibleMakes.join(', ')} ${part.compatibleModels.join(', ')}`
-    : 'Compatibility confirmation required';
+    ? part.compatibleMakes.map((make, index) => `${make}${part.compatibleModels[index] ? ` ${part.compatibleModels[index]}` : ''}`).join(', ')
+    : 'Multiple specification-dependent applications';
   return (
     <article className={`product-card part-card${compact ? ' compact' : ''}`}>
       <div className="card-image-wrap part-image">
@@ -66,7 +66,7 @@ export function PartCard({ part, compact = false }) {
         <span className="category-label">{part.category}</span>
         <h3><Link to={`/auto-parts/${part.id}`}>{part.name}</Link></h3>
         <p className="compatibility">Fits: {compatibility}</p>
-        <p className="part-number">Part no: {part.partNumber || 'On request'}</p>
+        <p className="part-number">Part no: {part.partNumber || part.reference}</p>
         <div className="availability-dot"><span />{part.availability}</div>
         <div className="card-bottom stacked-mobile">
           <strong className="price">{formatPrice(part.price)}</strong>

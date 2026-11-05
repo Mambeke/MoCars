@@ -6,6 +6,7 @@ dist/
 qa-*.png
 .wrangler/
 .auth/
+review-assets/
 
 .github-device.json
 .github-token.json

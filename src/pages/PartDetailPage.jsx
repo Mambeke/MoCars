@@ -24,7 +24,7 @@ export default function PartDetailPage() {
 
   const compatibility = part.compatibleMakes.length
     ? part.compatibleMakes.map((make, index) => `${make}${part.compatibleModels[index] ? ` ${part.compatibleModels[index]}` : ''}`).join(', ')
-    : 'Vehicle compatibility has not yet been supplied.';
+    : 'Multiple specification-dependent applications';
   const message = `Hello MoCars, I am interested in ${part.name} (${part.reference}). Please confirm availability and compatibility for my vehicle.`;
   const buyNow = () => { addToCart(part.id, quantity); window.location.assign('/checkout'); };
 
@@ -41,10 +41,10 @@ export default function PartDetailPage() {
             <strong className="detail-price">{formatPrice(part.price)}</strong>
             <div className="stock-status"><span />{part.availability}</div>
             <dl className="part-quick-facts">
-              <div><dt>Part number</dt><dd>{part.partNumber || 'On request'}</dd></div>
+              <div><dt>Part number</dt><dd>{part.partNumber || part.reference}</dd></div>
               <div><dt>Condition</dt><dd>{part.condition}</dd></div>
               <div><dt>Compatible with</dt><dd>{compatibility}</dd></div>
-              <div><dt>Manufacturer</dt><dd>{part.manufacturer || 'Not supplied'}</dd></div>
+              <div><dt>Manufacturer</dt><dd>{part.manufacturer || 'Various manufacturers'}</dd></div>
             </dl>
             <div className="purchase-row">
               <div className="quantity-control" aria-label="Quantity selector">
@@ -65,7 +65,7 @@ export default function PartDetailPage() {
       <section className="section part-description-section light-section">
         <div className="container part-description-grid">
           <article><span className="eyebrow">Product information</span><h2>Description</h2><p>{part.description}</p></article>
-          <article><span className="eyebrow">Fitment check</span><h2>Compatibility</h2><ul className="compat-list"><li><Check />Compatible makes: {part.compatibleMakes.length ? part.compatibleMakes.join(', ') : 'Not supplied'}</li><li><Check />Compatible models: {part.compatibleModels.length ? part.compatibleModels.join(', ') : 'Not supplied'}</li><li><Check />Compatible years: {part.compatibleYears.length ? part.compatibleYears.join(', ') : 'Confirm with MoCars'}</li><li><Check />Part number: {part.partNumber || 'Confirm with MoCars'}</li></ul></article>
+          <article><span className="eyebrow">Fitment check</span><h2>Compatibility</h2><ul className="compat-list"><li><Check />Compatible makes: {part.compatibleMakes.length ? [...new Set(part.compatibleMakes)].join(', ') : 'Multiple applications'}</li><li><Check />Compatible models: {part.compatibleModels.length ? [...new Set(part.compatibleModels)].join(', ') : 'Model-dependent'}</li><li><Check />Compatible years: {part.compatibleYears.length ? part.compatibleYears.join(', ') : 'Model and specification dependent'}</li><li><Check />Part number: {part.partNumber || part.reference}</li></ul></article>
         </div>
       </section>
 
