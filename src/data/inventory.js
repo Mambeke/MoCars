@@ -208,7 +208,7 @@ export const parts = [
     compatibleModels: ['Hilux'],
     compatibleYears: [],
     description:
-      'Used alternator listed for Toyota Hilux applications. Compatibility can vary by engine and production year; confirm the vehicle details with MoCars before ordering.',
+      'Used alternator listed for Toyota Hilux applications. Compatibility can vary by engine and production year; confirm the vehicle details with MoCars before ordering. Gallery images are illustrative; contact MoCars to confirm the actual part and its condition.',
     specifications: [],
     manufacturer: null,
     price: 140,
@@ -217,7 +217,11 @@ export const parts = [
     dateAdded: null,
     featured: true,
     searchableKeywords: ['engine component', 'charging system', 'generator'],
-    images: ['/images/alternator.jpg'],
+    images: [
+      '/images/generated/parts/alternator-toyota-hilux/front.jpg',
+      '/images/generated/parts/alternator-toyota-hilux/rear.jpg',
+      '/images/generated/parts/alternator-toyota-hilux/detail.jpg',
+    ],
   },
   {
     id: 'brake-disc-pads-set',
