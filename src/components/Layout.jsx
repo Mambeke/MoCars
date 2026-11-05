@@ -7,7 +7,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext.jsx';
-import { businessConfig } from '../config/business.js';
+import { businessConfig, whatsappLink } from '../config/business.js';
 import { Modal } from './UI.jsx';
 
 const emptyEnquiry = {
@@ -79,6 +79,8 @@ function Header() {
     }
   };
 
+  const whatsappNumber = businessConfig.whatsapp.replace(/\D/g, '');
+
   return (
     <>
       <header className="site-header">
@@ -101,11 +103,23 @@ function Header() {
               </div>
             )}
           </div>
-          <div className="header-actions">
+          <div className={`header-actions${whatsappNumber ? ' has-whatsapp' : ''}`}>
             <button className="btn btn-red header-enquiry-button" type="button" onClick={openEnquiry} aria-haspopup="dialog">
               <MessageCircle aria-hidden="true" />
               <span>Inquire Now</span>
             </button>
+            {whatsappNumber && (
+              <a
+                className="btn header-whatsapp-button"
+                href={whatsappLink('Hello MoCars, I need help with a vehicle or an auto part.')}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Chat with MoCars on WhatsApp"
+              >
+                <MessageCircle aria-hidden="true" />
+                <span>WhatsApp</span>
+              </a>
+            )}
           </div>
         </div>
       </header>
