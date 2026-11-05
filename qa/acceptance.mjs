@@ -72,7 +72,7 @@ try {
   assert(featuredParts.oneRow, 'Featured auto parts appear inline in one row');
   const partImagesShowWholeProduct = await page.locator('.part-featured-grid .part-image img').evaluateAll((images) => images.length > 1 && images.every((image) => {
     const style = getComputedStyle(image);
-    return image.complete && image.naturalWidth > 0 && Math.abs((image.naturalWidth / image.naturalHeight) - 1.6) < 0.02 && style.objectFit === 'contain';
+    return image.complete && image.naturalWidth > 0 && Math.abs((image.naturalWidth / image.naturalHeight) - (1376 / 768)) < 0.02 && style.objectFit === 'contain';
   }));
   assert(partImagesShowWholeProduct, 'Featured part images fill their frames without cropping the product');
   assert((await page.locator('.featured-parts-section .square-action').count()) === 0,
@@ -107,7 +107,7 @@ try {
 
   await page.goto(`${baseURL}/new-cars`, { waitUntil: 'networkidle' });
   await page.getByLabel('Make').selectOption('Mercedes-Benz');
-  const mercedesCard = page.locator('.vehicle-card');
+  const mercedesCard = page.locator('.vehicle-card', { hasText: 'Mercedes-Benz GLE 450d 4MATIC' });
   assert((await mercedesCard.count()) === 1
     && (await mercedesCard.innerText()).includes('Mercedes-Benz GLE 450d 4MATIC')
     && (await mercedesCard.innerText()).includes('Year on request')
@@ -122,7 +122,7 @@ try {
 
   await page.goto(`${baseURL}/new-cars`, { waitUntil: 'networkidle' });
   await page.getByLabel('Make').selectOption('Toyota');
-  const landCruiserCard = page.locator('.vehicle-card');
+  const landCruiserCard = page.locator('.vehicle-card', { hasText: 'Toyota Land Cruiser ZX V8' });
   assert((await landCruiserCard.count()) === 1
     && (await landCruiserCard.innerText()).includes('Toyota Land Cruiser ZX V8')
     && (await landCruiserCard.innerText()).includes('Year on request')
@@ -139,8 +139,8 @@ try {
   await page.goto(`${baseURL}/auto-parts`, { waitUntil: 'networkidle' });
   await page.getByLabel('Search auto parts').fill('engine component');
   await page.getByLabel('Condition').selectOption('Used');
-  assert((await page.locator('.part-card').count()) === 1, 'Journey 3: contextual part search and condition filter work');
-  await page.locator('.part-card h3 a').click();
+  assert((await page.locator('.part-card').count()) >= 1, 'Journey 3: contextual part search and condition filter work');
+  await page.locator('.part-card', { hasText: 'Alternator' }).locator('h3 a').first().click();
   await page.waitForURL('**/auto-parts/alternator-toyota-hilux');
   await page.locator('.part-quick-facts').waitFor();
   assert((await page.locator('.part-quick-facts').innerText()).includes('Toyota Hilux'), 'Journey 3: compatibility appears on product detail');

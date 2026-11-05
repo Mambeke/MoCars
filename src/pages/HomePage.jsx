@@ -42,7 +42,7 @@ export default function HomePage() {
             <span className="hero-line">Discover Quality Auto Parts.</span>
           </h1>
           <div className="hero-actions">
-            <Link className="btn btn-red btn-large" to="/used-cars"><CarFront /> Browse Cars <ArrowRight /></Link>
+            <Link className="btn btn-red btn-large" to="/cars"><CarFront /> Browse Cars <ArrowRight /></Link>
             <Link className="btn btn-glass btn-large" to="/auto-parts"><Cog /> Check Your Part <ArrowRight /></Link>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function HomePage() {
 
       <section className="section light-section featured-vehicles-section">
         <div className="container">
-          <SectionHeading eyebrow="Selected inventory" title="Featured Vehicles" linkTo="/used-cars" linkLabel="View All Cars" />
+          <SectionHeading eyebrow="Selected inventory" title="Featured Vehicles" linkTo="/cars" linkLabel="View All Cars" />
           <div className="featured-grid four vehicle-featured-grid">
             {vehicles.filter((vehicle) => vehicle.featured).map((vehicle) => <VehicleCard key={vehicle.id} vehicle={vehicle} compact />)}
           </div>
@@ -103,7 +103,7 @@ export default function HomePage() {
               <span className="eyebrow light">Vehicle catalogue</span>
               <h2>Compare the details.<br />Choose with confidence.</h2>
               <p>Explore factual specifications, clear pricing and dedicated enquiry actions for every listed vehicle.</p>
-              <Link className="btn btn-red" to="/used-cars">Browse Cars <ArrowRight /></Link>
+              <Link className="btn btn-red" to="/cars">Browse Cars <ArrowRight /></Link>
             </div>
           </div>
         </div>

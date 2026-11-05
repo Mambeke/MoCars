@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { SlidersHorizontal, X } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { VehicleCard } from '../components/Cards.jsx';
 import { EmptyState, PageHero } from '../components/UI.jsx';
 import { useInventory } from '../context/InventoryContext.jsx';
@@ -13,15 +13,31 @@ const initialFilters = {
 
 const unique = (values) => [...new Set(values.filter(Boolean))].sort();
 
-export default function VehiclesPage({ condition }) {
+const conditionTabs = [
+  { key: 'All', label: 'All Cars', path: '/cars' },
+  { key: 'New', label: 'New Cars', path: '/new-cars' },
+  { key: 'Used', label: 'Used Cars', path: '/used-cars' },
+];
+
+export default function VehiclesPage({ condition = 'All' }) {
   const { vehicles } = useInventory();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [filters, setFilters] = useState(() => ({ ...initialFilters, keyword: searchParams.get('q') || '' }));
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const title = condition === 'Used' ? 'Used Cars for Sale' : 'New Cars for Sale';
-  const catalogue = useMemo(() => vehicles.filter((vehicle) => vehicle.condition === condition), [condition, vehicles]);
+  const title = condition === 'All' ? 'All Cars for Sale' : `${condition} Cars for Sale`;
+  const eyebrow = condition === 'All' ? 'New and used vehicle catalogue' : `${condition.toLowerCase()} vehicle catalogue`;
+  const catalogue = useMemo(
+    () => (condition === 'All' ? vehicles : vehicles.filter((vehicle) => vehicle.condition === condition)),
+    [condition, vehicles],
+  );
+  const conditionCounts = useMemo(() => ({
+    All: vehicles.length,
+    New: vehicles.filter((vehicle) => vehicle.condition === 'New').length,
+    Used: vehicles.filter((vehicle) => vehicle.condition === 'Used').length,
+  }), [vehicles]);
 
-  usePageMeta(title, `Browse ${condition.toLowerCase()} cars from MoCars and filter by make, price, year, fuel type, transmission and body type.`);
+  usePageMeta(title, `Browse ${condition === 'All' ? 'new and used' : condition.toLowerCase()} cars from MoCars and filter by make, price, year, fuel type, transmission and body type.`);
 
   useEffect(() => {
     const q = searchParams.get('q');
@@ -95,10 +111,26 @@ export default function VehiclesPage({ condition }) {
 
   return (
     <>
-      <PageHero eyebrow={`${condition} vehicle catalogue`} title={title}>
+      <PageHero eyebrow={eyebrow} title={title}>
         <p>Search the supplied MoCars inventory and compare factual listing details before making an enquiry.</p>
       </PageHero>
       <section className="catalogue-section section">
+        <div className="container">
+          <div className="vehicle-condition-toggle" role="group" aria-label="Choose vehicle condition">
+            {conditionTabs.map((tab) => (
+              <button
+                key={tab.key}
+                type="button"
+                className={`vehicle-condition-pill${condition === tab.key ? ' is-active' : ''}`}
+                aria-pressed={condition === tab.key}
+                onClick={() => navigate(tab.path)}
+              >
+                {tab.label}
+                <span>{conditionCounts[tab.key]}</span>
+              </button>
+            ))}
+          </div>
+        </div>
         <div className="container catalogue-layout">
           <aside className="desktop-filters">{panel}</aside>
           <div className="catalogue-results">

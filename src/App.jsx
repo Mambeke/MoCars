@@ -24,6 +24,7 @@ export default function App() {
         <Route path="admin/*" element={<AdminPage />} />
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route path="cars" element={<VehiclesPage condition="All" />} />
           <Route path="used-cars" element={<VehiclesPage condition="Used" />} />
           <Route path="new-cars" element={<VehiclesPage condition="New" />} />
           <Route path="vehicles/:id" element={<VehicleDetailPage />} />
